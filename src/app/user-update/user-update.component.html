@@ -1,0 +1,58 @@
+<div class="signup">
+    <span class="title">Actualizar Usuario</span>
+
+    <form>
+        <div class="input-field">
+            <input type="text" [(ngModel)]="usuario.nombre" name="nombre" required>
+            <i class="uil uil-user"></i>
+        </div>
+
+        <div class="input-field">
+            <input type="text" [(ngModel)]="usuario.apellido" name="apellido" required>
+            <i class="uil uil-user"></i>
+        </div>
+        
+        <select class="input-select" [(ngModel)]="usuario.id_tipoDocumento" name="id_tipoDocumento" required>
+                <option *ngFor="let tipoDocumento of tiposDocumento" [value]="tipoDocumento.id">{{ tipoDocumento.nombre }}</option> 
+        </select>
+        
+
+        <div class="input-field">
+            <input type="text" [(ngModel)]="usuario.numero_documento" name="documento" required>
+            <i class="fa-solid fa-id-card"></i>
+        </div>
+
+        <div class="input-field">
+            <input type="text" [(ngModel)]="usuario.email" name="email" required>
+            <i class="uil uil-envelope icon"></i>
+          
+        </div>
+
+        <div class="input-field">
+            <input type="text" [(ngModel)]="usuario.telefono" name="telefono" required>
+            <i class="fa-sharp fa-solid fa-phone"></i>
+        </div>
+
+        <select class="input-select" [(ngModel)]="usuario.id_tipoPersona" name="id_tipoPersona" required>
+            <option *ngFor="let tipoUsuario of tiposUsuario" [value]="tipoUsuario.id">{{ tipoUsuario.nombre }}</option>
+        </select>   
+
+            <div class="input-field">
+            <input type="password" [(ngModel)]="usuario.password" name="password" class="password" required>
+            <i class="uil uil-lock icon"></i>
+            <i class="uil uil-eye-slash showHidePw"></i>
+        </div>
+
+    
+        <div class="botones">
+            <div class="input-field button">
+                <button (click)="actualizarUsuario()">Actualizar</button>
+            </div>
+            <div class="input-field button">
+                    <a href="{% url 'admins' %}">Volver</a>
+                </div>
+        </div>
+    </form>
+
+   
+</div>

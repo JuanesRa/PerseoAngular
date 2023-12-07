@@ -1,0 +1,34 @@
+<div class="signup">
+    <span class="title">Actualizar Producto</span>
+
+    <form (ngSubmit)="actualizarInventario()">
+        <div class="input-field">
+            <input [(ngModel)]="inventario.nombre_producto" type="text" name="Fproducto" placeholder="Ingrese producto"
+                required />
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="inventario.descripcion" type="text" name="Fdescripcion"
+                placeholder="Ingrese descripcion producto" required />
+        </div>
+
+        <select [(ngModel)]="inventario.id_estado" class="input-select" name="Fidestado">
+            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
+            <option *ngFor="let estado of estados" value="{{estado.id}}"> {{estado.nombre}} </option>
+        </select>
+
+        <select [(ngModel)]="inventario.id_categoria" class="input-select" name="Fidtcategoria">
+            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
+            <option *ngFor="let categoria of categorias" value="{{categoria.id}}"> {{categoria.nombre}} </option>
+        </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Registrar" />
+            </div>
+            <div class="input-field button">
+                <a href="{% url 'admins' %}">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>

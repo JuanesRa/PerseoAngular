@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
+
+:root{
+   --white:#fff;
+   --black: #333333;
+   --green:#5eb319;
+   --green_de:rgb(205, 235, 180);
+   --gray: #707070;
+   --border:.1rem solid rgba(84, 134, 80, 0.7);
+}
+
+section{
+    padding: 20px 0px;
+    width: 90%;
+    margin: 0 auto;
+ }
+ 
+ .header{
+    padding-bottom: 0;
+ }
+ 
+ .header .flex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+ }
+ 
+ .header .flex .logo{
+    color: #5eb319;
+    font-size: 25px
+ }
+
+ .header .navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 15px;
+    margin-top: 20px;
+    background-color: #5eb319;
+    padding: 5px 0px;
+    border-radius: 5px;
+ }
+ 
+ .header .navbar a{
+    font-size: 20px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 15px;
+    text-decoration: none;
+ }
+ 
+ .header .navbar a:hover{
+    background-color: #fff;
+    color: #5eb319;
+    padding: 5px 15px;
+ }
+
+ .navbar .options {
+   display: none;
+   position: absolute;
+   background-color: #5eb319;
+   border: 1px solid #ccc;
+   padding: 5px;
+   z-index: 1;
+}
+
+.navbar .nav-item {
+   position: relative;
+}
+
+.navbar .nav-item:hover .options {
+   display: flex;
+   flex-direction: column;
+}

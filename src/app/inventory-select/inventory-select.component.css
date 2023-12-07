@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
+
+:root {
+   --white: #fff;
+   --black: #333333;
+   --green: #5eb319;
+   --green_de: rgb(205, 235, 180);
+   --gray: #707070;
+   --border: .1rem solid rgba(84, 134, 80, 0.7);
+}
+
+* {
+   font-family: 'Montserrat', sans-serif;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   outline: none;
+   border: none;
+   text-decoration: none;
+}
+
+*::-webkit-scrollbar {
+   height: .5rem;
+   width: 1rem;
+}
+
+*::-webkit-scrollbar-track {
+   background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+   background-color: #5eb319;
+   border-radius: 5rem;
+}
+
+body {
+   background-color: #fff;
+}
+
+/* TABLA CSS */
+.tabla_content {
+   width: 90%;
+   margin: auto;
+   margin-top: 10px;
+
+}
+
+.tabla_content table {
+   width: 100%;
+   font-size: 15px;
+}
+
+.tabla_content table thead tr th {
+   background-color: #5eb319;
+   color: #fff;
+}
+
+.tabla_content th,
+.tabla_content td {
+   text-align: center;
+}
+
+/* Ajuste de la columna de descripción */
+.tabla_content td:nth-child(3) {
+   max-width: 400px;
+   /* Ancho máximo de la columna de descripción */
+   /*overflow: hidden;
+   text-overflow: ellipsis; Si el contenido es demasiado largo, muestra puntos suspensivos
+   white-space: nowrap; Evita que el texto se envuelva */
+   vertical-align: middle;
+   /* Alinea el contenido al medio */
+}
+
+.tabla_content tbody td {
+   height: 80px;
+   vertical-align: middle;
+}
+
+.tabla_content .table-light {
+   color: #333333;
+}
+
+.tabla_content table tbody tr .btns {
+   display: flex;
+   justify-content: center;
+   vertical-align: middle;
+   gap: 7px;
+}
+
+.tabla_content table tbody tr .btns button {
+   height: 40px;
+   padding: 0px 7px;
+   font-size: 15px;
+   vertical-align: middle;
+}

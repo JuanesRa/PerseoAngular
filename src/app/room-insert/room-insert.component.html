@@ -1,0 +1,33 @@
+<div>
+    <app-home></app-home>
+</div>
+
+<div class="signup">
+    <span class="title">Crear Habitación</span>
+
+    <form (ngSubmit)="crearNuevaHabitacion()">
+        <div class="input-field">
+            <input [(ngModel)]="nuevaHabitacion.num_habitacion" type="text" name="num_habitacion"
+                placeholder="Ingrese el número de habitación" required />
+        </div>
+
+        <select class="input-select" [(ngModel)]="nuevaHabitacion.id_estadoHab" name="id_estadoHab" required>
+            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
+            <option *ngFor="let estado of estadoHabitacion" [value]="estado.id">{{estado.nombre}}</option>
+        </select>
+
+        <select class="input-select" [(ngModel)]="nuevaHabitacion.id_tipoHab" name="id_tipoHab" required>
+            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
+            <option *ngFor="let tipo of tipoHabitacion" value="{{tipo.id}}"> {{tipo.nombre}} </option>
+        </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Registrar" />
+            </div>
+            <div class="input-field button">
+                <a href="{% url 'admins' %}">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>

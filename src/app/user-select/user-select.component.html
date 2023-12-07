@@ -1,0 +1,40 @@
+<div>
+  <app-home></app-home>
+</div>
+
+<div class="tabla_content" id="table_user">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tipo Doc</th>
+        <th scope="col">Nro Documento</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Email</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Contraseña</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td class="table-light">{{ user.id_tipoDocumento }}</td>
+        <td class="table-light">{{ user.numero_documento }}</td>
+        <td class="table-light">{{ user.nombre }}</td>
+        <td class="table-light">{{ user.apellido }}</td>
+        <td class="table-light">{{ user.email }}</td>
+        <td class="table-light">{{ user.telefono }}</td>
+        <td class="table-light">{{ user.id_tipoPersona }}</td>
+        <td class="table-light">{{ user.password }}</td>
+        <td class="btns">
+          <button (click)="redireccionarActualizar(user.numero_documento)" type="button" class="btn btn-warning">Actualizar</button>
+          <button (click)="eliminarUsuario(user.numero_documento)" type="button" class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
