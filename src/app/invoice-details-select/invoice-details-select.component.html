@@ -1,0 +1,34 @@
+<div>
+    <app-home></app-home>
+</div>
+
+<div class="tabla_content" id="table_invoice_details">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Fecha de Emisión</th>
+                <th scope="col">Total Factura</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let df of detallesFacturas, let i = index">
+                <th class="table-light" scope="row">{{ df.id }}</th>
+                <td class="table-light">{{ df.fecha_emision }}</td>
+                <td class="table-light">{{ df.total_factura }}</td>
+                <td class="btns">
+                    <button (click)="redireccionarActualizar(df.id)" type="button"
+                        class="btn btn-warning">
+                        Actualizar
+                    </button>
+                    <button (click)="eliminarDetalleFatura(df.id)" type="button"
+                        class="btn btn-danger">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

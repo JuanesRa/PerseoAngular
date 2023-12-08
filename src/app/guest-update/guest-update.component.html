@@ -1,0 +1,39 @@
+<div class="signup">
+    <span class="title">Actualizar huésped</span>
+
+    <form (ngSubmit)="actualizarHuesped()">
+        <div class="input-field">
+            <input [(ngModel)]="huesped.nombre" type="text" name="Fnombre" placeholder="Ingrese su nombre" required />
+            <i class="uil uil-user"></i>
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="huesped.apellido" type="text" name="Fapellido" placeholder="Ingrese su apellido" required />
+            <i class="uil uil-user"></i>
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="huesped.numero_documento" type="text" name="Fdocumento" placeholder="Ingrese su documento" required />
+            <i class="fa-solid fa-id-card"></i>
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="huesped.email" type="text" name="Femail" placeholder="Ingresa tu email" required />
+            <i class="uil uil-envelope icon"></i>
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="huesped.telefono" type="text" name="Ftelefono" placeholder="Ingresa tu telefono" required />
+            <i class="fa-sharp fa-solid fa-phone"></i>
+        </div>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Registrate" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/inicio" >Volver</a>
+            </div>
+        </div>
+    </form>
+</div>

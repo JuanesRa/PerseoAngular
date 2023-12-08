@@ -1,0 +1,26 @@
+<div>
+    <app-home></app-home>
+</div>
+
+<div class="signup">
+    <span class="title">Crear detalle de factura</span>
+
+    <form (ngSubmit)="crearNuevoDetalleFactura()">
+      <div class="input-field">
+        <input [(ngModel)]="nuevoDetalleFactura.fecha_emision" type="date" name="FfechaEmision" placeholder="Ingrese fecha emision" required />
+      </div>
+
+      <div class="input-field">
+          <input [(ngModel)]="nuevoDetalleFactura.total_factura" type="number" name="FtotalFactura" placeholder="Ingrese el total de la factura" required />
+        </div>
+
+      <div class="botones">
+        <div class="input-field button">
+          <input type="submit" value="Crear" />
+        </div>
+        <div class="input-field button">
+            <a routerLink="/inicio" >Volver</a>
+        </div>
+      </div>
+    </form>
+  </div>

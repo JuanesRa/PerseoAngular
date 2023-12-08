@@ -18,6 +18,16 @@ import { InventorySelectComponent } from './inventory-select/inventory-select.co
 import { InventoryInsertComponent } from './inventory-insert/inventory-insert.component';
 import { InventoryUpdateComponent } from './inventory-update/inventory-update.component';
 import { HomeComponent } from './home/home.component';
+import { GuestInsertComponent } from './guest-insert/guest-insert.component';
+import { GuestSelectComponent } from './guest-select/guest-select.component';
+import { GuestUpdateComponent } from './guest-update/guest-update.component';
+import { InvoiceDetailsInsertComponent } from './invoice-details-insert/invoice-details-insert.component';
+import { InvoiceDetailsSelectComponent } from './invoice-details-select/invoice-details-select.component';
+import { InvoiceDetailsUpdateComponent } from './invoice-details-update/invoice-details-update.component';
+import { InvoiceSelectComponent } from './invoice-select/invoice-select.component';
+import { InvoiceInsertComponent } from './invoice-insert/invoice-insert.component';
+import { InvoiceUpdateComponent } from './invoice-update/invoice-update.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +45,16 @@ import { HomeComponent } from './home/home.component';
     InventoryInsertComponent,
     InventoryUpdateComponent,
     HomeComponent,
+    GuestInsertComponent,
+    GuestSelectComponent,
+    GuestUpdateComponent,
+    InvoiceDetailsInsertComponent,
+    InvoiceDetailsSelectComponent,
+    InvoiceDetailsUpdateComponent,
+    InvoiceSelectComponent,
+    InvoiceInsertComponent,
+    InvoiceUpdateComponent,
+    AboutUsComponent,
   ],
   imports: [
     BrowserModule,

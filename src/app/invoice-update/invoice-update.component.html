@@ -1,0 +1,29 @@
+<div class="signup">
+    <span class="title">Actualizar factura</span>
+
+    <form (ngSubmit)="actualizarFactura()">
+        <div class="input-field">
+            <input [(ngModel)]="factura.numero_documento" type="number" name="numero_documento"
+                placeholder="Ingrese documento del usuario" required />
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="factura.id_detalleFactura" type="number" name="id_detalleFactura"
+                placeholder="Ingrese ID del detalle de factura" required />
+        </div>
+
+        <select class="input-select" [(ngModel)]="factura.id_metodoPago" name="id_metodoPago" required>
+            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
+            <option *ngFor="let m of metodoPago" value="{{m.id}}"> {{m.nombre}} </option>
+        </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/inicio">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
