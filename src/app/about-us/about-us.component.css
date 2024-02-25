@@ -43,6 +43,21 @@
     font-weight: bold;
 }
 
+.options a{
+    font-size: 17px;
+    background-color: #5eb319;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin: 0 0 0 5px;
+    text-decoration: none;
+ }
+ 
+ .options a:hover{
+    background-color: #fff;
+    color: #5eb319;
+ }
+
 .imagen {
     margin-top: 20px;
     display: flex;

@@ -1,7 +1,3 @@
-<div>
-  <app-home></app-home>
-</div>
-
 <div class="signup">
   <span class="title">Registro Usuario</span>
 
@@ -15,7 +11,7 @@
       <input type="text" [(ngModel)]="nuevoUsuario.apellido" name="apellido" placeholder="Ingrese su apellido"
         required />
       <i class="uil uil-user"></i>
-    </div> 
+    </div>
 
     <select class="input-select" [(ngModel)]="nuevoUsuario.id_tipoDocumento" name="id_tipoDocumento" required>
       <option selected="selected" disabled="disabled">
@@ -59,12 +55,17 @@
       <i class="uil uil-eye-slash showHidePw"></i>
     </div>
 
+    <div class="link">
+      <p>¿Ya tienes una cuenta?</p>
+      <a routerLink="/login">Inicia sesión</a>
+    </div>
+
     <div class="botones">
       <div class="input-field button">
         <input type="submit" value="Registrate" />
       </div>
       <div class="input-field button">
-        <a routerLink="/inicio" >Volver</a>
+        <a routerLink="/inicio">Volver</a>
       </div>
     </div>
   </form>

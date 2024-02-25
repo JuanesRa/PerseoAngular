@@ -1,0 +1,31 @@
+<div class="signup">
+    <span class="title">Inicio de sesión</span>
+
+    <form (ngSubmit)="iniciarSesion()">
+        <div class="input-field">
+            <input type="text" [(ngModel)]="usuario.username" name="email" placeholder="Ingrese su email" required />
+            <i class="uil uil-envelope icon"></i>
+        </div>
+
+        <div class="input-field">
+            <input type="password" [(ngModel)]="usuario.password" name="password" class="password"
+                placeholder="Ingrese su contraseña" required />
+            <i class="uil uil-lock icon"></i>
+            <i class="uil uil-eye-slash showHidePw"></i>
+        </div>
+
+        <div class="link">
+            <p>¿No tienes una cuenta?</p>
+            <a routerLink="/registro">Regístrate</a>
+        </div>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="iniciar Sesión" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/inicio">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>

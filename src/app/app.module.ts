@@ -28,6 +28,8 @@ import { InvoiceSelectComponent } from './invoice-select/invoice-select.componen
 import { InvoiceInsertComponent } from './invoice-insert/invoice-insert.component';
 import { InvoiceUpdateComponent } from './invoice-update/invoice-update.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
     InvoiceInsertComponent,
     InvoiceUpdateComponent,
     AboutUsComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

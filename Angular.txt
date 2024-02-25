@@ -1,0 +1,13 @@
+Angular
+Módulos Realizados Por Los Integrantes
+
+Juan Esteban Rodriguez Acosta
+mod_guest
+mod_invoice
+mod_reservation
+
+
+Jhonatan Andres Gelvis Rodriguez
+mod_inventory
+mod_user
+mod_room

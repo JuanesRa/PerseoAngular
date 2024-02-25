@@ -23,6 +23,8 @@ import { InvoiceInsertComponent } from './invoice-insert/invoice-insert.componen
 import { InvoiceUpdateComponent } from './invoice-update/invoice-update.component';
 import { HomeComponent } from './home/home.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {path: '', component: AboutUsComponent},
@@ -47,7 +49,9 @@ const routes: Routes = [
   {path: 'actualizar-detalle-factura/:id', component: InvoiceDetailsUpdateComponent},
   {path: 'lista-facturas', component: InvoiceSelectComponent},
   {path: 'insertar-factura', component: InvoiceInsertComponent},
-  {path: 'actualizar-factura/:id', component: InvoiceUpdateComponent}
+  {path: 'actualizar-factura/:id', component: InvoiceUpdateComponent},
+  {path: 'registro', component: SignupComponent},
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
