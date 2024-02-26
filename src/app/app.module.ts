@@ -27,9 +27,10 @@ import { InvoiceDetailsUpdateComponent } from './invoice-details-update/invoice-
 import { InvoiceSelectComponent } from './invoice-select/invoice-select.component';
 import { InvoiceInsertComponent } from './invoice-insert/invoice-insert.component';
 import { InvoiceUpdateComponent } from './invoice-update/invoice-update.component';
-import { AboutUsComponent } from './about-us/about-us.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -56,9 +57,10 @@ import { SignupComponent } from './signup/signup.component';
     InvoiceSelectComponent,
     InvoiceInsertComponent,
     InvoiceUpdateComponent,
-    AboutUsComponent,
     LoginComponent,
     SignupComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

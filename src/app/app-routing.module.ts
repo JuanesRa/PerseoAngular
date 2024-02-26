@@ -22,13 +22,12 @@ import { InvoiceSelectComponent } from './invoice-select/invoice-select.componen
 import { InvoiceInsertComponent } from './invoice-insert/invoice-insert.component';
 import { InvoiceUpdateComponent } from './invoice-update/invoice-update.component';
 import { HomeComponent } from './home/home.component';
-import { AboutUsComponent } from './about-us/about-us.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {path: '', component: AboutUsComponent},
-  {path: 'inicio', component: AboutUsComponent},
+  {path: '', component: HomeComponent},
+  {path: 'inicio', component: HomeComponent},
   {path: 'lista-usuarios', component: UserSelectComponent},
   {path: 'insertar-usuario', component: UserInsertComponent},
   {path: 'actualizar-usuario/:id', component: UserUpdateComponent},
