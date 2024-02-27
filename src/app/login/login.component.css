@@ -175,6 +175,11 @@ body {
 
 }
 
+.error-message {
+    color: red;
+    font-size: 11px;
+}
+
 .link {
     display: flex;
     margin-top: 0;

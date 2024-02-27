@@ -1,17 +1,33 @@
 <div class="signup">
     <span class="title">Inicio de sesión</span>
 
-    <form (ngSubmit)="iniciarSesion()">
+    <form [formGroup]="formulario" (ngSubmit)="iniciarSesion()" novalidate>
         <div class="input-field">
-            <input type="text" [(ngModel)]="usuario.username" name="email" placeholder="Ingrese su email" required/>
+            <input [formControl]="$any(formulario).controls['username']" type="text" name="email"
+                placeholder="Ingrese su email" required />
             <i class="uil uil-envelope icon"></i>
         </div>
 
+        <div *ngIf="formulario.get('username')?.hasError('required') && formulario.get('username')?.touched"
+            class="error-message">
+            El correo electrónico es obligatorio.
+        </div>
+        <div *ngIf="formulario.get('username')?.hasError('email') && formulario.get('username')?.touched"
+            class="error-message">
+            Por favor, ingrese un correo electrónico válido.
+        </div>
+
         <div class="input-field">
-            <input type="password" [(ngModel)]="usuario.password" name="password" class="password"
-                placeholder="Ingrese su contraseña" required />
+            <input type="password" [formControl]="$any(formulario).controls['password']" name="password"
+                class="password" placeholder="Ingrese su contraseña" required />
             <i class="uil uil-lock icon"></i>
             <i class="uil uil-eye-slash showHidePw"></i>
+        </div>
+
+        <div *ngIf="formulario.get('password')?.hasError('invalidPassword') && formulario.get('password')?.touched"
+            class="error-message">
+            La contraseña debe contener al menos 8 carácteres, una letra mayúscula, una letra minúscula, un número y un carácter
+            especial.
         </div>
 
         <div class="link">

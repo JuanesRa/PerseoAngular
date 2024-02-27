@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { passwordValidator } from '../validators/password_validator';
 import { UserDataService } from '../services/user-data.service';
 
 @Component({
@@ -10,33 +12,36 @@ import { UserDataService } from '../services/user-data.service';
 })
 export class LoginComponent {
 
-  usuario: any = {
-    username: '',
-    password: ''
-  };
+  formulario: FormGroup;
 
-
-  
-  constructor(private authService: AuthService, private router: Router, private UserDataService:UserDataService ) { }
+  constructor(private authService: AuthService, private router: Router, private UserDataService: UserDataService, public fb: FormBuilder) {
+    this.formulario = this.fb.group({
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, passwordValidator()]],
+    })
+  }
 
   iniciarSesion(): void {
 
-    this.authService.login(this.usuario).subscribe((data) => {
-      console.log('Iniciar Sesion:', data);
-      this.UserDataService.userData = data.user; 
-      if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 1) {
-      alert('Bienvenido Administrador');
-      }
-      else if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 2){
-        alert('Bienvenido Recepcionista');
-      }
 
-      else if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 3){
-        alert('Bienvenido CLiente');   
-      }
-      this.router.navigate(['/inicio'])
+    if (this.formulario.valid) {
+      this.authService.login(this.formulario.value).subscribe((data) => {
+        console.log('Inicio de sesión exitoso:', data);
+        alert('Inicio de sesión exitoso');
+        this.UserDataService.userData = data.user;
+        if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 1) {
+          alert('Bienvenido Administrador');
+        }
+        else if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 2) {
+          alert('Bienvenido Recepcionista');
+        }
 
-    });
+        else if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 3) {
+          alert('Bienvenido CLiente');
+        }
+        this.router.navigate(['/inicio'])
+      })
+    }
   }
 
 
