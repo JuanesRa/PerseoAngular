@@ -10,6 +10,12 @@ import { HomeComponent } from '../home/home.component';
 })
 export class RoomSelectComponent implements OnInit {
 
+  tipoHabitacion = [
+    { id: 1, nombre: 'Estándar' },
+    { id: 3, nombre: 'Doble' },
+    { id: 2, nombre: 'Suite' },
+  ];
+
   rooms: any[] = [];
 
   constructor(private roomService: RoomService, private router: Router) { }
@@ -30,5 +36,5 @@ export class RoomSelectComponent implements OnInit {
         window.location.reload()
       })
     }
-  }
+}
 }
