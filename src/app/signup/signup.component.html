@@ -1,19 +1,23 @@
+<div>
+  <app-header></app-header>
+</div>
+
 <div class="signup">
-  <span class="title">Registro Usuario</span>
+  <span class="title">Registro</span>
 
   <form (ngSubmit)="crearNuevoUsuario()">
     <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.nombre" name="nombre" placeholder="Ingrese su nombre" required />
+      <input type="text" [(ngModel)]="nuevoUsuario.NOMBRE" name="NOMBRE" placeholder="Ingrese su nombre" required />
       <i class="uil uil-user"></i>
     </div>
 
     <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.apellido" name="apellido" placeholder="Ingrese su apellido"
+      <input type="text" [(ngModel)]="nuevoUsuario.APELLIDO" name="APELLIDO" placeholder="Ingrese su apellido"
         required />
       <i class="uil uil-user"></i>
     </div>
 
-    <select class="input-select" [(ngModel)]="nuevoUsuario.id_tipoDocumento" name="id_tipoDocumento" required>
+    <select class="input-select" [(ngModel)]="nuevoUsuario.TIPO_DOCUMENTO_IDTIPODOCUMENTO" name="TIPO_DOCUMENTO_IDTIPODOCUMENTO" required>
       <option selected="selected" disabled="disabled">
         Seleccione tipo de documento
       </option>
@@ -23,7 +27,7 @@
     </select>
 
     <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.numero_documento" name="documento" placeholder="Ingrese su documento"
+      <input type="text" [(ngModel)]="nuevoUsuario.NRODOCUMENTO" name="NRODOCUMENTO" placeholder="Ingrese su documento"
         required />
       <i class="fa-solid fa-id-card"></i>
     </div>
@@ -34,19 +38,10 @@
     </div>
 
     <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.telefono" name="telefono" placeholder="Ingrese su telefono"
+      <input type="text" [(ngModel)]="nuevoUsuario.TELEFONO" name="TELEFONO" placeholder="Ingrese su telefono"
         required />
       <i class="fa-sharp fa-solid fa-phone"></i>
     </div>
-
-    <select class="input-select" [(ngModel)]="nuevoUsuario.id_tipoPersona" name="id_tipoPersona" required>
-      <option selected="selected" disabled="disabled">
-        Seleccione tipo de usuario
-      </option>
-      <option *ngFor="let tipoUsuario of tiposUsuario" [value]="tipoUsuario.id">
-        {{ tipoUsuario.nombre }}
-      </option>
-    </select>
 
     <div class="input-field">
       <input type="password" [(ngModel)]="nuevoUsuario.password" name="password" class="password"
@@ -55,18 +50,20 @@
       <i class="uil uil-eye-slash showHidePw"></i>
     </div>
 
-    <div class="link">
-      <p>¿Ya tienes una cuenta?</p>
-      <a routerLink="/login">Inicia sesión</a>
-    </div>
-
     <div class="botones">
       <div class="input-field button">
         <input type="submit" value="Registrate" />
       </div>
-      <div class="input-field button">
-        <a routerLink="/inicio">Volver</a>
-      </div>
     </div>
+
+    <div class="login-signup">
+      <span class="text">¿Ya tienes una cuenta?
+          <a routerLink="/login" class="text signup-link">Inicia Sesión</a>
+      </span>
+  </div>
   </form>
+</div>
+
+<div>
+  <app-footer></app-footer>
 </div>

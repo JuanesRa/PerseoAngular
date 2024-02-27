@@ -8,31 +8,31 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-
-
+  
   tiposUsuario = [
     { id: 1, nombre: 'Administrador' },
-    { id: 2, nombre: 'Empleado' },
+    { id: 2, nombre: 'Recepcionista' },
     { id: 3, nombre: 'Cliente' },
   ];
 
   tiposDocumento = [
-    { id: 1, nombre: 'Cédula de ciudadanía' },
-    { id: 3, nombre: 'Cédula de extranjería' },
+    { id: 1, nombre: 'Cédula de Ciudadanía' },
+    { id: 3, nombre: 'Cédula de Extranjería' },
     { id: 2, nombre: 'Pasaporte' },
   ];
 
   users: any[] = [];
   nuevoUsuario: any = {
-    numero_documento: '',
-    nombre: '',
-    apellido: '',
+    NRODOCUMENTO: '',
+    NOMBRE: '',
+    APELLIDO: '',
     email: '',
     username: '',
-    telefono: '',
+    TELEFONO: '',
     password: '',
-    id_tipoDocumento: null,
-    id_tipoPersona: null
+    TIPO_DOCUMENTO_IDTIPODOCUMENTO: null,
+    TIPO_PERSONA_IDTIPOPERSONA: 3,
+    ESTADO_USUARIO_IDESTADO: 1,
   };
 
   constructor(private authService: AuthService, private router: Router) { }
@@ -47,6 +47,4 @@ export class SignupComponent {
       this.router.navigate(['/login'])
     });
   }
-
-
 }
