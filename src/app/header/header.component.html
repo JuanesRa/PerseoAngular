@@ -13,14 +13,25 @@
     <div class="flex">
        <a routerLink="/inicio"  class="logo">Hotel Perseo</a>
        <div class="icons">
-          <a routerLink="/login"><i class="uil uil-user" style="color: var(--green);"></i></a>
-          <a routerLink="/registro"> <i class="fa-solid fa-user-plus" style="color: var(--green);"></i></a>
+          <a *ngIf="isUndefined" routerLink="/login"><i class="uil uil-user" style="color: var(--green);"></i></a>
+          <a *ngIf="isUndefined" routerLink="/registro"> <i class="fa-solid fa-user-plus" style="color: var(--green);"></i></a>
+          <a *ngIf="isAdmin || isCliente || isRecepcionista">
+            <i class="fa-solid fa-right-from-bracket" style="color: var(--green);"></i>
+          </a>
+          
+
        </div>
     </div>
 
     <nav class="navbar">
-       <a routerLink="/inicio">Inicio</a>
-       <a routerLink="/servios">Servicios</a>
-       <a routerLink="/habitaciones">Reservaciones</a>
-    </nav>
+      <a routerLink="/inicio">Inicio</a>
+      <a *ngIf="isAdmin" routerLink="">Usuarios</a>
+      <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="/lista-habitaciones">Habitaciones</a>
+      <a *ngIf="isCliente" [routerLink]="isAdmin ? '/lista-habitaciones' : '/inicio'">Habitaciones</a>
+      <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Reservaciones</a>
+      <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Servicios</a>
+      <a *ngIf="isAdmin || isCliente || isRecepcionista" routerLink="">Factura</a>
+      <a *ngIf="isAdmin" routerLink="">Inventario</a>
+   </nav>
+   
 </section>

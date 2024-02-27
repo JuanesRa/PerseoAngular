@@ -23,7 +23,7 @@ export class AuthService {
     return this.http.get(`${this.urlApi}/test-view`, data);
   }
 
-  logout(data: any): Observable<any> {
-    return this.http.get(`${this.urlApi}/logout`, data);
+  logout(): Observable<any> {
+    return this.http.get(`${this.urlApi}/logout`);
   }
 }

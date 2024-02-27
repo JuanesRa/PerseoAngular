@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { HomeComponent } from '../home/home.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-insert',
@@ -12,10 +11,8 @@ export class UserInsertComponent {
 
   tiposUsuario = [
     { id: 1, nombre: 'Administrador' },
-    { id: 2, nombre: 'Empleado' },
-    { id: 3, nombre: 'Cliente' },
-    { id: 4, nombre: 'Burrito Sabanero' },
-    { id: 5, nombre: 'Mesero' },
+    { id: 2, nombre: 'Recepcionista' },
+    { id: 3, nombre: 'Cliente' }
   ];
 
   tiposDocumento = [
@@ -26,22 +23,27 @@ export class UserInsertComponent {
 
   users: any[] = [];
   nuevoUsuario: any = {
-    numero_documento: '',
-    nombre: '',
-    apellido: '',
+    NRODOCUMENTO: '',
+    NOMBRE: '',
+    APELLIDO: '',
     email: '',
-    telefono: '',
+    username: '',
+    TELEFONO: '',
     password: '',
-    id_tipoDocumento: null,
-    id_tipoPersona: null
+    TIPO_DOCUMENTO_IDTIPODOCUMENTO: null,
+    TIPO_PERSONA_IDTIPOPERSONA: 3,
+    ESTADO_USUARIO_IDESTADO: 1,
   };
-
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   crearNuevoUsuario(): void {
-    this.userService.postUser(this.nuevoUsuario).subscribe((data) => {
+
+    this.nuevoUsuario.username = this.nuevoUsuario.email;
+
+    this.authService.signup(this.nuevoUsuario).subscribe((data) => {
       console.log('Usuario creado:', data);
-      this.router.navigate(['/lista-usuarios'])
+      alert('Registro exitoso');
+      this.router.navigate(['/login'])
     });
   }
 
