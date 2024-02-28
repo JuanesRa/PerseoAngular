@@ -16,7 +16,7 @@
           <a *ngIf="isUndefined" routerLink="/login"><i class="uil uil-user" style="color: var(--green);"></i></a>
           <a *ngIf="isUndefined" routerLink="/registro"> <i class="fa-solid fa-user-plus" style="color: var(--green);"></i></a>
           <a *ngIf="isAdmin || isCliente || isRecepcionista">
-            <i class="fa-solid fa-right-from-bracket" style="color: var(--green);"></i>
+            <i (click)="CerrarSesion()" class="fa-solid fa-right-from-bracket" style="color: var(--green);"></i>
           </a>
           
 

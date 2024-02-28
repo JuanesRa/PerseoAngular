@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../services/user-data.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,12 +15,11 @@ export class HeaderComponent implements OnInit {
   isUndefined: boolean = false;
 
 
-  constructor(private authService: AuthService, private userDataService: UserDataService) {}
+  constructor(private authService: AuthService, private userDataService: UserDataService, private router: Router) { }
 
   ngOnInit(): void {
     const userData = this.userDataService.userData;
     console.log('Datos del usuario:', userData);
-    
     if (userData === undefined) {
       this.isUndefined = true;
     } else {
@@ -33,11 +33,11 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
-    // CerrarSesion(): void {
-    // this.authService.logout(this.usuario).subscribe((data) => {
-    //   console.log('Cerrar Sesion:', data);
-    
 
-    // });
-  
-}
+
+  CerrarSesion(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
+    };
+
+  }

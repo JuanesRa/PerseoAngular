@@ -46,6 +46,11 @@ section{
    color: var(--green);
    display: none;
 }
+
+.header .flex .icons a i:hover {
+   cursor: pointer;
+}
+
  .header .navbar{
     display: flex;
     align-items: center;

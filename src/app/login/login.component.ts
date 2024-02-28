@@ -28,6 +28,8 @@ export class LoginComponent {
       this.authService.login(this.formulario.value).subscribe((data) => {
         console.log('Inicio de sesión exitoso:', data);
         alert('Inicio de sesión exitoso');
+        const token = data.token; // Aquí obtenemos el token del objeto data
+        this.authService.saveAuthToken(token)
         this.UserDataService.userData = data.user;
         if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 1) {
           alert('Bienvenido Administrador');
