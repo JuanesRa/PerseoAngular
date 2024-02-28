@@ -31,6 +31,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { RoomSelectClientComponent } from './room-select-client/room-select-client.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { FooterComponent } from './footer/footer.component';
     SignupComponent,
     HeaderComponent,
     FooterComponent,
+    RoomSelectClientComponent,
   ],
   imports: [
     BrowserModule,

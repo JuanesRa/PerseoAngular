@@ -9,37 +9,37 @@ import { RoomService } from '../services/room.service';
 })
 export class RoomUpdateComponent {
 
-  estadoHabitacion = [
-    { id: 1, nombre: 'Disponible' },
-    { id: 2, nombre: 'Reservada' },
-    { id: 3, nombre: 'En mantenimiento' },
-    { id: 27, nombre: 'Ocupada' }
-  ]
-
-  tipoHabitacion = [
-    { id: 1, nombre: 'Sencilla' },
-    { id: 2, nombre: 'Doble' },
-    { id: 3, nombre: 'Suite' },
-    { id: 9, nombre: 'Familiar' },
-    { id: 11, nombre: 'Presidencial' },
-  ]
-
+  
+  Statusrooms: any[] = [];
+  Typerooms: any[] = [];
   habitacion: any = {};
   habitacionOriginal: any = {};
 
   constructor(private router: Router, private route: ActivatedRoute, private roomService: RoomService) { }
 
   ngOnInit(): void {
+    this.roomService.getStatusRoom().subscribe((data) => {
+      this.Statusrooms = data;
+     });
+
+    this.roomService.getTypeRoom().subscribe((data) => {
+      this.Typerooms = data;
+     });
+  
+
     this.route.params.subscribe(params => {
       const roomId = +params['id'];
       this.roomService.getRoomById(roomId).subscribe((room) => {
         this.habitacion = room;
       });
-    });
+
+    
+    })
+    
   }
 
   actualizarHabitacion(): void {
-    const roomId = this.habitacion.num_habitacion;
+    const roomId = this.habitacion.NROHABITACION;
     const camposModificados = Object.keys(this.habitacion).filter(
       key => this.habitacion[key] !== this.habitacionOriginal[key]
     );

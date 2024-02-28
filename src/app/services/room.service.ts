@@ -7,7 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class RoomService {
 
-  private urlApi = 'http://127.0.0.1:8000/room/habitacion/';
+private urlApi = 'http://127.0.0.1:8000/room/habitacion/';
+private urlApiStatusRoom = 'http://127.0.0.1:8000/room/estadohab/';
+private urlApiTypeRoom = 'http://127.0.0.1:8000/room/tipohab/';
+
 
   constructor(private http: HttpClient) { }
 
@@ -33,5 +36,26 @@ export class RoomService {
     const url = `${this.urlApi}${roomId}/`;
     return this.http.delete<any>(url);
   }
+
+  // Estado Habitación 
+  
+  public getStatusRoom(): Observable<any> {
+    return this.http.get(this.urlApiStatusRoom)
+  }
+  public getStatusRoomById(statusroomId: number): Observable<any> {
+    const url = `${this.urlApiStatusRoom}${statusroomId}/`;
+    return this.http.get(url);
+  }
+
+  // Tipo Habitación 
+  public getTypeRoom(): Observable<any> {
+    return this.http.get(this.urlApiTypeRoom)
+  }
+
+  public getTypeRoomById(typeroomId: number): Observable<any> {
+    const url = `${this.urlApiTypeRoom}${typeroomId}/`;
+    return this.http.get(url);
+  }
+
 
 }
