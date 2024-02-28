@@ -1,0 +1,97 @@
+:root {
+    --white: #fff;
+    --black: #333333;
+    --green: #5eb319;
+    --gray: #707070;
+    --border: .1rem solid rgba(84, 134, 80, 0.7);
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+
+
+.div_habitacion {
+    margin: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    width: 450px;
+    padding: 50px;
+    border: 1px solid #ccc;	
+}
+
+.div_habitacion .title {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.div_habitacion .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #5eb319;
+    border-radius: 25px;
+}
+
+.div_habitacion .input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+
+.input-field input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+
+}
+
+.input-field input:is(:focus, :valid) {
+    border-bottom-color: #5eb319;
+}
+
+.input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid)~i {
+    color: #5eb319;
+}
+
+.input-field i.icon {
+    left: 0;
+}
+
+.input-field i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+

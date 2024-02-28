@@ -4,6 +4,7 @@ import { UserSelectComponent } from './user-select/user-select.component';
 import { UserInsertComponent } from './user-insert/user-insert.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { RoomSelectComponent } from './room-select/room-select.component';
+import { RoomSelectClientComponent } from './room-select-client/room-select-client.component'; 
 import { RoomInsertComponent } from './room-insert/room-insert.component';
 import { RoomUpdateComponent } from './room-update/room-update.component';
 import { ReservationSelectComponent } from './reservation-select/reservation-select.component';
@@ -32,6 +33,8 @@ const routes: Routes = [
   {path: 'insertar-usuario', component: UserInsertComponent},
   {path: 'actualizar-usuario/:id', component: UserUpdateComponent},
   {path: 'lista-habitaciones', component: RoomSelectComponent},
+  {path: 'habitaciones', component: RoomSelectClientComponent},
+  {path: 'lista-habitacione/:id', component: RoomSelectComponent},
   {path: 'insertar-habitacion', component: RoomInsertComponent},
   {path: 'actualizar-habitacion/:id', component: RoomUpdateComponent},
   {path: 'lista-reservas', component: ReservationSelectComponent},

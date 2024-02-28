@@ -1,29 +1,41 @@
+<div>
+    <app-header></app-header>
+</div>
+
 <div class="signup">
     <span class="title">Actualizar Habitación</span>
 
     <form (ngSubmit)="actualizarHabitacion()">
         <div class="input-field">
-            <input [(ngModel)]="habitacion.num_habitacion" type="text" name="num_habitacion"
+            <input [(ngModel)]="habitacion.NROHABITACION" type="text" name="num_habitacion"
                 placeholder="Ingrese el número de habitación" required />
         </div>
 
-        <select class="input-select" [(ngModel)]="habitacion.id_estadoHab" name="id_estadoHab" required>
+        <select class="input-select" [(ngModel)]="habitacion.ESTADO_HABITACION_IDESTADOHABITACION" name="Status Room" required>
             <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
-            <option *ngFor="let estado of estadoHabitacion" [value]="estado.id">{{estado.nombre}}</option>
+            <option *ngFor="let tipoEstado of Statusrooms" [value]="tipoEstado.IDESTADOHABITACION">
+                {{ tipoEstado.TIPO_ESTADO}}
+              </option>
         </select>
 
-        <select class="input-select" [(ngModel)]="habitacion.id_tipoHab" name="id_tipoHab" required>
+        <select class="input-select" [(ngModel)]="habitacion.TIPO_HABITACION_IDTIPOHABITACION" name="Type Room" required>
             <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
-            <option *ngFor="let tipo of tipoHabitacion" value="{{tipo.id}}"> {{tipo.nombre}} </option>
+            <option *ngFor="let tipohabitacion of Typerooms" [value]="tipohabitacion.IDTIPOHABITACION">
+                {{ tipohabitacion.TIPO_HABITACION}}
+              </option>
         </select>
 
         <div class="botones">
             <div class="input-field button">
-                <input type="submit" value="Registrar" />
+                <input type="submit" value="Actualizar"/>
             </div>
             <div class="input-field button">
-                <a routerLink="/inicio" >Volver</a>
+                <a routerLink="/lista-habitaciones" >Volver</a>
             </div>
         </div>
     </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
 </div>

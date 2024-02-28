@@ -17,17 +17,19 @@
     <tbody>
   <tr *ngFor="let room of rooms">
     <td class="table-light" scope="row">
-      <a href="room_inventory/{{ room.NROHABITACION  }}"></a>
+      <a href="room_inventory/{{room.NROHABITACION}}"></a>
     </td>
     <td class="table-light">{{ room.NROHABITACION }}</td>
-    <td class="table-light">{{ room.ESTADO_HABITACION_IDESTADOHABITACION }}</td>
-    <td class="table-light">{{ room.TIPO_HABITACION_IDTIPOHABITACION}}</td>
+    <td class="table-light">{{ room.tipoEstado }}</td>
+    <td class="table-light">{{ room.tipoHabitacion}}</td>
     <td class="btns">
-      <button (click)="redireccionarActualizar(room.num_habitacion)" type="button" class="btn btn-warning">Actualizar</button>
-      <button (click)="eliminarHabitacion(room.num_habitacion)" type="button" class="btn btn-danger">Eliminar</button>
+      <button (click)="redireccionarActualizar(room.NROHABITACION)" type="button" class="btn btn-warning">Actualizar</button>
+      <button (click)="eliminarHabitacion(room.NROHABITACION)" type="button" class="btn btn-danger">Eliminar</button>
     </td>
   </tr>
 </tbody>
 
   </table>
+  <a routerLink="/insertar-habitacion">Adicionar habitación</a>
+  
 </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
-import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-room-select',
@@ -10,11 +9,6 @@ import { HomeComponent } from '../home/home.component';
 })
 export class RoomSelectComponent implements OnInit {
 
-  tipoHabitacion = [
-    { id: 1, nombre: 'Estándar' },
-    { id: 3, nombre: 'Doble' },
-    { id: 2, nombre: 'Suite' },
-  ];
 
   rooms: any[] = [];
 
@@ -23,12 +17,29 @@ export class RoomSelectComponent implements OnInit {
   ngOnInit(): void {
     this.roomService.getRooms().subscribe((data) => {
       this.rooms = data;
-    })
+
+      // Obtener el tipo de estado para cada habitación
+      this.rooms.forEach((room) => {
+        this.roomService.getStatusRoomById(room.ESTADO_HABITACION_IDESTADOHABITACION).subscribe((statusData) => {
+          room.tipoEstado = statusData.TIPO_ESTADO;
+        });
+      });
+
+    // Obtener el tipo de habitación para cada habitación 
+    this.rooms.forEach((room) => {
+      this.roomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData)=>{
+      room.tipoHabitacion = statusData.TIPO_HABITACION
+      });
+      });
+
+     });
   }
 
   redireccionarActualizar(roomId: number): void {
     this.router.navigate(['/actualizar-habitacion', roomId]);
   }
+
+
 
   eliminarHabitacion(roomId: number): void {
     if (confirm('¿Está seguro de eliminar la habitación?')) {

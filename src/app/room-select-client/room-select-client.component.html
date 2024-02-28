@@ -1,0 +1,31 @@
+<div>
+    <app-header></app-header>
+</div>
+
+
+
+<div class="div_habitacion">
+    <div class="card" style="width: 18rem;" *ngFor="let room of rooms">
+        <img *ngFor="let tipo of Typerooms" [src]="tipo.FOTO" class="card-img-top" alt="Room Image">
+      <div class="card-body">
+        <h5 class="card-title">{{ room.name }}</h5>
+        <p class="card-text">{{ room.description }}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Habitación Nro: {{ room.NROHABITACION }}</li>
+        <li *ngFor="let tipo of Typerooms" class="list-group-item">Precio: {{ tipo.PRECIOXNOCHE }}</li>
+        <li class="list-group-item title">Capacidad:</li>
+        <li *ngFor="let tipo of Typerooms" class="list-group-item">Adultos: {{ tipo.CANTIDAD_ADULTOS }}</li>
+        <li *ngFor="let tipo of Typerooms" class="list-group-item">Niños: {{ tipo.CANTIDAD_NINOS}}</li>
+      </ul>
+      <div class="card-body">
+        <a [routerLink]="['/room-details', room.id]" class="card-link">Details</a>
+      </div> 
+    </div>
+</div>
+  
+
+ 
+<div>
+    <app-footer></app-footer>
+</div>

@@ -1,5 +1,5 @@
 <div>
-    <app-home></app-home>
+    <app-header></app-header>
 </div>
 
 <div class="signup">
@@ -7,20 +7,30 @@
 
     <form (ngSubmit)="crearNuevaHabitacion()">
         <div class="input-field">
-            <input [(ngModel)]="nuevaHabitacion.num_habitacion" type="text" name="num_habitacion"
+            <input [(ngModel)]="nuevaHabitacion.NROHABITACION" type="text" name="num_habitacion"
                 placeholder="Ingrese el número de habitación" required />
         </div>
 
-        <select class="input-select" [(ngModel)]="nuevaHabitacion.id_estadoHab" name="id_estadoHab" required>
-            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
-            <option *ngFor="let estado of estadoHabitacion" [value]="estado.id">{{estado.nombre}}</option>
-        </select>
+        <select class="input-select" [(ngModel)]="nuevaHabitacion.ESTADO_HABITACION_IDESTADOHABITACION" name="Status Room" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Estado Habitación
+            </option>
+            <option *ngFor="let tipoEstado of Statusrooms" [value]="tipoEstado.IDESTADOHABITACION">
+              {{ tipoEstado.TIPO_ESTADO}}
+            </option>
+          </select>
 
-        <select class="input-select" [(ngModel)]="nuevaHabitacion.id_tipoHab" name="id_tipoHab" required>
-            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
-            <option *ngFor="let tipo of tipoHabitacion" value="{{tipo.id}}"> {{tipo.nombre}} </option>
-        </select>
-
+        
+        
+          <select class="input-select" [(ngModel)]="nuevaHabitacion.TIPO_HABITACION_IDTIPOHABITACION" name="Type Room" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Tipo Habitación
+            </option>
+            <option *ngFor="let tipohabitacion of Typerooms" [value]="tipohabitacion.IDTIPOHABITACION">
+              {{ tipohabitacion.TIPO_HABITACION}}
+            </option>
+          </select>
+      
         <div class="botones">
             <div class="input-field button">
                 <input type="submit" value="Registrar" />
@@ -30,4 +40,8 @@
             </div>
         </div>
     </form>
+</div>
+ 
+<div>
+    <app-footer></app-footer>
 </div>
