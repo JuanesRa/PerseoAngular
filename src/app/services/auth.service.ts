@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,23 +27,19 @@ export class AuthService {
 
   logout(): Observable<any> {
     const token = this.getAuthToken();
-    alert(token)
-    if (!token) {
-      console.error('No hay token almacenado en el localStorage');
-      return throwError(() => 'No hay token almacenado en el localStorage')
-    }
 
-    localStorage.removeItem(this.authTokenKey);
+    const headers = new HttpHeaders();
+    const headersWithToken = this.attachToken(headers);
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.get(`${this.urlApi}/logout`, { headers }).pipe(
+    // Eliminar el token del servidor
+    return this.http.get(`${this.urlApi}/logout`, { headers: headersWithToken }).pipe(
       catchError(error => {
-        console.error('Error al realizar la solicitud de logout:', error);
-        return throwError(() => 'Error al realizar la solicitud de logout')
+        console.error('Error al intentar cerrar sesión:', error);
+        return throwError(() => error);
+      }),
+      // Realizar la limpieza del token almacenado en el cliente (localStorage)
+      finalize(() => {
+        localStorage.removeItem(this.authTokenKey);
       })
     );
   }
@@ -56,13 +52,13 @@ export class AuthService {
     return localStorage.getItem(this.authTokenKey);
   }
 
-    // Por ejemplo, un método para adjuntar el token a las solicitudes
-    attachToken(headers: HttpHeaders): HttpHeaders {
-      const authToken = this.getAuthToken();
-      if (authToken) {
-        return headers.set('Authorization', `Token ${authToken}`);
-      }
-      return headers;
+  // Método para adjuntar el token a las solicitudes
+  attachToken(headers: HttpHeaders): HttpHeaders {
+    const authToken = this.getAuthToken();
+    if (authToken) {
+      return headers.set('Authorization', `Token ${authToken}`);
     }
+    return headers;
+  }
 
 }

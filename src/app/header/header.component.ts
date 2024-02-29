@@ -36,8 +36,15 @@ export class HeaderComponent implements OnInit {
 
 
   CerrarSesion(): void {
-    this.authService.logout();
-    this.router.navigate(['/']);
-    };
-
+    this.authService.logout().subscribe({
+      next: (response) => {
+        console.log('Sesión cerrada exitosamente');
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Error al cerrar sesión:', error);
+      },
+    }
+    );
   }
+}
