@@ -6,7 +6,7 @@
 
 <div class="div_habitacion">
     <div class="card" style="width: 18rem;" *ngFor="let room of rooms">
-        <img *ngFor="let tipo of Typerooms" [src]="tipo.FOTO" class="card-img-top" alt="Room Image">
+        <img src="{{room.foto}}" class="card-img-top" alt="Room Image">
       <div class="card-body">
         <h5 class="card-title">{{ room.name }}</h5>
         <p class="card-text">{{ room.description }}</p>

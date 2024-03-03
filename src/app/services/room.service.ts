@@ -57,5 +57,10 @@ private urlApiTypeRoom = 'http://127.0.0.1:8000/room/tipohab/';
     return this.http.get(url);
   }
 
+  public getPhotoRoomById(photoroomId: number): Observable<any> {
+    const url = `${this.urlApiTypeRoom}${photoroomId}/`;
+    return this.http.get(url);
+  }
+
 
 }
