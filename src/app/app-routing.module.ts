@@ -25,7 +25,9 @@ import { InvoiceUpdateComponent } from './invoice-update/invoice-update.componen
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-
+import { TypeRoomSelectComponent } from './typeroom-select/type-room-select.component';
+import { TyperoomUpdateComponent } from './typeroom-update/typeroom-update.component'; 
+import { TyperoomInsertComponent } from './typeroom-insert/typeroom-insert.component';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'inicio', component: HomeComponent},
@@ -53,7 +55,11 @@ const routes: Routes = [
   {path: 'insertar-factura', component: InvoiceInsertComponent},
   {path: 'actualizar-factura/:id', component: InvoiceUpdateComponent},
   {path: 'registro', component: SignupComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'lista-tipohabitaciones', component: TypeRoomSelectComponent},
+  {path: 'actualizar-tipohabitaciones/:id', component: TyperoomUpdateComponent},
+  {path: 'insertar-tipo-habitacion', component: TyperoomInsertComponent},
+
 ];
 
 @NgModule({

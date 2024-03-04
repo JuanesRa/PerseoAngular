@@ -32,6 +32,10 @@ import { SignupComponent } from './signup/signup.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { RoomSelectClientComponent } from './room-select-client/room-select-client.component';
+import { TypeRoomSelectComponent } from './typeroom-select/type-room-select.component';
+import { TyperoomUpdateComponent } from './typeroom-update/typeroom-update.component';
+import { TyperoomInsertComponent } from './typeroom-insert/typeroom-insert.component';
+
 
 @NgModule({
   declarations: [
@@ -63,6 +67,9 @@ import { RoomSelectClientComponent } from './room-select-client/room-select-clie
     HeaderComponent,
     FooterComponent,
     RoomSelectClientComponent,
+    TypeRoomSelectComponent,
+    TyperoomUpdateComponent,
+    TyperoomInsertComponent,
   ],
   imports: [
     BrowserModule,

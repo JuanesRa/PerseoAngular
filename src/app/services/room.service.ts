@@ -52,6 +52,10 @@ private urlApiTypeRoom = 'http://127.0.0.1:8000/room/tipohab/';
     return this.http.get(this.urlApiTypeRoom)
   }
 
+  public postTypeRoom(typeroom: any):Observable<any> {
+    return this.http.post(this.urlApiTypeRoom, typeroom)
+  }
+
   public getTypeRoomById(typeroomId: number): Observable<any> {
     const url = `${this.urlApiTypeRoom}${typeroomId}/`;
     return this.http.get(url);
@@ -60,6 +64,14 @@ private urlApiTypeRoom = 'http://127.0.0.1:8000/room/tipohab/';
   public getPhotoRoomById(photoroomId: number): Observable<any> {
     const url = `${this.urlApiTypeRoom}${photoroomId}/`;
     return this.http.get(url);
+  }
+  public putTypeRoom(TyperoomId: number, updatedTypeRoomData: any):Observable<any> {
+    const url = `${this.urlApiTypeRoom}${TyperoomId}/`;
+    return this.http.put<any>(url, updatedTypeRoomData)
+  }
+  public deleteTypeRoom(roomId: number): Observable<any> {
+    const url = `${this.urlApiTypeRoom}${roomId}/`;
+    return this.http.delete<any>(url);
   }
 
 

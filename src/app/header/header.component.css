@@ -93,3 +93,12 @@ section{
    display: flex;
    flex-direction: column;
 }
+
+
+.submenu {
+   display: none;
+}
+
+.dropdown:hover .submenu {
+   display: block;
+}

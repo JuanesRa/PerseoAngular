@@ -1,0 +1,54 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Actualizar Tipo Habitación</span>
+
+    <form (ngSubmit)="actualizarTipoHabitacion()">
+        <div class="input-field">
+            <input [(ngModel)]="tipohabitacion.TIPO_HABITACION" type="text" name="tipo_hab"
+                placeholder="Ingrese el número de habitación" required />
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="tipohabitacion.DESCRIPCION" type="text" name="descripcion"
+                placeholder="Ingrese el número de habitación" required />
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="tipohabitacion.PRECIOXNOCHE" type="text" name="precioxnoche"
+                placeholder="Ingrese el número de habitación" required />
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="tipohabitacion.CANTIDAD_ADULTOS" type="text" name="cantidad_adultos"
+                placeholder="Ingrese el número de habitación" required />
+        </div>
+        <div class="input-field">
+            <input [(ngModel)]="tipohabitacion.CANTIDAD_NINOS" type="text" name="cantidad_ninos"
+                placeholder="Ingrese el número de habitación" required />
+        </div>
+
+        
+        <div class="input-field">
+            <img *ngIf="tipohabitacion.FOTO" [src]="tipohabitacion.FOTO" alt="Imagen actual" width="40">
+            <input type="file" (change)="onFileSelected($event)" name="Farchivo" accept="image/*">
+
+        </div>
+
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Actualizar"/>
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-tipohabitaciones" >Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

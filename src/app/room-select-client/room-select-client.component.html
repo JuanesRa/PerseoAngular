@@ -8,18 +8,20 @@
     <div class="card" style="width: 18rem;" *ngFor="let room of rooms">
         <img src="{{room.foto}}" class="card-img-top" alt="Room Image">
       <div class="card-body">
-        <h5 class="card-title">{{ room.name }}</h5>
+        <h5 class="card-title">Habitación Nro: {{room.NROHABITACION }}</h5>
         <p class="card-text">{{ room.description }}</p>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Habitación Nro: {{ room.NROHABITACION }}</li>
-        <li *ngFor="let tipo of Typerooms" class="list-group-item">Precio: {{ tipo.PRECIOXNOCHE }}</li>
-        <li class="list-group-item title">Capacidad:</li>
-        <li *ngFor="let tipo of Typerooms" class="list-group-item">Adultos: {{ tipo.CANTIDAD_ADULTOS }}</li>
-        <li *ngFor="let tipo of Typerooms" class="list-group-item">Niños: {{ tipo.CANTIDAD_NINOS}}</li>
+        <li class="list-group-item"></li>
+        <li class="list-group-item">{{room.tipo}} </li>
+        <li class="list-group-item">Descripción:{{room.descripcion}} </li>
+        <li class="list-group-item">Precio:{{room.precio}} </li>
+        <li class="list-group-item">Capacidad</li>
+        <li class="list-group-item">Adultos: {{room.cap_adultos}}</li>
+        <li class="list-group-item">Niños: {{room.cap_ninos}}</li>
       </ul>
       <div class="card-body">
-        <a [routerLink]="['/room-details', room.id]" class="card-link">Details</a>
+        <button type="button" class="btn btn-success">Reservar</button>
       </div> 
     </div>
 </div>

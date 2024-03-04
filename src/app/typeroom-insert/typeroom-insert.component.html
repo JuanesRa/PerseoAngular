@@ -1,0 +1,81 @@
+<div>
+  <app-header></app-header>
+</div>
+
+<div class="signup">
+  <span class="title">Crear Tipo Habitación</span>
+
+  <form (ngSubmit)="crearNuevoTipoHabitacion()">
+    <div class="input-field">
+      <input
+        [(ngModel)]="nuevatipoHabitacion.TIPO_HABITACION"
+        type="text"
+        name="tipo_hab"
+        placeholder="Ingrese tipo  de habitación"
+        required
+      />
+    </div>
+
+    <div class="input-field">
+      <input
+        [(ngModel)]="nuevatipoHabitacion.DESCRIPCION"
+        type="text"
+        name="descripcion"
+        placeholder="Ingrese descripcion"
+        required
+      />
+    </div>
+
+    <div class="input-field">
+      <input
+        [(ngModel)]="nuevatipoHabitacion.PRECIOXNOCHE"
+        type="number"
+        name="precioxnoche"
+        placeholder="Ingrese Precio"
+        required
+      />
+    </div>
+
+    <div class="input-field">
+      <input
+        [(ngModel)]="nuevatipoHabitacion.CANTIDAD_ADULTOS"
+        type="number"
+        name="cant_adultos"
+        placeholder="Capacidad de adultos"
+        required
+      />
+    </div>
+
+    <div class="input-field">
+      <input
+        [(ngModel)]="nuevatipoHabitacion.CANTIDAD_NINOS"
+        type="number"
+        name="cant_ninos"
+        placeholder="Capacidad de niños"
+        required
+      />
+    </div>
+
+    <div class="input-field">
+      <input
+        type="file"
+        (change)="onFileSelected($event)"
+        name="Farchivo"
+        accept="image/*"
+      />
+    </div>
+
+    <div class="botones">
+      <div class="input-field button">
+        <input type="submit" value="Registrar" />
+      </div>
+      <div class="input-field button">
+        <a routerLink="/lista-tipohabitaciones">Volver</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div>
+  <app-footer></app-footer>
+</div>

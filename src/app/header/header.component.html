@@ -26,12 +26,20 @@
     <nav class="navbar">
       <a routerLink="/inicio">Inicio</a>
       <a *ngIf="isAdmin" routerLink="">Usuarios</a>
-      <a *ngIf="isCliente || isUndefined || isRecepcionista"  routerLink="/habitaciones">Habitaciones</a>
-      <a *ngIf="isAdmin" routerLink="/lista-habitaciones">Habitaciones</a>
+      <a *ngIf="isCliente || isUndefined || isRecepcionista" routerLink="/habitaciones">Habitaciones</a>
+      <li *ngIf="isAdmin" class="dropdown">
+          Modulo Habitación
+          <ul class="submenu">
+              <a *ngIf="isAdmin" routerLink="/lista-habitaciones"> Habitación </a>
+              <a *ngIf="isAdmin" routerLink="/lista-tipohabitaciones" class="menu">  Tipo Habitación </a>
+              <a class="menu"> Estado Habitación </a>
+          </ul>
+      </li>
       <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Reservaciones</a>
       <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Servicios</a>
       <a *ngIf="isAdmin || isCliente || isRecepcionista" routerLink="">Factura</a>
       <a *ngIf="isAdmin" routerLink="">Inventario</a>
-   </nav>
+  </nav>
+  
    
 </section>
