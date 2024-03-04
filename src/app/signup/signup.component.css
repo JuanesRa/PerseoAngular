@@ -217,6 +217,11 @@ body {
 }
 
 
+.error-message {
+    color: red;
+    font-size: 11px;
+}
+
 
 .signup .button a {
     position: absolute;

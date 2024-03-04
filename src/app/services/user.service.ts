@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   private urlApi = 'http://127.0.0.1:8000/user/usuarios/';
+  private urlApiTipoDocumento = 'http://127.0.0.1:8000/usuarios/tipodoc/'
 
   constructor(private http: HttpClient) { }
 
@@ -32,6 +33,17 @@ export class UserService {
   public deleteUser(userId: number): Observable<any> {
     const url = `${this.urlApi}${userId}/`;
     return this.http.delete<any>(url);
+  }
+
+  // Tipo documento
+
+  public getTipoDocumento(): Observable<any> {
+    return this.http.get(this.urlApiTipoDocumento)
+  }
+
+  public getTipoDocumentoById(tipoDocId: number): Observable<any> {
+    const url = `${this.urlApiTipoDocumento}${tipoDocId}/`;
+    return this.http.get(url)
   }
 
 }
