@@ -37,6 +37,13 @@
       </li>
       <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Reservaciones</a>
       <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Servicios</a>
+      <li *ngIf="isAdmin  || isUndefined" class="dropdown">
+        Modulo Servicios
+        <ul class="submenu">
+            <a routerLink="/lista-servicios"  class="opcion"> Servicios </a>
+            <a routerLink="/lista-tiposervicios" class="opcion">  Tipo Servicios </a>
+        </ul>
+    </li>
       <a *ngIf="isAdmin || isCliente || isRecepcionista" routerLink="">Factura</a>
       <a *ngIf="isAdmin" routerLink="">Inventario</a>
   </nav>

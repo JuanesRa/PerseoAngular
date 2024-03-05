@@ -1,0 +1,31 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Crear tipo de servicio</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="crearTipoServicio()">
+        <div class="input-field">
+            <input type="text" [formControl]="$any(formulario).controls['TIPO_SERVICIO']" name="TIPO_SERVICIO"
+                placeholder="Ingrese el tipo de servicio" required maxlength="30" />
+            <i class="uil uil-user"></i>
+        </div>
+
+        <div *ngIf="formulario.get('TIPO_SERVICIO')?.hasError('required') && formulario.get('TIPO_SERVICIO')?.touched"
+            class="error-message">
+            El campo es obligatorio.
+        </div>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

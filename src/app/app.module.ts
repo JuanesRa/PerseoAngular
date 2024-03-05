@@ -38,6 +38,12 @@ import { TyperoomInsertComponent } from './room-type-insert/typeroom-insert.comp
 import { StatusroomSelectComponent } from './room-status-select/statusroom-select.component';
 import { RoomStatusInsertComponent } from './room-status-insert/room-status-insert.component';
 import { RoomStatusUpdateComponent } from './room-status-update/room-status-update.component';
+import { ServiceTypeInsertComponent } from './service-type-insert/service-type-insert.component';
+import { ServiceTypeSelectComponent } from './service-type-select/service-type-select.component';
+import { ServiceTypeUpdateComponent } from './service-type-update/service-type-update.component';
+import { ServiceInsertComponent } from './service-insert/service-insert.component';
+import { ServiceSelectComponent } from './service-select/service-select.component';
+import { ServiceUpdateComponent } from './service-update/service-update.component';
 
 
 @NgModule({
@@ -76,6 +82,12 @@ import { RoomStatusUpdateComponent } from './room-status-update/room-status-upda
     StatusroomSelectComponent,
     RoomStatusInsertComponent,
     RoomStatusUpdateComponent,
+    ServiceTypeInsertComponent,
+    ServiceTypeSelectComponent,
+    ServiceTypeUpdateComponent,
+    ServiceInsertComponent,
+    ServiceSelectComponent,
+    ServiceUpdateComponent,
   ],
   imports: [
     BrowserModule,
