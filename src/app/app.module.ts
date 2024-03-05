@@ -32,9 +32,12 @@ import { SignupComponent } from './signup/signup.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { RoomSelectClientComponent } from './room-select-client/room-select-client.component';
-import { TypeRoomSelectComponent } from './typeroom-select/type-room-select.component';
-import { TyperoomUpdateComponent } from './typeroom-update/typeroom-update.component';
-import { TyperoomInsertComponent } from './typeroom-insert/typeroom-insert.component';
+import { TypeRoomSelectComponent } from './room-type-select/type-room-select.component';
+import { TyperoomUpdateComponent } from './room-type-update/typeroom-update.component';
+import { TyperoomInsertComponent } from './room-type-insert/typeroom-insert.component';
+import { StatusroomSelectComponent } from './room-status-select/statusroom-select.component';
+import { RoomStatusInsertComponent } from './room-status-insert/room-status-insert.component';
+import { RoomStatusUpdateComponent } from './room-status-update/room-status-update.component';
 
 
 @NgModule({
@@ -70,6 +73,9 @@ import { TyperoomInsertComponent } from './typeroom-insert/typeroom-insert.compo
     TypeRoomSelectComponent,
     TyperoomUpdateComponent,
     TyperoomInsertComponent,
+    StatusroomSelectComponent,
+    RoomStatusInsertComponent,
+    RoomStatusUpdateComponent,
   ],
   imports: [
     BrowserModule,

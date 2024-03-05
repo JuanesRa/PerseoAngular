@@ -25,20 +25,32 @@ import { InvoiceUpdateComponent } from './invoice-update/invoice-update.componen
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-import { TypeRoomSelectComponent } from './typeroom-select/type-room-select.component';
-import { TyperoomUpdateComponent } from './typeroom-update/typeroom-update.component'; 
-import { TyperoomInsertComponent } from './typeroom-insert/typeroom-insert.component';
+import { TypeRoomSelectComponent } from './room-type-select/type-room-select.component';
+import { TyperoomUpdateComponent } from './room-type-update/typeroom-update.component'; 
+import { TyperoomInsertComponent } from './room-type-insert/typeroom-insert.component';
+import { StatusroomSelectComponent } from './room-status-select/statusroom-select.component';
+import { RoomStatusInsertComponent } from './room-status-insert/room-status-insert.component';
+import { RoomStatusUpdateComponent } from './room-status-update/room-status-update.component';
+
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'inicio', component: HomeComponent},
   {path: 'lista-usuarios', component: UserSelectComponent},
   {path: 'insertar-usuario', component: UserInsertComponent},
   {path: 'actualizar-usuario/:id', component: UserUpdateComponent},
+  
   {path: 'lista-habitaciones', component: RoomSelectComponent},
   {path: 'habitaciones', component: RoomSelectClientComponent},
   {path: 'lista-habitacione/:id', component: RoomSelectComponent},
   {path: 'insertar-habitacion', component: RoomInsertComponent},
   {path: 'actualizar-habitacion/:id', component: RoomUpdateComponent},
+  {path: 'lista-tipohabitaciones', component: TypeRoomSelectComponent},
+  {path: 'actualizar-tipohabitaciones/:id', component: TyperoomUpdateComponent},
+  {path: 'insertar-tipo-habitacion', component: TyperoomInsertComponent},
+  {path: 'lista-estadohabitaciones', component: StatusroomSelectComponent},
+  {path: 'insertar-estado-habitacion', component: RoomStatusInsertComponent},
+  {path: 'actualizar-estado/:id', component: RoomStatusUpdateComponent},
+  
   {path: 'lista-reservas', component: ReservationSelectComponent},
   {path: 'insertar-reserva', component: ReservationInsertComponent},
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
@@ -56,9 +68,6 @@ const routes: Routes = [
   {path: 'actualizar-factura/:id', component: InvoiceUpdateComponent},
   {path: 'registro', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'lista-tipohabitaciones', component: TypeRoomSelectComponent},
-  {path: 'actualizar-tipohabitaciones/:id', component: TyperoomUpdateComponent},
-  {path: 'insertar-tipo-habitacion', component: TyperoomInsertComponent},
 
 ];
 

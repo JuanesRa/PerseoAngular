@@ -1,0 +1,32 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Actualizar Tipo Habitación</span>
+
+    <form (ngSubmit)="actualizarEstadoHabitacion()">
+        <div class="input-field">
+            <input [(ngModel)]="estadoHabitacion.TIPO_ESTADO" type="text" name="tipo_hab"
+                placeholder="Ingrese estado habitación" required />
+        </div>
+
+        <div class="input-field">
+            <input [(ngModel)]="estadoHabitacion.DESCRIPCION" type="text" name="descripcion"
+                placeholder="Ingrese descripción" required />
+        </div>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Actualizar"/>
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-estadohabitaciones" >Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

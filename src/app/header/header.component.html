@@ -27,12 +27,12 @@
       <a routerLink="/inicio">Inicio</a>
       <a *ngIf="isAdmin" routerLink="">Usuarios</a>
       <a *ngIf="isCliente || isUndefined || isRecepcionista" routerLink="/habitaciones">Habitaciones</a>
-      <li *ngIf="isAdmin" class="dropdown">
+      <li *ngIf="isAdmin  || isUndefined" class="dropdown">
           Modulo Habitación
           <ul class="submenu">
-              <a *ngIf="isAdmin" routerLink="/lista-habitaciones"> Habitación </a>
-              <a *ngIf="isAdmin" routerLink="/lista-tipohabitaciones" class="menu">  Tipo Habitación </a>
-              <a class="menu"> Estado Habitación </a>
+              <a routerLink="/lista-habitaciones"  class="opcion"> Habitación </a>
+              <a routerLink="/lista-tipohabitaciones" class="opcion">  Tipo Habitación </a>
+              <a routerLink="/lista-estadohabitaciones" class="opcion"> Estado Habitación </a>
           </ul>
       </li>
       <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Reservaciones</a>

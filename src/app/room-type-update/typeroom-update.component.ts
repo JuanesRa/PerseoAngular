@@ -63,10 +63,7 @@ export class TyperoomUpdateComponent {
       // Si se ha seleccionado una nueva imagen, adjúntala al FormData
       if (nuevaImagenSeleccionada && this.selectedFile) {
         formData.append('FOTO', this.selectedFile);
-      } else {
-        // Si no se ha seleccionado una nueva imagen, adjunta la imagen actual al FormData
-        formData.append('FOTO', this.tipohabitacion.FOTO);
-      }
+      };
   
       // Envía la solicitud para actualizar el tipo de habitación
       this.roomService.putTypeRoom(roomId, formData).subscribe(() => {
