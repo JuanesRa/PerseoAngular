@@ -175,6 +175,12 @@ body {
 
 }
 
+.error-message {
+    color: red;
+    font-size: 11px;
+}
+
+
 .botones {
     display: flex;
     justify-content: space-between;

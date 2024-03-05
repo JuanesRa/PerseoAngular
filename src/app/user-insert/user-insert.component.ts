@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { passwordValidator } from '../validators/password_validator';
+import { UserService } from '../services/user.service';
+
 
 @Component({
   selector: 'app-user-insert',
@@ -9,42 +13,83 @@ import { AuthService } from '../services/auth.service';
 })
 export class UserInsertComponent {
 
-  tiposUsuario = [
-    { id: 1, nombre: 'Administrador' },
-    { id: 2, nombre: 'Recepcionista' },
-    { id: 3, nombre: 'Cliente' }
-  ];
+  formulario: FormGroup;
 
-  tiposDocumento = [
-    { id: 1, nombre: 'Cédula de ciudadanía' },
-    { id: 3, nombre: 'Cédula de extranjería' },
-    { id: 2, nombre: 'Pasaporte' },
-  ];
+  TiposUsuarios: any[] = [];
+  TiposDocumento: any[] = [];
 
-  users: any[] = [];
-  nuevoUsuario: any = {
-    NRODOCUMENTO: '',
-    NOMBRE: '',
-    APELLIDO: '',
-    email: '',
-    username: '',
-    TELEFONO: '',
-    password: '',
-    TIPO_DOCUMENTO_IDTIPODOCUMENTO: null,
-    TIPO_PERSONA_IDTIPOPERSONA: 3,
-    ESTADO_USUARIO_IDESTADO: 1,
-  };
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private userService: UserService, public fb: FormBuilder) {
+    this.formulario = this.fb.group({
+      NRODOCUMENTO: ['', [Validators.required, Validators.maxLength(10)]],
+      NOMBRE: ['', [Validators.required, Validators.maxLength(70)]],
+      APELLIDO: ['', [Validators.required, Validators.maxLength(70)]],
+      email: ['', [Validators.required, Validators.email,  Validators.maxLength(100)],],
+      username: ['', [Validators.required, Validators.maxLength(100)]],
+      TELEFONO: ['', [Validators.required, Validators.maxLength(15)]],
+      password: ['', [Validators.required, passwordValidator()]],
+      confirmPassword: ['', Validators.required],
+      TIPO_DOCUMENTO_IDTIPODOCUMENTO: [null, [Validators.required]],
+      TIPO_PERSONA_IDTIPOPERSONA: [null, [Validators.required]],
+      ESTADO_USUARIO_IDESTADO: [1, [Validators.required]],
+    }, {
+      validators: this.passwordMatchValidator // Aquí asigna el validador correctamente
+    });
+
+
+    this.formulario?.get('email')?.valueChanges.subscribe(email => {
+      this.formulario?.get('username')?.setValue(email);
+
+    });
+  }
+
+  
+  ngOnInit(): void {
+    this.userService.getTipoDocumento().subscribe((data) => {
+      this.TiposDocumento = data;
+    })
+
+    this.userService.getTipoUsuarios().subscribe((data) => { 
+      this.TiposUsuarios = data;
+    })
+  }
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+
+    if (password !== confirmPassword) {
+      formGroup.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+    } else {
+      formGroup.get('confirmPassword')?.setErrors(null);
+    }
+  }
+
+  public inputValidator(event: any) {
+    const pattern = /^[a-zA-Z ]*$/;
+    const inputChar = event.key;
+    
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
 
   crearNuevoUsuario(): void {
+    if (this.formulario.valid) {
+      if (!this.formulario.hasError('passwordMismatch')) {
+        this.authService.signup(this.formulario.value).subscribe((data) => {
+          console.log('Usuario creado:', data);
+          alert('Registro exitoso');
+          this.router.navigate(['/login'])
+        });
+      } else {
+        alert('Las contraseñas no coinciden');
+      }
+    }
+    else if (this.formulario.invalid){
+      console.log('Formulario inválido')
+      alert('Formulario inválido')
+    }
 
-    this.nuevoUsuario.username = this.nuevoUsuario.email;
-
-    this.authService.signup(this.nuevoUsuario).subscribe((data) => {
-      console.log('Usuario creado:', data);
-      alert('Registro exitoso');
-      this.router.navigate(['/login'])
-    });
   }
 
 }

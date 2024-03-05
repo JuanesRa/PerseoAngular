@@ -4,7 +4,6 @@ import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../validators/password_validator';
 import { UserService } from '../services/user.service';
-import { UserDataService } from '../services/user-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +17,7 @@ export class SignupComponent {
   users: any[] = [];
   TiposDocumento: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService, public fb: FormBuilder, private userDataService: UserDataService) {
+  constructor(private authService: AuthService, private router: Router, private userService: UserService, public fb: FormBuilder) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: ['', [Validators.required, Validators.maxLength(10)]],
       NOMBRE: ['', [Validators.required, Validators.maxLength(70)]],
@@ -59,6 +58,15 @@ export class SignupComponent {
     }
   }
 
+  public inputValidator(event: any) {
+    const pattern = /^[a-zA-Z ]*$/;
+    const inputChar = event.key;
+    
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
   crearNuevoUsuario(): void {
     if (this.formulario.valid) {
       if (!this.formulario.hasError('passwordMismatch')) {
@@ -70,6 +78,10 @@ export class SignupComponent {
       } else {
         alert('Las contraseñas no coinciden');
       }
+    }
+    else if (this.formulario.invalid){
+      console.log('Formulario inválido')
+      alert('Formulario inválido')
     }
 
   }

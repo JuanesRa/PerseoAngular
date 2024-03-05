@@ -5,65 +5,138 @@
 <div class="signup">
   <span class="title">Registro</span>
 
-  <form (ngSubmit)="crearNuevoUsuario()">
+  <form [formGroup]="formulario" (ngSubmit)="crearNuevoUsuario()">
 
-    <select class="input-select" [(ngModel)]="nuevoUsuario.TIPO_PERSONA_IDTIPOPERSONA" name="TIPO_PERSONA_IDTIPOPERSONA" required>
+    <select class="input-select" [formControl]="$any(formulario).controls['TIPO_PERSONA_IDTIPOPERSONA']"
+      name="TIPO_PERSONA_IDTIPOPERSONA" required>
       <option selected="selected" disabled="disabled">
-        Seleccione tipo de Usuario
+        Seleccione tipo de usuario
       </option>
-      <option *ngFor="let tipoUser of tiposUsuario" [value]="tipoUser.id">
-        {{ tipoUser.nombre }}
+      <option *ngFor="let tipoUsuario of TiposUsuarios" [value]="tipoUsuario.IDTIPOPERSONA">
+        {{ tipoUsuario.TIPO_PERSONA}}
       </option>
     </select>
 
-    <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.NOMBRE" name="NOMBRE" placeholder="Ingrese su nombre" required />
-      <i class="uil uil-user"></i>
+    <div
+      *ngIf="formulario.get('TIPO_PERSONA_IDTIPOPERSONA')?.hasError('required') && formulario.get('TIPO_PERSONA_IDTIPOPERSONA')?.touched"
+      class="error-message">
+      El tipo de usuario es obligatorio.
     </div>
 
     <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.APELLIDO" name="APELLIDO" placeholder="Ingrese su apellido"
-        required />
+      <input type="text" [formControl]="$any(formulario).controls['NOMBRE']" name="NOMBRE"
+        placeholder="Ingrese su nombre" required maxlength="30" (keydown)="inputValidator($event)" />
       <i class="uil uil-user"></i>
     </div>
 
-    <select class="input-select" [(ngModel)]="nuevoUsuario.TIPO_DOCUMENTO_IDTIPODOCUMENTO" name="TIPO_DOCUMENTO_IDTIPODOCUMENTO" required>
+    <div *ngIf="formulario.get('NOMBRE')?.hasError('required') && formulario.get('NOMBRE')?.touched"
+      class="error-message">
+      El nombre es obligatorio.
+    </div>
+
+    <div class="input-field">
+      <input type="text" [formControl]="$any(formulario).controls['APELLIDO']" name="APELLIDO"
+        placeholder="Ingrese su apellido" required maxlength="30" (keydown)="inputValidator($event)" />
+      <i class="uil uil-user"></i>
+    </div>
+
+    <div *ngIf="formulario.get('APELLIDO')?.hasError('required') && formulario.get('APELLIDO')?.touched"
+      class="error-message">
+      El apellido es obligatorio.
+    </div>
+
+    <select class="input-select" [formControl]="$any(formulario).controls['TIPO_DOCUMENTO_IDTIPODOCUMENTO']"
+      name="TIPO_DOCUMENTO_IDTIPODOCUMENTO" required>
       <option selected="selected" disabled="disabled">
         Seleccione tipo de documento
       </option>
-      <option *ngFor="let tipoDocumento of tiposDocumento" [value]="tipoDocumento.id">
-        {{ tipoDocumento.nombre }}
+      <option *ngFor="let tipoDocumento of TiposDocumento" [value]="tipoDocumento.IDTIPODOCUMENTO">
+        {{ tipoDocumento.TIPO_DOCUMENTO }}
       </option>
     </select>
 
+    <div
+      *ngIf="formulario.get('TIPO_DOCUMENTO_IDTIPODOCUMENTO')?.hasError('required') && formulario.get('TIPO_DOCUMENTO_IDTIPODOCUMENTO')?.touched"
+      class="error-message">
+      El tipo de documento es obligatorio.
+    </div>
+
     <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.NRODOCUMENTO" name="NRODOCUMENTO" placeholder="Ingrese su documento"
-        required />
+      <input type="number" [formControl]="$any(formulario).controls['NRODOCUMENTO']" name="NRODOCUMENTO"
+        placeholder="Ingrese su documento" required
+        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+        maxlength="10" />
       <i class="fa-solid fa-id-card"></i>
     </div>
 
+    <div *ngIf="formulario.get('NRODOCUMENTO')?.hasError('required') && formulario.get('NRODOCUMENTO')?.touched"
+      class="error-message">
+      El documento es obligatorio.
+    </div>
+
     <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.email" name="email" placeholder="Ingrese su email" required />
+      <input type="text" [formControl]="$any(formulario).controls['email']" name="email" placeholder="Ingrese su email"
+        required maxlength="50" />
       <i class="uil uil-envelope icon"></i>
     </div>
 
-    <div class="input-field">
-      <input type="text" [(ngModel)]="nuevoUsuario.TELEFONO" name="TELEFONO" placeholder="Ingrese su telefono"
-        required />
-      <i class="fa-sharp fa-solid fa-phone"></i>
+    <div *ngIf="formulario.get('email')?.hasError('required') && formulario.get('email')?.touched"
+      class="error-message">
+      El correo electrónico es obligatorio.
+    </div>
+
+    <div *ngIf="formulario.get('email')?.errors?.['email'] && formulario.get('email')?.touched" class="error-message">
+      El correo electrónico no es válido.
     </div>
 
     <div class="input-field">
-      <input type="password" [(ngModel)]="nuevoUsuario.password" name="password" class="password"
-        placeholder="Ingrese su contraseña" required />
+      <input type="number" [formControl]="$any(formulario).controls['TELEFONO']" name="TELEFONO"
+        placeholder="Ingrese su telefono" required
+        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+        maxlength="10" />
+      <i class="fa-sharp fa-solid fa-phone"></i>
+    </div>
+
+    <div *ngIf="formulario.get('TELEFONO')?.hasError('required') && formulario.get('TELEFONO')?.touched"
+      class="error-message">
+      El número telefónico es obligatorio.
+    </div>
+
+    <div class="input-field">
+      <input type="text" formControlName="password" class="password" placeholder="Ingrese su contraseña" required />
       <i class="uil uil-lock icon"></i>
       <i class="uil uil-eye-slash showHidePw"></i>
+    </div>
+
+    <div *ngIf="formulario.get('password')?.hasError('invalidPassword') && formulario.get('password')?.touched"
+      class="error-message">
+      La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un
+      carácter especial.
+    </div>
+
+    <div class="input-field">
+      <input type="text" formControlName="confirmPassword" class="password" placeholder="Confirme su contraseña"
+        required />
+      <i class="uil uil-lock icon"></i>
+      <i class="uil uil-eye-slash showHidePw"></i>
+    </div>
+
+    <div
+      *ngIf="formulario.get('confirmPassword')?.errors?.['passwordMismatch'] || (formulario.hasError('passwordMismatch') && formulario.get('confirmPassword')?.touched)"
+      class="error-message">
+      Las contraseñas no coinciden.
     </div>
 
     <div class="botones">
       <div class="input-field button">
         <input type="submit" value="Registrate" />
       </div>
+    </div>
+
+    <div class="login-signup">
+      <span class="text">¿Ya tienes una cuenta?
+        <a routerLink="/login" class="text signup-link">Inicia Sesión</a>
+      </span>
     </div>
   </form>
 </div>

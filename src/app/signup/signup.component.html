@@ -8,7 +8,7 @@
   <form [formGroup]="formulario" (ngSubmit)="crearNuevoUsuario()">
     <div class="input-field">
       <input type="text" [formControl]="$any(formulario).controls['NOMBRE']" name="NOMBRE"
-        placeholder="Ingrese su nombre" required maxlength="30" />
+        placeholder="Ingrese su nombre" required maxlength="30" (keydown)="inputValidator($event)" />
       <i class="uil uil-user"></i>
     </div>
 
@@ -19,7 +19,7 @@
 
     <div class="input-field">
       <input type="text" [formControl]="$any(formulario).controls['APELLIDO']" name="APELLIDO"
-        placeholder="Ingrese su apellido" required maxlength="30" />
+        placeholder="Ingrese su apellido" required maxlength="30" (keydown)="inputValidator($event)" />
       <i class="uil uil-user"></i>
     </div>
 
@@ -66,6 +66,10 @@
     <div *ngIf="formulario.get('email')?.hasError('required') && formulario.get('email')?.touched"
       class="error-message">
       El correo electrónico es obligatorio.
+    </div>
+
+    <div *ngIf="formulario.get('email')?.errors?.['email'] && formulario.get('email')?.touched" class="error-message">
+      El correo electrónico no es válido.
     </div>
 
     <div class="input-field">
