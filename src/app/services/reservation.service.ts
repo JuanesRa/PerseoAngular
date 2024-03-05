@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class ReservationService {
 
   private urlApi = 'http://127.0.0.1:8000/reservation/reserva/';
+  private urlApiStatusReservation = 'http://127.0.0.1:8000/reservation/estadoreserva/';
 
   constructor(private http: HttpClient) { }
 
@@ -32,6 +33,12 @@ export class ReservationService {
   public deleteReserva(reservaId: number): Observable<any> {
     const url = `${this.urlApi}${reservaId}/`;
     return this.http.delete(url);
+  }
+
+  //Estado reserva 
+  public getStatusReservationById(statusreservationId: number): Observable<any> {
+    const url = `${this.urlApiStatusReservation}${statusreservationId}/`;
+    return this.http.get(url);
   }
 
 

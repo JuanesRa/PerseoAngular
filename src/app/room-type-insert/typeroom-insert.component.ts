@@ -42,7 +42,6 @@ export class TyperoomInsertComponent {
 
   crearNuevoTipoHabitacion(): void {
     const formData = new FormData();
-  
     formData.append('TIPO_HABITACION', this.typeRoomForm.value.TIPO_HABITACION);
     formData.append('DESCRIPCION', this.typeRoomForm.value.DESCRIPCION);
     formData.append('PRECIOXNOCHE', this.typeRoomForm.value.PRECIOXNOCHE.toString());

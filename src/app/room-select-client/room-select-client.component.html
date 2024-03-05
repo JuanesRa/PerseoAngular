@@ -21,13 +21,11 @@
         <li class="list-group-item">Niños: {{room.cap_ninos}}</li>
       </ul>
       <div class="card-body">
-        <button type="button" class="btn btn-success">Reservar</button>
+        <button (click)="redireccionarReservar(room)" type="button" class="btn btn-success">Reservar</button>
       </div> 
     </div>
 </div>
   
-
- 
 <div>
     <app-footer></app-footer>
 </div>

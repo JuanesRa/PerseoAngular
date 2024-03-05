@@ -52,7 +52,7 @@ const routes: Routes = [
   {path: 'actualizar-estado/:id', component: RoomStatusUpdateComponent},
   
   {path: 'lista-reservas', component: ReservationSelectComponent},
-  {path: 'insertar-reserva', component: ReservationInsertComponent},
+  {path: 'insertar-reserva/:id', component: ReservationInsertComponent},
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
   {path: 'lista-inventario', component: InventorySelectComponent},
   {path: 'insertar-inventario', component: InventoryInsertComponent},

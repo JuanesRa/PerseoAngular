@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
-  private urlApi = 'http://127.0.0.1:8000/user/usuarios/';
+  private urlApi = 'http://127.0.0.1:8000/usuarios/usuarios/';
   private urlApiTipoDocumento = 'http://127.0.0.1:8000/usuarios/tipodoc/'
   private urlApiTiposUsuario = 'http://127.0.0.1:8000/usuarios/tipousuario/'
 

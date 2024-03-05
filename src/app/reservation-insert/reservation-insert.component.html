@@ -1,44 +1,37 @@
 <div>
-    <app-home></app-home>
+    <app-header></app-header>
 </div>
 
 <div class="signup">
     <span class="title">Crear Reserva</span>
 
-    <form (ngSubmit)="crearNuevaReserva()">
+    <form [formGroup]="ReservationForm" (ngSubmit)="crearNuevaReserva()">
+        <input formControlName="FECHA_RESERVACION" name="fechaReservacion" type="date" placeholder="Fecha de entrada" style="display: none;">
+
+        <p>Fecha de entrada</p>
         <div class="input-field">
-            <input [(ngModel)]="nuevaReserva.fecha_entrada" type="datetime-local" name="Ffecha_entrada"
-                placeholder="Fecha de entrada" required>
+            <input formControlName="FECHA_ENTRADA" type="date" name="Ffecha_entrada" placeholder="Fecha de entrada" required>
+            <i class="uil uil-calendar"></i>
+        </div>
+
+        <p>Fecha de Salida</p>
+        <div class="input-field">
+            <input formControlName="FECHA_SALIDA" type="date" name="Ffecha_entrada" placeholder="Fecha de salida" required>
             <i class="uil uil-calendar"></i>
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="nuevaReserva.fecha_salida" type="datetime-local" name="Ffecha_salida"
-                placeholder="Fecha de salida" required>
-            <i class="uil uil-calendar"></i>
-        </div>
-
-        <div class="input-field">
-            <input [(ngModel)]="nuevaReserva.precio_calculado" type="number" name="Fprecio" placeholder="Precio"
-                step="0.01" required>
-            <i class="uil uil-dollar-sign"></i>
-        </div>
-
-        <div class="input-field">
-            <input [(ngModel)]="nuevaReserva.cantidad_adultos" type="number" name="Fcantidad_adultos"
-                placeholder="Cantidad de adultos" required>
+            <input formControlName="CANTIDAD_ADULTOS" type="number" name="Fcantidad_adultos" placeholder="Cantidad de adultos" required>
             <i class="uil uil-user"></i>
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="nuevaReserva.cantidad_ninos" type="number" name="Fcantidad_niños"
-                placeholder="Cantidad de niños" required>
+            <input formControlName="CANTIDAD_NINOS" type="number" name="Fcantidad_niños" placeholder="Cantidad de niños" required>
             <i class="uil uil-child"></i>
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="nuevaReserva.numero_documento" type="text" name="Fdocumento"
-                placeholder="Número de documento" required>
+            <input formControlName="PERSONA_NRODOCUMENTO" type="text" name="Fdocumento" placeholder="Número de documento" required>
             <i class="fa-solid fa-id-card"></i>
         </div>
         <div class="botones">
@@ -47,7 +40,7 @@
             </div>
 
             <div class="input-field button">
-                <a routerLink="/inicio" >Volver</a>
+                <a routerLink="/lista-reservas">Volver</a>
             </div>
         </div>
     </form>

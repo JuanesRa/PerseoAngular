@@ -40,4 +40,10 @@ export class RoomSelectClientComponent implements OnInit {
 
     })
   }
+  redireccionarReservar(room: any): void {
+    this.router.navigate(['/insertar-reserva', room.NROHABITACION], { state: { habitacion: room } });
+  }
+  
+
+
 }
