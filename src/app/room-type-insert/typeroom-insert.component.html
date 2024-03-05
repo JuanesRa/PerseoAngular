@@ -7,63 +7,68 @@
 
   <form (ngSubmit)="crearNuevoTipoHabitacion()">
     <div class="input-field">
-      <input
-        [(ngModel)]="nuevatipoHabitacion.TIPO_HABITACION"
-        type="text"
-        name="tipo_hab"
-        placeholder="Ingrese tipo  de habitación"
-        required
-      />
+      <input [formControl]="$any(typeRoomForm).controls['TIPO_HABITACION']" type="text" name="tipo_hab"
+        placeholder="Ingrese tipo  de habitación" required />
+    </div>
+
+    <div
+      *ngIf="typeRoomForm.get('TIPO_HABITACION')?.hasError('required') && typeRoomForm.get('TIPO_HABITACION')?.touched"
+      class="error-message">
+      El campo es obligatorio.
     </div>
 
     <div class="input-field">
-      <input
-        [(ngModel)]="nuevatipoHabitacion.DESCRIPCION"
-        type="text"
-        name="descripcion"
-        placeholder="Ingrese descripcion"
-        required
-      />
+      <input [formControl]="$any(typeRoomForm).controls['DESCRIPCION']" type="text" name="descripcion"
+        placeholder="Ingrese descripcion" required />
+    </div>
+
+    <div *ngIf="typeRoomForm.get('DESCRIPCION')?.hasError('required') && typeRoomForm.get('DESCRIPCION')?.touched"
+      class="error-message">
+      El campo es obligatorio.
     </div>
 
     <div class="input-field">
-      <input
-        [(ngModel)]="nuevatipoHabitacion.PRECIOXNOCHE"
-        type="number"
-        name="precioxnoche"
-        placeholder="Ingrese Precio"
-        required
-      />
+      <input [formControl]="$any(typeRoomForm).controls['PRECIOXNOCHE']" type="number" name="precioxnoche"
+        placeholder="Ingrese Precio" required />
+    </div>
+
+    <div *ngIf="typeRoomForm.get('PRECIOXNOCHE')?.hasError('required') && typeRoomForm.get('PRECIOXNOCHE')?.touched"
+      class="error-message">
+      El campo es obligatorio.
     </div>
 
     <div class="input-field">
-      <input
-        [(ngModel)]="nuevatipoHabitacion.CANTIDAD_ADULTOS"
-        type="number"
-        name="cant_adultos"
-        placeholder="Capacidad de adultos"
-        required
-      />
+      <input [formControl]="$any(typeRoomForm).controls['CANTIDAD_ADULTOS']" type="number" name="cant_adultos"
+        placeholder="Capacidad de adultos" required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+        maxlength="1" />
+    </div>
+
+    <div
+      *ngIf="typeRoomForm.get('CANTIDAD_ADULTOS')?.hasError('required') && typeRoomForm.get('CANTIDAD_ADULTOS')?.touched"
+      class="error-message">
+      El campo es obligatorio.
     </div>
 
     <div class="input-field">
-      <input
-        [(ngModel)]="nuevatipoHabitacion.CANTIDAD_NINOS"
-        type="number"
-        name="cant_ninos"
-        placeholder="Capacidad de niños"
-        required
-      />
+      <input [formControl]="$any(typeRoomForm).controls['CANTIDAD_NINOS']" type="number" name="cant_ninos"
+        placeholder="Capacidad de niños" required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+        maxlength="1" />
+    </div>
+
+    <div *ngIf="typeRoomForm.get('CANTIDAD_NINOS')?.hasError('required') && typeRoomForm.get('CANTIDAD_NINOS')?.touched"
+      class="error-message">
+      El campo es obligatorio.
     </div>
 
     <div class="input-field">
-      <input
-        type="file"
-        (change)="onFileSelected($event)"
-        name="Farchivo"
-        accept="image/*"
-      />
+      <input type="file" (change)="onFileSelected($event)" name="Farchivo" accept="image/*" />
     </div>
+
+    <div *ngIf="typeRoomForm.get('FOTO')?.hasError('required') && typeRoomForm.get('CANTIDAD_NINOS')?.touched"
+    class="error-message">
+      La foto es obligatoria.
+    </div>
+
 
     <div class="botones">
       <div class="input-field button">

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -10,18 +11,20 @@ import { RoomService } from '../services/room.service';
 })
 export class TyperoomInsertComponent {
 
-  nuevatipoHabitacion: any = {
-    TIPO_HABITACION : '',
-    DESCRIPCION : '',
-    PRECIOXNOCHE : '',
-    CANTIDAD_ADULTOS : null,
-    CANTIDAD_NINOS : null, 
-
-  };
+  typeRoomForm: FormGroup;
   selectedFile: File | null = null;
 
-  
-  constructor(private roomService: RoomService, private router: Router) { }
+
+  constructor(private roomService: RoomService, private router: Router, public fb: FormBuilder) {
+    this.typeRoomForm = this.fb.group({
+      TIPO_HABITACION: ['', [Validators.required, Validators.maxLength(30)]],
+      DESCRIPCION: ['', [Validators.required, Validators.maxLength(200)]],
+      PRECIOXNOCHE: ['', [Validators.required]],
+      CANTIDAD_ADULTOS: [null, [Validators.required]],
+      CANTIDAD_NINOS: [null, [Validators.required]],
+      FOTO: [null, [Validators.required]],
+    })
+  }
 
   ngOnInit(): void {
    
@@ -38,28 +41,27 @@ export class TyperoomInsertComponent {
 
 
   crearNuevoTipoHabitacion(): void {
-    // Crea un nuevo objeto FormData para enviar los datos del formulario
     const formData = new FormData();
   
-    // Agrega los campos del formulario al FormData
-    formData.append('TIPO_HABITACION', this.nuevatipoHabitacion.TIPO_HABITACION);
-    formData.append('DESCRIPCION', this.nuevatipoHabitacion.DESCRIPCION);
-    formData.append('PRECIOXNOCHE', this.nuevatipoHabitacion.PRECIOXNOCHE.toString());
-    formData.append('CANTIDAD_ADULTOS', this.nuevatipoHabitacion.CANTIDAD_ADULTOS.toString());
-    formData.append('CANTIDAD_NINOS', this.nuevatipoHabitacion.CANTIDAD_NINOS.toString());
+    formData.append('TIPO_HABITACION', this.typeRoomForm.value.TIPO_HABITACION);
+    formData.append('DESCRIPCION', this.typeRoomForm.value.DESCRIPCION);
+    formData.append('PRECIOXNOCHE', this.typeRoomForm.value.PRECIOXNOCHE.toString());
+    formData.append('CANTIDAD_ADULTOS', this.typeRoomForm.value.CANTIDAD_ADULTOS.toString());
+    formData.append('CANTIDAD_NINOS', this.typeRoomForm.value.CANTIDAD_NINOS.toString());
   
-    // Si hay una imagen seleccionada, agrégala al FormData
     if (this.selectedFile) {
       formData.append('FOTO', this.selectedFile);
+    } else {
+      // Marcar el campo de la foto como inválido si no se ha seleccionado ninguna foto
+      this.typeRoomForm.get('FOTO')?.setErrors({ required: true });
+      return; // Evitar enviar el formulario si no se ha seleccionado ninguna foto
     }
   
-    // Envía la solicitud para crear un nuevo tipo de habitación
     this.roomService.postTypeRoom(formData).subscribe((data) => {
       this.router.navigate(['/lista-tipohabitaciones']);
     });
   }
   
-
 }
 
 
