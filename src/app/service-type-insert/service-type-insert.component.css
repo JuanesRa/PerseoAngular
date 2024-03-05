@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
+
+:root {
+    --white: #fff;
+    --black: #333333;
+    --green: #5eb319;
+    --gray: #707070;
+    --border: .1rem solid rgba(84, 134, 80, 0.7);
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+*::selection {
+    background-color: #5eb319;
+    color: #fff;
+}
+
+*::-webkit-scrollbar {
+    height: .5rem;
+    width: 1rem;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #5eb319;
+    border-radius: 5rem;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+}
+
+body {
+    background-color: #fff;
+}
+
+.signup {
+    margin: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    width: 450px;
+    padding: 50px;
+    border: 1px solid #ccc;	
+}
+
+.signup .title {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.signup .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #5eb319;
+    border-radius: 25px;
+}
+
+.signup .input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+
+.input-field input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+
+}
+
+.input-field input:is(:focus, :valid) {
+    border-bottom-color: #5eb319;
+}
+
+.input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid)~i {
+    color: #5eb319;
+}
+
+.input-field i.icon {
+    left: 0;
+}
+
+.input-field i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+
+.signup .button input {
+    width: 90%;
+    margin-top: 30px;
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    background-color: #5eb319;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signup .button input:hover {
+    background-color: #5eb319d8;
+}
+
+.signup .login-signup {
+    margin-top: 30px;
+    text-align: center;
+}
+
+
+
+.signup .input-select {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-top: 40px;
+    border-bottom: 2px solid #ccc;
+    padding: 0 35px;
+    font-size: 16px;
+    color: var(--black);
+    background-color: var(--white);
+}
+
+.input-select {
+    padding-left: 30px;
+    background-repeat: no-repeat;
+    background-position: 5px center;
+    /* Alineación del icono */
+}
+
+.signup .input-select:hover {
+
+    border-bottom: 2px solid #5eb319;
+
+}
+
+.error-message {
+    color: red;
+    font-size: 11px;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-field.button a:is(:focus, :valid) {
+    border-bottom-color: #5eb319;
+}
+
+.input-field.button i.icon {
+    left: 0;
+}
+
+.input-field.button i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+
+
+.signup .button a {
+    position: absolute;
+    text-decoration: none;
+    border: none;
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    color: var(--white);
+    font-size: 17px;
+    font-weight: 500;
+    padding: 15px 35px 0 65px;
+    margin-left: 10px;
+    margin-top: 30px;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    background-color: var(--green);
+    transition: all 0.2s ease;
+
+}
+
+.input-field.button a:hover {
+    border-bottom-color: #91d856;
+    /* Cambia el color del borde inferior al pasar el cursor */
+}

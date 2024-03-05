@@ -31,6 +31,12 @@ import { TyperoomInsertComponent } from './room-type-insert/typeroom-insert.comp
 import { StatusroomSelectComponent } from './room-status-select/statusroom-select.component';
 import { RoomStatusInsertComponent } from './room-status-insert/room-status-insert.component';
 import { RoomStatusUpdateComponent } from './room-status-update/room-status-update.component';
+import { ServiceSelectComponent } from './service-select/service-select.component';
+import { ServiceInsertComponent } from './service-insert/service-insert.component';
+import { ServiceUpdateComponent } from './service-update/service-update.component';
+import { ServiceTypeSelectComponent } from './service-type-select/service-type-select.component';
+import { ServiceTypeInsertComponent } from './service-type-insert/service-type-insert.component';
+import { ServiceTypeUpdateComponent } from './service-type-update/service-type-update.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -50,6 +56,15 @@ const routes: Routes = [
   {path: 'lista-estadohabitaciones', component: StatusroomSelectComponent},
   {path: 'insertar-estado-habitacion', component: RoomStatusInsertComponent},
   {path: 'actualizar-estado/:id', component: RoomStatusUpdateComponent},
+
+  // TIPO SERVICIOS
+  {path: 'lista-tiposervicios', component: ServiceTypeSelectComponent},
+  {path: 'insertar-tiposervicio', component: ServiceTypeInsertComponent},
+  {path: 'actualizar-tiposervicio', component: ServiceTypeUpdateComponent},
+  // SERVICIOS
+  {path: 'lista-servicios', component: ServiceSelectComponent},
+  {path: 'insertar-servicio', component: ServiceInsertComponent},
+  {path: 'actualizar-servicio', component: ServiceUpdateComponent},
   
   {path: 'lista-reservas', component: ReservationSelectComponent},
   {path: 'insertar-reserva/:id', component: ReservationInsertComponent},
