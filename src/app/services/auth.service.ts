@@ -39,17 +39,27 @@ export class AuthService {
       }),
       // Realizar la limpieza del token almacenado en el cliente (localStorage)
       finalize(() => {
-        localStorage.removeItem(this.authTokenKey);
+        this.clearAuthData();
       })
     );
   }
 
-  saveAuthToken(token: string): void {
+  saveAuthToken(token: string, userId: string): void {
     localStorage.setItem(this.authTokenKey, token);
+    localStorage.setItem('Doc', userId);
   }
 
   getAuthToken(): string | null {
     return localStorage.getItem(this.authTokenKey);
+  }
+
+  getAuthId(): string | null {
+    return localStorage.getItem('Doc');
+  }
+
+  clearAuthData(): void {
+    localStorage.removeItem(this.authTokenKey);
+    localStorage.removeItem('Doc');
   }
 
   // Método para adjuntar el token a las solicitudes
