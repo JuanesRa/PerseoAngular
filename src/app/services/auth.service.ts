@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize, retry } from 'rxjs/operators';
 
@@ -13,8 +13,22 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(user: any): Observable<any> {
-    return this.http.post(`${this.urlApi}/login`, user);
+  login(credentials: { username: string, password: string }): Observable<any> {
+    return this.http.post<any>(`${this.urlApi}/login`, credentials).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = 'Error de inicio de sesión';
+
+        if (error.status === 400 && error.error && error.error.detail) {
+          errorMessage = error.error.detail;
+        } else if (error.status === 401 && error.error && error.error.detail) {
+          errorMessage = error.error.detail;
+        } else if (error.status === 403 && error.error && error.error.detail) {
+          errorMessage = error.error.detail;
+        }
+        alert(errorMessage); // Mostrar el mensaje de error
+        return throwError(() => errorMessage)
+      })
+    );
   }
 
   signup(user: any): Observable<any> {

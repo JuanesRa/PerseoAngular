@@ -32,17 +32,6 @@ export class LoginComponent {
         const userId = data.user.NRODOCUMENTO;
         const rolId = data.user.TIPO_PERSONA_IDTIPOPERSONA;
         this.authService.saveAuthToken(token, userId, rolId)
-        // this.UserDataService.userData = data.user;
-        // if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 1) {
-        //   alert('Bienvenido Administrador');
-        // }
-        // else if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 2) {
-        //   alert('Bienvenido Recepcionista');
-        // }
-
-        // else if (data.user.TIPO_PERSONA_IDTIPOPERSONA == 3) {
-        //   alert('Bienvenido CLiente');
-        // }
         this.router.navigate(['/inicio'])
       })
     }
