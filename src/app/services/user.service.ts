@@ -10,6 +10,7 @@ export class UserService {
   private urlApi = 'http://127.0.0.1:8000/usuarios/usuarios/';
   private urlApiTipoDocumento = 'http://127.0.0.1:8000/usuarios/tipodoc/'
   private urlApiTiposUsuario = 'http://127.0.0.1:8000/usuarios/tipousuario/'
+  private urlApiEstadoUsuario = 'http://127.0.0.1:8000/usuarios/estadousuario/'
 
   constructor(private http: HttpClient) { }
 
@@ -56,5 +57,11 @@ export class UserService {
   public getTipoUsuariosById(tipoUsu: number): Observable<any> {
     const url = `${this.urlApiTiposUsuario}${tipoUsu}/`;
     return this.http.get(this.urlApiTiposUsuario)
+  }
+
+  // Estado Usuario
+
+  public getEstadoUsuarios(): Observable<any> {
+    return this.http.get(this.urlApiEstadoUsuario)
   }
 }
