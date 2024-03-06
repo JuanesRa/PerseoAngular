@@ -1,1 +1,32 @@
-<p>service-select works!</p>
+<div>
+    <app-header></app-header>
+  </div>
+  
+  <div class="tabla_content" id="table_room">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Tipo servicio</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+    <tr *ngFor="let servicio of servicios">
+      <td class="table-light">{{servicio.NOMBRE_PRODUCTO}}</td>
+      <td class="table-light">{{servicio.VALOR}}</td>
+      <td class="table-light">{{servicio.tipoServicio}}</td>
+      <td class="btns">
+        <button (click)="redireccionarActualizar(servicio.IDPRODUCTO)" type="button" class="btn btn-warning">Actualizar</button>
+        <button  (click)="eliminarServicio(servicio.IDPRODUCTO)" type="button" class="btn btn-danger">Eliminar</button>
+      </td>
+    </tr> 
+  </tbody>
+  
+    </table>
+    <a routerLink="/insertar-servicio">Adicionar Producto </a>
+    
+  </div>
+  

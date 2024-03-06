@@ -1,1 +1,39 @@
-<p>service-update works!</p>
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Actualizar Servicio</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="actualizarServicio()">
+        <div class="input-field">
+            <input formControlName="NOMBRE_PRODUCTO" type="text" name="servicio"
+                placeholder="Ingrese Producto" required />
+        </div>
+
+        <div class="input-field">
+            <input formControlName="VALOR" type="text" name="valor"
+                placeholder="Ingrese Valor" required />
+        </div>
+
+        <select class="input-select" formControlName="TIPO_SERVICIO_IDTIPOSERVICIO" name="Type service" required>
+            <option selected="selected" disabled="disabled">Seleccione Tipo Servicio</option>
+            <option *ngFor="let tipservice of typeService" [value]="tipservice.IDTIPOSERVICIO">
+                {{ tipservice.TIPO_SERVICIO }}
+            </option>
+        </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Actualizar"/>
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-servicios">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

@@ -25,7 +25,7 @@ export class StatusroomSelectComponent {
     }
 
     eliminarEstadoHabitacion(StatusroomId: number): void {
-      if (confirm('¿Está seguro de eliminar el tipo de habitación?')) {
+      if (confirm('¿Está seguro de eliminar el estado de la habitación?')) {
         this.roomService.deleteStatusRoom(StatusroomId).subscribe(() => {
           window.location.reload()
         })

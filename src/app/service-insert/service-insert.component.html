@@ -1,1 +1,41 @@
-<p>service-insert works!</p>
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Crear Producto</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="crearNuevaSerivicio()">
+        <div class="input-field">
+            <input  [formControl]="$any(formulario).controls['NOMBRE_PRODUCTO']" type="text" name="nombre_producto"
+                placeholder="Ingrese producto" required />
+        </div>
+        <div class="input-field">
+            <input [formControl]="$any(formulario).controls['VALOR']"  type="number" name="valor"
+                placeholder="Ingrese valor del producto" required />
+        </div>
+
+
+        <select class="input-select"  [formControl]="$any(formulario).controls['TIPO_SERVICIO_IDTIPOSERVICIO']" name="Type service" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Tipo Servicio
+            </option>
+            <option *ngFor="let tipservice of typeService" [value]="tipservice.IDTIPOSERVICIO">
+              {{ tipservice.TIPO_SERVICIO}}
+            </option>
+          </select>
+  
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-servicios" >Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+ 
+<div>
+    <app-footer></app-footer>
+</div>

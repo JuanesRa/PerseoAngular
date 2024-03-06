@@ -1,1 +1,27 @@
-<p>service-type-update works!</p>
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Actualizar Tipo Servicio</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="actualizarTipoServicio()">
+        <div class="input-field">
+            <input formControlName="TIPO_SERVICIO" type="text" name="tipo_hab"
+                placeholder="Ingrese estado habitación" required />
+        </div>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Actualizar"/>
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-tiposervicios">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

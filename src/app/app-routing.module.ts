@@ -62,11 +62,11 @@ const routes: Routes = [
   // TIPO SERVICIOS
   {path: 'lista-tiposervicios', component: ServiceTypeSelectComponent},
   {path: 'insertar-tiposervicio', component: ServiceTypeInsertComponent},
-  {path: 'actualizar-tiposervicio', component: ServiceTypeUpdateComponent},
+  {path: 'actualizar-tiposervicio/:id', component: ServiceTypeUpdateComponent},
   // SERVICIOS
   {path: 'lista-servicios', component: ServiceSelectComponent},
   {path: 'insertar-servicio', component: ServiceInsertComponent},
-  {path: 'actualizar-servicio', component: ServiceUpdateComponent},
+  {path: 'actualizar-servicio/:id', component: ServiceUpdateComponent},
   
   {path: 'lista-reservas', component: ReservationSelectComponent},
   {path: 'insertar-reserva/:id', component: ReservationInsertComponent, canActivate: [AuthGuardService]},
