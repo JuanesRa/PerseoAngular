@@ -18,25 +18,25 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private userDataService: UserDataService, private router: Router) { }
 
   ngOnInit(): void {
-
     if (this.isLoggedIn) {
-      const userData = this.userDataService.userData;
-      console.log('Datos del usuario:', userData);
-      if (userData.TIPO_PERSONA_IDTIPOPERSONA === 1) {
+      const rol = this.authService.getRolId();
+      console.log('Datos del usuario:', rol);
+      if (rol === '1') {
         this.isAdmin = true;
-      } else if (userData.TIPO_PERSONA_IDTIPOPERSONA === 2) {
+      } else if (rol === '2') {
         this.isRecepcionista = true;
-      } else if (userData.TIPO_PERSONA_IDTIPOPERSONA === 3) {
+      } else if (rol === '3') {
         this.isCliente = true;
       }
     }
   }
+  
 
 
   CerrarSesion(): void {
     this.authService.logout().subscribe({
       next: (response) => {
-        console.log('Sesión cerrada exitosamente');
+        alert('Sesión cerrada exitosamente')
         this.router.navigate(['/']);
       },
       error: (error) => {
