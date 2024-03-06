@@ -25,9 +25,9 @@
 
     <nav class="navbar">
       <a routerLink="/inicio">Inicio</a>
-      <a *ngIf="isAdmin || !isLoggedIn" routerLink="/lista-usuarios">Usuarios</a>
+      <a *ngIf="isAdmin" routerLink="/lista-usuarios">Usuarios</a>
       <a *ngIf="isCliente || !isLoggedIn || isRecepcionista" routerLink="/habitaciones">Habitaciones</a>
-      <li *ngIf="isAdmin || !isLoggedIn " class="dropdown">
+      <li *ngIf="isAdmin" class="dropdown">
           Modúlo Habitación
           <ul class="submenu">
               <a routerLink="/lista-habitaciones"  class="opcion"> Habitación </a>
@@ -37,9 +37,9 @@
       </li>
       <a *ngIf="isAdmin" routerLink="/lista-reservas">Modúlo Reserva</a>
 
-      <a *ngIf="isAdmin || isCliente || isRecepcionista" routerLink="">Reservaciones</a>
+      <a *ngIf="isCliente || isRecepcionista" routerLink="">Reservaciones</a>
       <a *ngIf="isAdmin || isCliente || isRecepcionista || !isLoggedIn" routerLink="">Servicios</a>
-      <li *ngIf="isAdmin || !isLoggedIn " class="dropdown">
+      <li *ngIf="isAdmin " class="dropdown">
         Modulo Servicios
         <ul class="submenu">
             <a routerLink="/lista-servicios"  class="opcion"> Servicios </a>
