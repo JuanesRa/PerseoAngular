@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +55,10 @@ export class AuthService {
 
   getAuthId(): string | null {
     return localStorage.getItem('Doc');
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getAuthToken();
   }
 
   clearAuthData(): void {

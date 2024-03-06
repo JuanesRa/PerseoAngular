@@ -38,6 +38,8 @@ import { ServiceTypeSelectComponent } from './service-type-select/service-type-s
 import { ServiceTypeInsertComponent } from './service-type-insert/service-type-insert.component';
 import { ServiceTypeUpdateComponent } from './service-type-update/service-type-update.component';
 
+import { AuthGuardService } from './services/auth-guard.service';
+
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'inicio', component: HomeComponent},
@@ -67,7 +69,7 @@ const routes: Routes = [
   {path: 'actualizar-servicio', component: ServiceUpdateComponent},
   
   {path: 'lista-reservas', component: ReservationSelectComponent},
-  {path: 'insertar-reserva/:id', component: ReservationInsertComponent},
+  {path: 'insertar-reserva/:id', component: ReservationInsertComponent, canActivate: [AuthGuardService]},
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
   {path: 'lista-inventario', component: InventorySelectComponent},
   {path: 'insertar-inventario', component: InventoryInsertComponent},
