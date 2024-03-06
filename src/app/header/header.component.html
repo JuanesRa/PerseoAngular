@@ -13,9 +13,9 @@
     <div class="flex">
        <a routerLink="/inicio"  class="logo">Hotel Perseo</a>
        <div class="icons">
-          <a *ngIf="isUndefined" routerLink="/login"><i class="uil uil-user" style="color: var(--green);"></i></a>
-          <a *ngIf="isUndefined" routerLink="/registro"> <i class="fa-solid fa-user-plus" style="color: var(--green);"></i></a>
-          <a *ngIf="isAdmin || isCliente || isRecepcionista">
+          <a *ngIf="!isLoggedIn" routerLink="/login"><i class="uil uil-user" style="color: var(--green);"></i></a>
+          <a *ngIf="!isLoggedIn" routerLink="/registro"> <i class="fa-solid fa-user-plus" style="color: var(--green);"></i></a>
+          <a *ngIf="isLoggedIn">
             <i (click)="CerrarSesion()" class="fa-solid fa-right-from-bracket" style="color: var(--green);"></i>
           </a>
           
@@ -26,8 +26,8 @@
     <nav class="navbar">
       <a routerLink="/inicio">Inicio</a>
       <a *ngIf="isAdmin" routerLink="">Usuarios</a>
-      <a *ngIf="isCliente || isUndefined || isRecepcionista" routerLink="/habitaciones">Habitaciones</a>
-      <li *ngIf="isAdmin  || isUndefined" class="dropdown">
+      <a *ngIf="isCliente || !isLoggedIn || isRecepcionista" routerLink="/habitaciones">Habitaciones</a>
+      <li *ngIf="isAdmin" class="dropdown">
           Modúlo Habitación
           <ul class="submenu">
               <a routerLink="/lista-habitaciones"  class="opcion"> Habitación </a>
@@ -35,11 +35,11 @@
               <a routerLink="/lista-estadohabitaciones" class="opcion"> Estado Habitación </a>
           </ul>
       </li>
-      <a *ngIf="isAdmin || isUndefined" routerLink="/lista-reservas">Modúlo Reserva</a>
+      <a *ngIf="isAdmin" routerLink="/lista-reservas">Modúlo Reserva</a>
 
-      <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Reservaciones</a>
-      <a *ngIf="isAdmin || isCliente || isRecepcionista || isUndefined" routerLink="">Servicios</a>
-      <li *ngIf="isAdmin  || isUndefined" class="dropdown">
+      <a *ngIf="isAdmin || isCliente || isRecepcionista" routerLink="">Reservaciones</a>
+      <a *ngIf="isAdmin || isCliente || isRecepcionista || !isLoggedIn" routerLink="">Servicios</a>
+      <li *ngIf="isAdmin" class="dropdown">
         Modulo Servicios
         <ul class="submenu">
             <a routerLink="/lista-servicios"  class="opcion"> Servicios </a>

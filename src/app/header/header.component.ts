@@ -12,18 +12,16 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean = false;
   isRecepcionista: boolean = false;
   isCliente: boolean = false;
-  isUndefined: boolean = false;
+  isLoggedIn: boolean = this.authService.isLoggedIn();
 
 
   constructor(private authService: AuthService, private userDataService: UserDataService, private router: Router) { }
 
   ngOnInit(): void {
-    const userData = this.userDataService.userData;
-    console.log('Datos del usuario:', userData);
-    if (userData === undefined) {
-      this.isUndefined = true;
-    } else {
-      // Verificar el tipo de persona y establecer las variables correspondientes
+
+    if (this.isLoggedIn) {
+      const userData = this.userDataService.userData;
+      console.log('Datos del usuario:', userData);
       if (userData.TIPO_PERSONA_IDTIPOPERSONA === 1) {
         this.isAdmin = true;
       } else if (userData.TIPO_PERSONA_IDTIPOPERSONA === 2) {
