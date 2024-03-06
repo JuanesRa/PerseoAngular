@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
-
 :root{
    --white:#fff;
    --black: #333333;
@@ -36,42 +34,48 @@
 body{
    background-color: #fff;
 }
-
 /* TABLA CSS */
-.tabla_content{
-    width: 90%;
-    margin: auto;
-    margin-top: 10px;
- 
- }
- 
- .tabla_content table {
-    width: 100%;
-    font-size: 15px;
- }
- 
- .tabla_content table thead tr th {
-    background-color: #5eb319;
-    color: #fff;
- }
- 
- .tabla_content th,
- .tabla_content td {
-    text-align: center;
- }
- 
- .tabla_content .table-light {
-    color: #333333;
- }
- 
- .tabla_content table tbody tr .btns {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
- }
+.tabla_content {
+   width: 60%;
+   margin: auto;
+   margin-top: 10px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
 
- .tabla_content table tbody tr .btns button {
-    padding: 4px 7px;
-    font-size: 15px;
- }
+.tabla_content table {
+   width: 100%;
+   font-size: 15px;
+   margin: auto;
+}
+
+
+.tabla_content table thead tr th {
+   background-color: #5eb319;
+   color: #fff;
+}
+
+.tabla_content th,
+.tabla_content td {
+   text-align: center;
+}
+
+.tabla_content .table-light {
+   color: #333333;
+}
+
+.tabla_content table tbody tr .btns {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 7px;
+}
+
+.tabla_content table tbody tr .btns button {
+   padding: 4px 7px;
+   font-size: 15px;
+}
+
+

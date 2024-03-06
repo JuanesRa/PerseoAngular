@@ -1,5 +1,5 @@
 <div>
-  <app-home></app-home>
+  <app-header></app-header>
 </div>
 
 <div class="tabla_content" id="table_user">
@@ -14,7 +14,6 @@
         <th scope="col">Email</th>
         <th scope="col">Teléfono</th>
         <th scope="col">Rol</th>
-        <th scope="col">Contraseña</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
@@ -22,19 +21,19 @@
     <tbody>
       <tr *ngFor="let user of users; let i = index">
         <td>{{ i + 1 }}</td>
-        <td class="table-light">{{ user.id_tipoDocumento }}</td>
-        <td class="table-light">{{ user.numero_documento }}</td>
-        <td class="table-light">{{ user.nombre }}</td>
-        <td class="table-light">{{ user.apellido }}</td>
+        <td class="table-light">{{ user.tipodocumento }}</td>
+        <td class="table-light">{{ user.NRODOCUMENTO }}</td>
+        <td class="table-light">{{ user.NOMBRE }}</td>
+        <td class="table-light">{{ user.APELLIDO }}</td>
         <td class="table-light">{{ user.email }}</td>
-        <td class="table-light">{{ user.telefono }}</td>
-        <td class="table-light">{{ user.id_tipoPersona }}</td>
-        <td class="table-light">{{ user.password }}</td>
+        <td class="table-light">{{ user.TELEFONO }}</td>
+        <td class="table-light">{{ user.rol}}</td>
         <td class="btns">
-          <button (click)="redireccionarActualizar(user.numero_documento)" type="button" class="btn btn-warning">Actualizar</button>
-          <button (click)="eliminarUsuario(user.numero_documento)" type="button" class="btn btn-danger">Eliminar</button>
+          <button (click)="redireccionarActualizar(user.NRODOCUMENTO)" type="button" class="btn btn-warning">Actualizar</button>
+          <button (click)="eliminarUsuario(user.NRODOCUMENTO)" type="button" class="btn btn-danger">Eliminar</button>
         </td>
       </tr>
     </tbody>
   </table>
+  <a routerLink="/insertar-usuario">Crear Usuarios</a>
 </div>

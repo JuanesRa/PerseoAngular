@@ -79,7 +79,7 @@ export class UserInsertComponent {
         this.authService.signup(this.formulario.value).subscribe((data) => {
           console.log('Usuario creado:', data);
           alert('Registro exitoso');
-          this.router.navigate(['/login'])
+          this.router.navigate(['/lista-usuarios'])
         });
       } else {
         alert('Las contraseñas no coinciden');

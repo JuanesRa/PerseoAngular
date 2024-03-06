@@ -25,7 +25,7 @@
 
     <nav class="navbar">
       <a routerLink="/inicio">Inicio</a>
-      <a *ngIf="isAdmin" routerLink="">Usuarios</a>
+      <a *ngIf="isAdmin || !isLoggedIn" routerLink="/lista-usuarios">Usuarios</a>
       <a *ngIf="isCliente || !isLoggedIn || isRecepcionista" routerLink="/habitaciones">Habitaciones</a>
       <li *ngIf="isAdmin || !isLoggedIn " class="dropdown">
           Modúlo Habitación
@@ -51,4 +51,4 @@
   </nav>
   
    
-</section>
+</section>  
