@@ -44,9 +44,10 @@ export class AuthService {
     );
   }
 
-  saveAuthToken(token: string, userId: string): void {
+  saveAuthToken(token: string, userId: string, userRolId: string): void {
     localStorage.setItem(this.authTokenKey, token);
     localStorage.setItem('Doc', userId);
+    localStorage.setItem('Rol', userRolId)
   }
 
   getAuthToken(): string | null {
@@ -57,6 +58,10 @@ export class AuthService {
     return localStorage.getItem('Doc');
   }
 
+  getRolId(): string | null {
+    return localStorage.getItem('Rol');
+  }
+
   isLoggedIn(): boolean {
     return !!this.getAuthToken();
   }
@@ -64,6 +69,7 @@ export class AuthService {
   clearAuthData(): void {
     localStorage.removeItem(this.authTokenKey);
     localStorage.removeItem('Doc');
+    localStorage.removeItem('Rol');
   }
 
   // Método para adjuntar el token a las solicitudes

@@ -26,28 +26,40 @@
     <nav class="navbar">
       <a routerLink="/inicio">Inicio</a>
       <a *ngIf="isAdmin" routerLink="">Usuarios</a>
-      <a *ngIf="isCliente || !isLoggedIn || isRecepcionista" routerLink="/habitaciones">Habitaciones</a>
-      <li *ngIf="isAdmin || !isLoggedIn " class="dropdown">
-          Modúlo Habitación
-          <ul class="submenu">
-              <a routerLink="/lista-habitaciones"  class="opcion"> Habitación </a>
-              <a routerLink="/lista-tipohabitaciones" class="opcion"> Tipo Habitación </a>
-              <a routerLink="/lista-estadohabitaciones" class="opcion"> Estado Habitación </a>
-          </ul>
-      </li>
-      <a *ngIf="isAdmin" routerLink="/lista-reservas">Modúlo Reserva</a>
-
-      <a *ngIf="isAdmin || isCliente || isRecepcionista" routerLink="">Reservaciones</a>
-      <a *ngIf="isAdmin || isCliente || isRecepcionista || !isLoggedIn" routerLink="">Servicios</a>
-      <li *ngIf="isAdmin || !isLoggedIn " class="dropdown">
-        Modulo Servicios
-        <ul class="submenu">
-            <a routerLink="/lista-servicios"  class="opcion"> Servicios </a>
-            <a routerLink="/lista-tiposervicios" class="opcion">  Tipo Servicios </a>
-        </ul>
-    </li>
-      <a *ngIf="isAdmin || isCliente || isRecepcionista" routerLink="">Factura</a>
-      <a *ngIf="isAdmin" routerLink="">Inventario</a>
+      <a *ngIf="isAdmin || !isLoggedIn || isCliente" routerLink="/habitaciones">Habitaciones</a>
+      <ng-container *ngIf="isAdmin">
+          <li class="dropdown">
+              Modúlo Habitación
+              <ul class="submenu">
+                  <a routerLink="/lista-habitaciones" class="opcion"> Habitación </a>
+                  <a routerLink="/lista-tipohabitaciones" class="opcion"> Tipo Habitación </a>
+                  <a routerLink="/lista-estadohabitaciones" class="opcion"> Estado Habitación </a>
+              </ul>
+          </li>
+          <a routerLink="/lista-reservas">Modúlo Reserva</a>  
+      </ng-container>
+  
+      <ng-container *ngIf="isAdmin || isCliente || isRecepcionista">
+          <a routerLink="">Reservaciones</a>
+      </ng-container>
+      <ng-container *ngIf="isAdmin || isCliente || isRecepcionista || !isLoggedIn">
+          <a routerLink="">Servicios</a>
+      </ng-container>
+      <ng-container *ngIf="isAdmin">
+          <li class="dropdown">
+              Modulo Servicios
+              <ul class="submenu">
+                  <a routerLink="/lista-servicios" class="opcion"> Servicios </a>
+                  <a routerLink="/lista-tiposervicios" class="opcion">  Tipo Servicios </a>
+              </ul>
+          </li>
+      </ng-container>
+      <ng-container *ngIf="isAdmin || isCliente || isRecepcionista">
+          <a routerLink="">Factura</a>
+      </ng-container>
+      <ng-container *ngIf="isAdmin">
+          <a routerLink="">Inventario</a>
+      </ng-container>
   </nav>
   
    
