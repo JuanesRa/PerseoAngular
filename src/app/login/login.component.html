@@ -1,3 +1,7 @@
+<div>
+    <app-header></app-header>
+</div>
+
 <div class="signup">
     <span class="title">Inicio de sesión</span>
 
@@ -26,7 +30,8 @@
 
         <div *ngIf="formulario.get('password')?.hasError('invalidPassword') && formulario.get('password')?.touched"
             class="error-message">
-            La contraseña debe contener al menos 8 carácteres, una letra mayúscula, una letra minúscula, un número y un carácter
+            La contraseña debe contener al menos 8 carácteres, una letra mayúscula, una letra minúscula, un número y un
+            carácter
             especial.
         </div>
 
@@ -44,4 +49,8 @@
             </div>
         </div>
     </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
 </div>
