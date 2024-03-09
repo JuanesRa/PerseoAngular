@@ -14,10 +14,20 @@
             <i class="uil uil-calendar"></i>
         </div>
 
+        <div *ngIf="ReservationForm.get('FECHA_ENTRADA')?.touched && ReservationForm.get('FECHA_ENTRADA')?.errors?.['required']"
+            class="error-message">
+            El campo es obligatorio.
+        </div>
+
         <p>Fecha de Salida</p>
         <div class="input-field">
             <input formControlName="FECHA_SALIDA" type="date" name="Ffecha_entrada" placeholder="Fecha de salida" required>
             <i class="uil uil-calendar"></i>
+        </div>
+
+        <div *ngIf="ReservationForm.get('FECHA_SALIDA')?.touched && ReservationForm.get('FECHA_SALIDA')?.errors?.['required']"
+            class="error-message">
+            El campo es obligatorio.
         </div>
 
         <div class="input-field">
@@ -25,15 +35,34 @@
             <i class="uil uil-user"></i>
         </div>
 
+        <div *ngIf="ReservationForm.get('CANTIDAD_ADULTOS')?.touched && ReservationForm.get('CANTIDAD_ADULTOS')?.errors?.['required']"
+            class="error-message">
+            El campo es obligatorio.
+        </div>
+
         <div class="input-field">
             <input formControlName="CANTIDAD_NINOS" type="number" name="Fcantidad_niños" placeholder="Cantidad de niños" required>
             <i class="uil uil-child"></i>
         </div>
 
-        <div class="input-field">
-            <input formControlName="PERSONA_NRODOCUMENTO" type="text" name="Fdocumento" placeholder="Número de documento" required>
-            <i class="fa-solid fa-id-card"></i>
+        <div *ngIf="ReservationForm.get('CANTIDAD_NINOS')?.touched && ReservationForm.get('CANTIDAD_NINOS')?.errors?.['required']"
+            class="error-message">
+            El campo es obligatorio.
         </div>
+
+        <ng-container *ngIf="isAdmin || isRecepcionista">
+            <div class="input-field">
+                <input formControlName="PERSONA_NRODOCUMENTO" type="text" name="Fdocumento"
+                    placeholder="Número de documento" required>
+                <i class="fa-solid fa-id-card"></i>
+            </div>
+
+            <div *ngIf="ReservationForm.get('PERSONA_NRODOCUMENTO')?.touched && ReservationForm.get('PERSONA_NRODOCUMENTO')?.errors?.['required']"
+                class="error-message">
+                El campo es obligatorio.
+            </div>
+        </ng-container>
+        
         <div class="botones">
             <div class="input-field button">
                 <input type="submit" value="Reservar">
