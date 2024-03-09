@@ -10,7 +10,7 @@
 
         <p>Fecha de entrada</p>
         <div class="input-field">
-            <input formControlName="FECHA_ENTRADA" type="date" name="Ffecha_entrada" placeholder="Fecha de entrada" required>
+            <input formControlName="FECHA_ENTRADA" type="date" name="Ffecha_entrada" placeholder="Fecha de entrada" required [min]="fechaMinimaIn">
             <i class="uil uil-calendar"></i>
         </div>
 
@@ -21,7 +21,7 @@
 
         <p>Fecha de Salida</p>
         <div class="input-field">
-            <input formControlName="FECHA_SALIDA" type="date" name="Ffecha_entrada" placeholder="Fecha de salida" required>
+            <input formControlName="FECHA_SALIDA" type="date" name="Ffecha_entrada" placeholder="Fecha de salida" required [min]="fechaMinimaOut">
             <i class="uil uil-calendar"></i>
         </div>
 
@@ -62,14 +62,14 @@
                 El campo es obligatorio.
             </div>
         </ng-container>
-
+      
         <div class="botones">
             <div class="input-field button">
                 <input type="submit" value="Reservar">
             </div>
 
             <div class="input-field button">
-                <a routerLink="/habitaciones">Volver</a>
+                <a routerLink="/lista-reservas">Volver</a>
             </div>
         </div>
     </form>

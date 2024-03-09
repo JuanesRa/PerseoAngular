@@ -20,6 +20,8 @@ export class ReservationInsertComponent implements OnInit {
   isAdmin: boolean = false;
   isRecepcionista: boolean = false;
   isCliente: boolean = false;
+  fechaMinimaIn: string;
+  fechaMinimaOut: string = '';
 
   constructor(private reservationService: ReservationService, private authService: AuthService, private router: Router, public fb: FormBuilder) {
     this.ReservationForm = this.fb.group({
@@ -32,6 +34,18 @@ export class ReservationInsertComponent implements OnInit {
       ESTADO_RESERVA: [2,],
       PERSONA_NRODOCUMENTO: ['', [Validators.required]],
     });
+    // VALIDACIONES FECHAS
+    const today = new Date();
+    this.fechaMinimaIn = today.toISOString().split('T')[0];
+    if (this.ReservationForm) {
+      this.ReservationForm.get('FECHA_ENTRADA')?.valueChanges.subscribe((fechaEntrada: string) => {
+        if (fechaEntrada) {
+          const minDate = new Date(fechaEntrada);
+          minDate.setDate(minDate.getDate() + 1); // Sumar un día
+          this.fechaMinimaOut = minDate.toISOString().split('T')[0];
+        }
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -72,38 +86,52 @@ export class ReservationInsertComponent implements OnInit {
   calcularPrecioTotal(): void {
     const fechaEntrada = this.ReservationForm.value.FECHA_ENTRADA;
     const fechaSalida = this.ReservationForm.value.FECHA_SALIDA;
-  
     // Calcula la duración de la estadía en días
     const duracionEstadia = this.calcularDiasEntreFechas(fechaEntrada, fechaSalida);
-  
     // Calcula el precio total multiplicando la tarifa por noche por la duración de la estadía
     const precioTotal = this.precioPorNoche * duracionEstadia;
-  
     // Actualizar el valor en el formulario
     this.ReservationForm.patchValue({
       PRECIO_CALCULADO: precioTotal
     });
-  
     console.log('Precio total de la reserva:', this.ReservationForm.value.PRECIO_CALCULADO);
+  }
+
+  validarCantidadPersonas(): boolean {
+    const capacidadAdultos = this.habitacion.cap_adultos;
+    const capacidadNinos = this.habitacion.cap_ninos;
+    const cantidadAdultos = this.ReservationForm.value.CANTIDAD_ADULTOS;
+    const cantidadNinos = this.ReservationForm.value.CANTIDAD_NINOS;
+    if (cantidadAdultos > capacidadAdultos) {
+      alert('La cantidad de adultos supera la capacidad de la habitación.');
+      return false;
+    }
+    else if (cantidadNinos > capacidadNinos) {
+      alert('La cantidad de niños supera la capacidad de la habitación.');
+      return false;
+    }
+    return true;
   }
 
   crearNuevaReserva(): void {
     if (this.ReservationForm.valid) {
       this.calcularPrecioTotal();
-      this.reservationService.postReservas(this.ReservationForm.value).subscribe(
-        (data) => {
-          console.log('Reserva creada:', data);
-          alert('Registro exitoso');
-          this.router.navigate(['/']);
-        },
-        (error) => {
-          console.error('Error al crear reserva:', error);
-          alert('Error al crear reserva. Por favor, inténtelo de nuevo.');
-        }
-      );
-    } else {
-      console.log('Formulario inválido');
-      alert('Formulario inválido');
+      if (this.validarCantidadPersonas()) {
+        this.reservationService.postReservas(this.ReservationForm.value).subscribe(
+          (data) => {
+            console.log('Reserva creada:', data);
+            alert('Registro exitoso');
+            this.router.navigate(['/']);
+          },
+          (error) => {
+            console.error('Error al crear reserva:', error);
+            alert('Error al crear reserva. Por favor, inténtelo de nuevo.');
+          }
+        );
+      } else {
+        console.log('Formulario inválido');
+        alert('Formulario inválido');
+      }
     }
   }
 }
