@@ -49,7 +49,7 @@ const routes: Routes = [
 
   {path: 'lista-habitaciones', component: RoomSelectComponent},
   {path: 'habitaciones', component: RoomSelectClientComponent},
-  {path: 'lista-habitacione/:id', component: RoomSelectComponent},
+  {path: 'lista-habitaciones/:id', component: RoomSelectComponent},
   {path: 'insertar-habitacion', component: RoomInsertComponent},
   {path: 'actualizar-habitacion/:id', component: RoomUpdateComponent},
   {path: 'lista-tipohabitaciones', component: TypeRoomSelectComponent},
@@ -74,7 +74,7 @@ const routes: Routes = [
   {path: 'lista-inventario', component: InventorySelectComponent},
   {path: 'insertar-inventario', component: InventoryInsertComponent},
   {path: 'actualizar-inventario/:id', component: InventoryUpdateComponent},
-  
+
   //HUESPED
   {path: 'lista-huespedes', component: GuestSelectComponent},
   {path: 'insertar-huesped', component: GuestInsertComponent},

@@ -30,14 +30,14 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
-  
+
 
 
   CerrarSesion(): void {
     this.authService.logout().subscribe({
       next: (response) => {
         alert('Sesión cerrada exitosamente')
-        this.router.navigate(['/']);
+        this.router.navigate(['/inicio']);
       },
       error: (error) => {
         console.error('Error al cerrar sesión:', error);
