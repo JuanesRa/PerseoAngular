@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { GuestService } from '../services/guest.service';
 import { Router } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GuestService } from '../services/guest.service';
+
 
 @Component({
   selector: 'app-guest-insert',
@@ -9,20 +10,21 @@ import { HomeComponent } from '../home/home.component';
   styleUrls: ['./guest-insert.component.css']
 })
 export class GuestInsertComponent {
-
+  formulario: FormGroup;
   huespedes: any[] = [];
-  nuevoHuesped: any = {
-    numero_documento : '',
-    nombre: '',
-    apellido: '',
-    email: '',
-    telefono: ''
+
+  constructor(private guestService: GuestService, private router: Router,  public fb: FormBuilder) {
+    this.formulario = this.fb.group({
+      NRODOCUMENTO : ['',],
+      NOMBRE : ['', ],
+      APELLIDO : ['',],
+      EMAIL : ['',],
+      TELEFONO : ['',],
+    })
   }
-  
-  constructor(private guestService: GuestService, private router: Router) {}
 
   crearNuevoHuesped(): void {
-    this.guestService.postGuest(this.nuevoHuesped).subscribe((data) => {
+    this.guestService.postGuest(this.formulario.value).subscribe((data) => {
       this.router.navigate(['/lista-huespedes'])
     })
   }

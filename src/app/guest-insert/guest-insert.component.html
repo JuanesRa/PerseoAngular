@@ -1,33 +1,33 @@
 <div>
-    <app-home></app-home>
+    <app-header></app-header>
 </div>
 
 <div class="signup">
     <span class="title">Registro Huésped</span>
 
-    <form (ngSubmit)="crearNuevoHuesped()">
+    <form [formGroup]="formulario" (ngSubmit)="crearNuevoHuesped()">
         <div class="input-field">
-            <input [(ngModel)]="nuevoHuesped.nombre" type="text" name="Fnombre" placeholder="Ingrese nombre del huésped" required />
+            <input [formControl]="$any(formulario).controls['NOMBRE']" type="text" name="Fnombre" placeholder="Ingrese nombre del huésped" required />
             <i class="uil uil-user"></i>
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="nuevoHuesped.apellido" type="text" name="Fapellido" placeholder="Ingrese apellido del huésped" required />
+            <input [formControl]="$any(formulario).controls['APELLIDO']" type="text" name="Fapellido" placeholder="Ingrese apellido del huésped" required />
             <i class="uil uil-user"></i>
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="nuevoHuesped.numero_documento" type="text" name="Fdocumento" placeholder="Ingrese documento del huésped" required />
+            <input [formControl]="$any(formulario).controls['NRODOCUMENTO']" type="text" name="Fdocumento" placeholder="Ingrese documento del huésped" required />
             <i class="fa-solid fa-id-card"></i>
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="nuevoHuesped.email" type="text" name="Femail" placeholder="Ingresa email del huésped" required />
+            <input [formControl]="$any(formulario).controls['EMAIL']" type="text" name="Femail" placeholder="Ingresa email del huésped" required />
             <i class="uil uil-envelope icon"></i>
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="nuevoHuesped.telefono" type="text" name="Ftelefono" placeholder="Ingresa telefono del huésped" required />
+            <input [formControl]="$any(formulario).controls['TELEFONO']" type="text" name="Ftelefono" placeholder="Ingresa telefono del huésped" required />
             <i class="fa-sharp fa-solid fa-phone"></i>
         </div>
 
@@ -36,7 +36,7 @@
                 <input type="submit" value="Registrate" />
             </div>
             <div class="input-field button">
-                <a routerLink="/inicio" >Volver</a>
+                <a routerLink="/lista-huespedes" >Volver</a>
             </div>
         </div>
     </form>

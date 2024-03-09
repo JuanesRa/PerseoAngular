@@ -1,5 +1,5 @@
 <div>
-    <app-home></app-home>
+    <app-header></app-header>
 </div>
 
 <div class="tabla_content" id="table_huesped">
@@ -19,19 +19,20 @@
         <tbody>
             <tr *ngFor="let huesped of huespedes, let i = index">
                 <td>{{ i + 1 }}</td>
-                <td class="table-light">{{ huesped.numero_documento }}</td>
-                <td class="table-light">{{ huesped.nombre }}</td>
-                <td class="table-light">{{ huesped.apellido }}</td>
-                <td class="table-light">{{ huesped.email }}</td>
-                <td class="table-light">{{ huesped.telefono }}</td>
+                <td class="table-light">{{ huesped.NRODOCUMENTO }}</td>
+                <td class="table-light">{{ huesped.NOMBRE  }}</td>
+                <td class="table-light">{{ huesped.APELLIDO }}</td>
+                <td class="table-light">{{ huesped.EMAIL }}</td>
+                <td class="table-light">{{ huesped.TELEFONO }}</td>
                 <td class="btns">
-                    <button (click)="redireccionarActualizar(huesped.numero_documento)" type="button"
+                    <button (click)="redireccionarActualizar(huesped.NRODOCUMENTO)" type="button"
                         class="btn btn-warning">Actualizar</button>
-                    <button (click)="eliminarHuesped(huesped.numero_documento)" type="button"
+                    <button (click)="eliminarHuesped(huesped.NRODOCUMENTO)" type="button"
                         class="btn btn-danger">Eliminar</button>
                 </td>
             </tr>
         </tbody>
-
     </table>
+      <a routerLink="/insertar-huesped">Adicionar huesped</a>
 </div>
+

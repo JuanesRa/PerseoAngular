@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ServiceUpdateComponent implements OnInit {
   formulario: FormGroup;
   typeService: any[] = [];
-  servicioId!: number; // Inicializado con un valor de tipo number.
+  servicioId!: number;
 
   constructor(
     private router: Router,
