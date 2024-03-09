@@ -1,0 +1,32 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Actualizar Categoria Inventario</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="actualizarCategoria()">
+        <div class="input-field">
+            <input formControlName="NOMBRE_CATEGORIA" type="text" name="categoria"
+                placeholder="Ingrese Categoria" required />
+        </div>
+
+        <div class="input-field">
+            <input formControlName="DESCRIPCION" type="text" name="descripcion"
+                placeholder="Ingrese Descripción" required />
+        </div>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Actualizar"/>
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-categoria-inventario">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

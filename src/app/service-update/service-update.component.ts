@@ -13,12 +13,7 @@ export class ServiceUpdateComponent implements OnInit {
   typeService: any[] = [];
   servicioId!: number;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private serviceService: ServiceService,
-    public fb: FormBuilder
-  ) {
+  constructor( private router: Router, private route: ActivatedRoute, private serviceService: ServiceService, public fb: FormBuilder) {
     this.formulario = this.fb.group({
       NOMBRE_PRODUCTO: ['', [Validators.required, Validators.maxLength(30)]],
       VALOR: [null, [Validators.required, Validators.maxLength(30)]],

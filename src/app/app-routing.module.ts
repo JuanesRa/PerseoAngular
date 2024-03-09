@@ -37,6 +37,10 @@ import { ServiceUpdateComponent } from './service-update/service-update.componen
 import { ServiceTypeSelectComponent } from './service-type-select/service-type-select.component';
 import { ServiceTypeInsertComponent } from './service-type-insert/service-type-insert.component';
 import { ServiceTypeUpdateComponent } from './service-type-update/service-type-update.component';
+import { InventoryCategorySelectComponent } from './inventory-category-select/inventory-category-select.component';
+import { InventoryCategoryInsertComponent } from './inventory-category-insert/inventory-category-insert.component';
+import { InventoryCategoryUpdateComponent } from './inventory-category-update/inventory-category-update.component';
+
 
 import { AuthGuardService } from './services/auth-guard.service';
 
@@ -52,9 +56,13 @@ const routes: Routes = [
   {path: 'lista-habitaciones/:id', component: RoomSelectComponent},
   {path: 'insertar-habitacion', component: RoomInsertComponent},
   {path: 'actualizar-habitacion/:id', component: RoomUpdateComponent},
+
+  //TIPO HABITACION
   {path: 'lista-tipohabitaciones', component: TypeRoomSelectComponent},
   {path: 'actualizar-tipohabitaciones/:id', component: TyperoomUpdateComponent},
   {path: 'insertar-tipo-habitacion', component: TyperoomInsertComponent},
+
+  //ESTADO HABITACION
   {path: 'lista-estadohabitaciones', component: StatusroomSelectComponent},
   {path: 'insertar-estado-habitacion', component: RoomStatusInsertComponent},
   {path: 'actualizar-estado/:id', component: RoomStatusUpdateComponent},
@@ -63,6 +71,7 @@ const routes: Routes = [
   {path: 'lista-tiposervicios', component: ServiceTypeSelectComponent},
   {path: 'insertar-tiposervicio', component: ServiceTypeInsertComponent},
   {path: 'actualizar-tiposervicio/:id', component: ServiceTypeUpdateComponent},
+
   // SERVICIOS
   {path: 'lista-servicios', component: ServiceSelectComponent},
   {path: 'insertar-servicio', component: ServiceInsertComponent},
@@ -71,9 +80,17 @@ const routes: Routes = [
   {path: 'lista-reservas', component: ReservationSelectComponent},
   {path: 'insertar-reserva/:id', component: ReservationInsertComponent, canActivate: [AuthGuardService]},
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
+
+  // INVENTARIO
   {path: 'lista-inventario', component: InventorySelectComponent},
   {path: 'insertar-inventario', component: InventoryInsertComponent},
   {path: 'actualizar-inventario/:id', component: InventoryUpdateComponent},
+
+  //CATEGORIA INVENTARIO
+  {path: 'lista-categoria-inventario', component: InventoryCategorySelectComponent},
+  {path: 'insertar-categoria-inventario', component: InventoryCategoryInsertComponent},
+  {path: 'actualizar-categoria-inventario/:id', component: InventoryCategoryUpdateComponent},
+
 
   //HUESPED
   {path: 'lista-huespedes', component: GuestSelectComponent},

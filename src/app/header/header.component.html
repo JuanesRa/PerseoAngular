@@ -45,13 +45,21 @@
             </li>
 
             <li class="dropdown">
-                <a>Modulo Servicios</a>
+                <a>Gestión de Servicios</a>
                 <ul class="submenu">
                     <li><a routerLink="/lista-servicios" class="opcion">Servicios</a></li>
                     <li><a routerLink="/lista-tiposervicios" class="opcion">Tipo Servicios</a></li>
                 </ul>
             </li>
-            <a routerLink="">Inventario</a>
+
+               <li class="dropdown">
+                <a>Gestión Inventario</a>
+                <ul class="submenu">
+                    <li><a routerLink="/lista-inventario" class="opcion">Inventario</a></li>
+                    <li><a routerLink="/lista-categoria-inventario" class="opcion">Categoria</a></li>
+                </ul>
+            </li>
+
         </ng-container>
         <ng-container *ngIf="isCliente || isRecepcionista">
             <a routerLink="/habitaciones">Habitaciones</a>

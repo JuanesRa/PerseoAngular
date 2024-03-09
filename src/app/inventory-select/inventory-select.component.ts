@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
-import { HomeComponent } from '../home/home.component';
+
 
 @Component({
   selector: 'app-inventory-select',
@@ -17,7 +17,20 @@ export class InventorySelectComponent implements OnInit {
   ngOnInit(): void {
     this.inventoryService.getInventory().subscribe((data) => {
       this.inventarios = data;
+      console.log(this.inventarios = data);
+
+
+    // Obtener el tipo de habitación para cada habitación
+    this.inventarios.forEach((inventario) => {
+    this.inventoryService.getInventoryCategoryById(inventario.CATEGORIA_IDCATEGORIA).subscribe((statusData)=>{
+      inventario.categoria = statusData.NOMBRE_CATEGORIA
+      });
+    });
     })
+
+
+
+
   }
 
   redireccionarActualizar(inventarioId: number): void {
@@ -27,8 +40,8 @@ export class InventorySelectComponent implements OnInit {
   eliminarInventario(inventarioId: number): void {
     if (confirm('¿Está seguro de eliminar el inventario?')) {
       this.inventoryService.deleteInventory(inventarioId).subscribe(() => {
-        this.router.navigate(['/lista-inventario']);
-      })
+      window.location.reload()
+      });
     }
   }
 

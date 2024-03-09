@@ -25,7 +25,7 @@ export class RoomSelectComponent implements OnInit {
         });
       });
 
-    // Obtener el tipo de habitación para cada habitación 
+    // Obtener el tipo de habitación para cada habitación
     this.rooms.forEach((room) => {
       this.roomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData)=>{
       room.tipoHabitacion = statusData.TIPO_HABITACION
@@ -46,6 +46,7 @@ export class RoomSelectComponent implements OnInit {
       this.roomService.deleteRoom(roomId).subscribe(() => {
         window.location.reload()
       })
-    }
+ 
+   }
 }
 }

@@ -1,34 +1,39 @@
+<div>
+    <app-header></app-header>
+</div>
+
 <div class="signup">
-    <span class="title">Actualizar Producto</span>
+    <span class="title">Actualizar Inventario</span>
 
-    <form (ngSubmit)="actualizarInventario()">
+    <form [formGroup]="formulario" (ngSubmit)="actualizarInventario()">
         <div class="input-field">
-            <input [(ngModel)]="inventario.nombre_producto" type="text" name="Fproducto" placeholder="Ingrese producto"
-                required />
+            <input formControlName="NOMBRE_PRODUCTO" type="text" name="producto"
+                placeholder="Ingrese Producto" required />
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="inventario.descripcion" type="text" name="Fdescripcion"
-                placeholder="Ingrese descripcion producto" required />
+            <input formControlName="DESCRIPCION_PRODUCTO" type="text" name="descripcion"
+                placeholder="Ingrese Descripción" required />
         </div>
 
-        <select [(ngModel)]="inventario.id_estado" class="input-select" name="Fidestado">
-            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
-            <option *ngFor="let estado of estados" value="{{estado.id}}"> {{estado.nombre}} </option>
-        </select>
-
-        <select [(ngModel)]="inventario.id_categoria" class="input-select" name="Fidtcategoria">
-            <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
-            <option *ngFor="let categoria of categorias" value="{{categoria.id}}"> {{categoria.nombre}} </option>
+         <select class="input-select" formControlName="CATEGORIA_IDCATEGORIA" name="categoria" required>
+            <option selected="selected" disabled="disabled">Seleccione Categoria</option>
+            <option *ngFor="let categoria of categorias" [value]="categoria.IDCATEGORIA">
+                {{ categoria.NOMBRE_CATEGORIA }}
+            </option>
         </select>
 
         <div class="botones">
             <div class="input-field button">
-                <input type="submit" value="Registrar" />
+                <input type="submit" value="Actualizar"/>
             </div>
             <div class="input-field button">
-                <a routerLink="/inicio" >Volver</a>
+                <a routerLink="/lista-inventario">Volver</a>
             </div>
         </div>
     </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
 </div>

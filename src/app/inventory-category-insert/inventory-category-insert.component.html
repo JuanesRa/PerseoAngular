@@ -1,0 +1,36 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Crear Categoria Inventario</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="crearTipoServicio()">
+        <div class="input-field">
+            <input type="text" [formControl]="$any(formulario).controls['NOMBRE_CATEGORIA']" name="categoria"
+                placeholder="Ingrese la Categoria" required maxlength="30" />
+        </div>
+
+        <div class="input-field">
+            <input type="text" [formControl]="$any(formulario).controls['DESCRIPCION']" name="descripcion"
+                placeholder="Ingrese la descripción" required maxlength="30" />
+        </div>
+
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-categoria-inventario" >Volver</a>
+            </div>
+        </div>
+
+
+
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

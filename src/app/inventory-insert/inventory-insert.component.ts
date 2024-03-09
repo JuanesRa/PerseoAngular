@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { InventoryService } from '../services/inventory.service';
 import { Router } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
+import { InventoryService } from '../services/inventory.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-inventory-insert',
@@ -9,39 +10,31 @@ import { HomeComponent } from '../home/home.component';
   styleUrls: ['./inventory-insert.component.css']
 })
 export class InventoryInsertComponent {
+  categorias: any[] = [];
 
-  estados = [
-    { id: 1, nombre: 'Nuevo' },
-    { id: 2, nombre: 'Buen estado' },
-    { id: 3, nombre: 'Con defectos menores' },
-    { id: 5, nombre: 'Reacondicionado' },
-    { id: 5, nombre: 'Defectuoso' }
-  ]
+  formulario: FormGroup;
 
-  categorias = [
-    { id: 1, nombre: 'Mobiliario' },
-    { id: 2, nombre: 'Electrodomésticos' },
-    { id: 3, nombre: 'Artículos de Decoración' },
-    { id: 4, nombre: 'Seguridad y Accesorios' },
-    { id: 5, nombre: 'Iluminación' },
-    { id: 9, nombre: 'Consumibles' }
-  ]
-
-
-  inventarios: any[] = [];
-  nuevoInventario: any = {
-    id: '',
-    nombre_producto: '',
-    descripcion: '',
-    id_estado: null,
-    id_categoria: null
+  constructor(private inventoryService: InventoryService, private router: Router, public fb: FormBuilder) {
+    this.formulario = this.fb.group({
+      NOMBRE_PRODUCTO  : ['', [Validators.required, Validators.maxLength(30)]],
+      DESCRIPCION_PRODUCTO  : ['', [Validators.required, Validators.maxLength(100)]],
+      CATEGORIA_IDCATEGORIA   : [null, [Validators.required]],
+    })
   }
 
-  constructor(private router: Router, private inventoryService: InventoryService) {}
+  ngOnInit(): void {
+    //Obtener Categorias De inventario
+    this.inventoryService.getInventoryCategory().subscribe((data) => {
+      this.categorias = data;
+     });
 
-  crearNuevoInventario():void {
-    this.inventoryService.postInventory(this.nuevoInventario).subscribe((data) => {
-      this.router.navigate(['/lista-inventario'])
-    })
+  }
+
+  crearNuevoInventario(): void {
+    if (this.formulario.valid) {
+      this.inventoryService.postInventory(this.formulario.value).subscribe((data) => {
+        this.router.navigate(['/lista-inventario'])
+      })
+    }
   }
 }

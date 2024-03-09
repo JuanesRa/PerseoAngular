@@ -1,36 +1,44 @@
 <div>
-  <app-home></app-home>
+    <app-header></app-header>
 </div>
 
 <div class="signup">
-    <span class="title">Crear Producto</span>
+    <span class="title">Crear Inventario</span>
 
-    <form (ngSubmit)="crearNuevoInventario()">
-      <div class="input-field">
-        <input [(ngModel)]="nuevoInventario.nombre_producto" type="text" name="Fproducto" placeholder="Ingrese producto" required />
-      </div>
-
-      <div class="input-field">
-          <input [(ngModel)]="nuevoInventario.descripcion" type="text" name="Fdescripcion" placeholder="Ingrese descripcion producto" required />
+    <form [formGroup]="formulario" (ngSubmit)="crearNuevoInventario()">
+        <div class="input-field">
+            <input type="text" [formControl]="$any(formulario).controls['NOMBRE_PRODUCTO']" name="categoria"
+                placeholder="Ingrese Producto" required maxlength="30" />
         </div>
 
-      <select [(ngModel)]="nuevoInventario.id_estado" class="input-select"  name="Fidestado"  >
-          <option selected="selected" disabled="disabled" > Seleccione Una Opción </option>
-          <option *ngFor="let estado of estados" value="{{estado.id}}"> {{estado.nombre}} </option>
-      </select>
-
-      <select [(ngModel)]="nuevoInventario.id_categoria" class="input-select"  name="Fidtcategoria"  >
-          <option selected="selected" disabled="disabled" > Seleccione Una Opción </option>
-          <option *ngFor="let categoria of categorias" value="{{categoria.id}}"> {{categoria.nombre}} </option>
-      </select>
-
-      <div class="botones">
-        <div class="input-field button">
-          <input type="submit" value="Registrar" />
+        <div class="input-field">
+            <input type="text" [formControl]="$any(formulario).controls['DESCRIPCION_PRODUCTO']" name="descripcion"
+                placeholder="Ingrese Descripción" required maxlength="30" />
         </div>
-        <div class="input-field button">
-          <a routerLink="/inicio" >Volver</a>
+
+         <select class="input-select" [formControl]="$any(formulario).controls['CATEGORIA_IDCATEGORIA']"  name="categoria" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Categoria
+            </option>
+            <option *ngFor="let categoria of categorias" [value]="categoria.IDCATEGORIA ">
+              {{ categoria.NOMBRE_CATEGORIA}}
+            </option>
+          </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-inventario" >Volver</a>
+            </div>
         </div>
-      </div>
+
+
+
     </form>
-  </div>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

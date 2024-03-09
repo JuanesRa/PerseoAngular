@@ -44,6 +44,9 @@ import { ServiceTypeUpdateComponent } from './service-type-update/service-type-u
 import { ServiceInsertComponent } from './service-insert/service-insert.component';
 import { ServiceSelectComponent } from './service-select/service-select.component';
 import { ServiceUpdateComponent } from './service-update/service-update.component';
+import { InventoryCategorySelectComponent } from './inventory-category-select/inventory-category-select.component';
+import { InventoryCategoryInsertComponent } from './inventory-category-insert/inventory-category-insert.component';
+import { InventoryCategoryUpdateComponent } from './inventory-category-update/inventory-category-update.component';
 
 
 @NgModule({
@@ -88,6 +91,9 @@ import { ServiceUpdateComponent } from './service-update/service-update.componen
     ServiceInsertComponent,
     ServiceSelectComponent,
     ServiceUpdateComponent,
+    InventoryCategorySelectComponent,
+    InventoryCategoryInsertComponent,
+    InventoryCategoryUpdateComponent,
   ],
   imports: [
     BrowserModule,
