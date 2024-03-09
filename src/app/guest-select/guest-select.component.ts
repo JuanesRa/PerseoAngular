@@ -27,7 +27,7 @@ export class GuestSelectComponent implements OnInit {
   eliminarHuesped(huespedId: number): void {
     if (confirm('¿Está seguro de eliminar el huésped?')) {
       this.guestService.deleteGuest(huespedId).subscribe(() => {
-        this.router.navigate(['/lista-huespedes']);
+        window.location.reload()
       })
     }
   }

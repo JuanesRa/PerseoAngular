@@ -4,7 +4,7 @@ import { UserSelectComponent } from './user-select/user-select.component';
 import { UserInsertComponent } from './user-insert/user-insert.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { RoomSelectComponent } from './room-select/room-select.component';
-import { RoomSelectClientComponent } from './room-select-client/room-select-client.component'; 
+import { RoomSelectClientComponent } from './room-select-client/room-select-client.component';
 import { RoomInsertComponent } from './room-insert/room-insert.component';
 import { RoomUpdateComponent } from './room-update/room-update.component';
 import { ReservationSelectComponent } from './reservation-select/reservation-select.component';
@@ -26,7 +26,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { TypeRoomSelectComponent } from './room-type-select/type-room-select.component';
-import { TyperoomUpdateComponent } from './room-type-update/typeroom-update.component'; 
+import { TyperoomUpdateComponent } from './room-type-update/typeroom-update.component';
 import { TyperoomInsertComponent } from './room-type-insert/typeroom-insert.component';
 import { StatusroomSelectComponent } from './room-status-select/statusroom-select.component';
 import { RoomStatusInsertComponent } from './room-status-insert/room-status-insert.component';
@@ -46,7 +46,7 @@ const routes: Routes = [
   {path: 'lista-usuarios', component: UserSelectComponent},
   {path: 'insertar-usuario', component: UserInsertComponent},
   {path: 'actualizar-usuario/:id', component: UserUpdateComponent},
-  
+
   {path: 'lista-habitaciones', component: RoomSelectComponent},
   {path: 'habitaciones', component: RoomSelectClientComponent},
   {path: 'lista-habitacione/:id', component: RoomSelectComponent},
@@ -67,13 +67,15 @@ const routes: Routes = [
   {path: 'lista-servicios', component: ServiceSelectComponent},
   {path: 'insertar-servicio', component: ServiceInsertComponent},
   {path: 'actualizar-servicio/:id', component: ServiceUpdateComponent},
-  
+
   {path: 'lista-reservas', component: ReservationSelectComponent},
   {path: 'insertar-reserva/:id', component: ReservationInsertComponent, canActivate: [AuthGuardService]},
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
   {path: 'lista-inventario', component: InventorySelectComponent},
   {path: 'insertar-inventario', component: InventoryInsertComponent},
   {path: 'actualizar-inventario/:id', component: InventoryUpdateComponent},
+  
+  //HUESPED
   {path: 'lista-huespedes', component: GuestSelectComponent},
   {path: 'insertar-huesped', component: GuestInsertComponent},
   {path: 'actualizar-huesped/:id', component: GuestUpdateComponent},

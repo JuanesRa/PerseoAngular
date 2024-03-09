@@ -16,7 +16,7 @@ export class ServiceSelectComponent {
       this.servicios = data;
       console.log(this.servicios)
 
-     // Obtener el tipo de habitación para cada habitación 
+     // Obtener el tipo de habitación para cada habitación
      this.servicios.forEach((servicio) => {
       this.serviceService.getTypeServiceById(servicio.TIPO_SERVICIO_IDTIPOSERVICIO).subscribe((statusData)=>{
         servicio.tipoServicio = statusData.TIPO_SERVICIO
@@ -24,22 +24,17 @@ export class ServiceSelectComponent {
       });
 
      });
-
-
   }
-  
+
   redireccionarActualizar(serviceId: number): void {
     this.router.navigate(['/actualizar-servicio', serviceId]);
   }
 
   eliminarServicio(serviceId: number): void {
-    if (confirm('¿Está seguro de eliminar el servicio? ')) {
+    if (confirm('¿Está seguro de eliminar el producto? ')) {
       this.serviceService.deleteService(serviceId).subscribe(() => {
         window.location.reload()
       })
    }
 }
-
-
-
 }

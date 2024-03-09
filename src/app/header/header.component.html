@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
- 
+
 
 <section class="header">
     <div class="flex">
@@ -18,7 +18,7 @@
           <a *ngIf="isLoggedIn">
             <i (click)="CerrarSesion()" class="fa-solid fa-right-from-bracket" style="color: var(--green);"></i>
           </a>
-          
+
 
        </div>
     </div>
@@ -35,7 +35,15 @@
                     <li><a routerLink="/lista-estadohabitaciones" class="opcion">Estado Habitación</a></li>
                 </ul>
             </li>
-            <a routerLink="/lista-reservas">Modúlo Reserva</a>
+
+            <li class="dropdown">
+                <a>Modúlo Reserva</a>
+                <ul class="submenu">
+                    <li><a routerLink="/lista-reservas" class="opcion">Reservaciones</a></li>
+                    <li><a routerLink="/lista-huespedes" class="opcion">Húesped</a></li>
+                </ul>
+            </li>
+
             <li class="dropdown">
                 <a>Modulo Servicios</a>
                 <ul class="submenu">
@@ -56,6 +64,6 @@
             <a routerLink="">Servicios</a>
         </ng-container>
     </nav>
-  
-   
-</section>  
+
+
+</section>
