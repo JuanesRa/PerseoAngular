@@ -1,7 +1,7 @@
 <div>
     <app-header></app-header>
   </div>
-  
+
   <div class="tabla_content" id="table_room">
     <table class="table table-striped table-hover">
       <thead>
@@ -10,19 +10,20 @@
           <th scope="col">Acciones</th>
         </tr>
       </thead>
-  
+
       <tbody>
-    <tr *ngFor="let servicio of servicios">
-      <td class="table-light">{{ servicio.TIPO_SERVICIO }}</td>
-      <td class="btns">
-        <button (click)="redireccionarActualizar(servicio.IDTIPOSERVICIO)" type="button" class="btn btn-warning">Actualizar</button>
-        <button (click)="eliminarTipoServicio(servicio.IDTIPOSERVICIO)" type="button" class="btn btn-danger">Eliminar</button>
-      </td>
-    </tr>
-  </tbody>
-  
+        <tr *ngFor="let servicio of servicios">
+          <td class="table-light">{{ servicio.TIPO_SERVICIO }}</td>
+          <td class="btns">
+            <button (click)="redireccionarActualizar(servicio.IDTIPOSERVICIO)" type="button" class="btn btn-warning">Actualizar</button>
+            <button (click)="eliminarTipoServicio(servicio.IDTIPOSERVICIO)" type="button" class="btn btn-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+
     </table>
-    <a routerLink="/insertar-tiposervicio"  class="opcion">Servicios</a>
-    
-  </div>
-  
+    <div class="btns">
+      <a routerLink="/insertar-tiposervicio"  class="opcion">Crear Tipo</a>
+    </div>
+</div>
+

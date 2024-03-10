@@ -40,17 +40,24 @@ import { ServiceTypeUpdateComponent } from './service-type-update/service-type-u
 import { InventoryCategorySelectComponent } from './inventory-category-select/inventory-category-select.component';
 import { InventoryCategoryInsertComponent } from './inventory-category-insert/inventory-category-insert.component';
 import { InventoryCategoryUpdateComponent } from './inventory-category-update/inventory-category-update.component';
-
+import { RoomInventorySelectComponent } from './room-inventory-select/room-inventory-select.component';
+import { RoomInventoryInsertComponent } from './room-inventory-insert/room-inventory-insert.component';
+import { RoomInventoryUpdateComponent } from './room-inventory-update/room-inventory-update.component';
 
 import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'inicio', component: HomeComponent},
+  {path: 'registro', component: SignupComponent},
+  {path: 'login', component: LoginComponent},
+
+  //USUARIOS
   {path: 'lista-usuarios', component: UserSelectComponent},
   {path: 'insertar-usuario', component: UserInsertComponent},
   {path: 'actualizar-usuario/:id', component: UserUpdateComponent},
 
+  //HABITACIONES
   {path: 'lista-habitaciones', component: RoomSelectComponent},
   {path: 'habitaciones', component: RoomSelectClientComponent},
   {path: 'lista-habitaciones/:id', component: RoomSelectComponent},
@@ -67,6 +74,12 @@ const routes: Routes = [
   {path: 'insertar-estado-habitacion', component: RoomStatusInsertComponent},
   {path: 'actualizar-estado/:id', component: RoomStatusUpdateComponent},
 
+  //HABITACION X INVENTARIO
+  {path: 'lista-habitacion-inventario/:id', component: RoomInventorySelectComponent},
+  {path: 'insertar-habitacion-inventario/:id', component: RoomInventoryInsertComponent},
+  {path: 'actualizar-habitacion-inventario/:id', component: RoomInventoryUpdateComponent},
+
+
   // TIPO SERVICIOS
   {path: 'lista-tiposervicios', component: ServiceTypeSelectComponent},
   {path: 'insertar-tiposervicio', component: ServiceTypeInsertComponent},
@@ -77,6 +90,7 @@ const routes: Routes = [
   {path: 'insertar-servicio', component: ServiceInsertComponent},
   {path: 'actualizar-servicio/:id', component: ServiceUpdateComponent},
 
+  //RESERVAS
   {path: 'lista-reservas', component: ReservationSelectComponent},
   {path: 'insertar-reserva/:id', component: ReservationInsertComponent, canActivate: [AuthGuardService]},
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
@@ -91,19 +105,20 @@ const routes: Routes = [
   {path: 'insertar-categoria-inventario', component: InventoryCategoryInsertComponent},
   {path: 'actualizar-categoria-inventario/:id', component: InventoryCategoryUpdateComponent},
 
-
   //HUESPED
   {path: 'lista-huespedes', component: GuestSelectComponent},
   {path: 'insertar-huesped', component: GuestInsertComponent},
   {path: 'actualizar-huesped/:id', component: GuestUpdateComponent},
+
+  //DETALLES FACTURA
   {path: 'lista-detalles-facturas', component: InvoiceDetailsSelectComponent},
   {path: 'insertar-detalle-factura', component: InvoiceDetailsInsertComponent},
   {path: 'actualizar-detalle-factura/:id', component: InvoiceDetailsUpdateComponent},
+
+  //FACTURA
   {path: 'lista-facturas', component: InvoiceSelectComponent},
   {path: 'insertar-factura', component: InvoiceInsertComponent},
   {path: 'actualizar-factura/:id', component: InvoiceUpdateComponent},
-  {path: 'registro', component: SignupComponent},
-  {path: 'login', component: LoginComponent},
 
 ];
 

@@ -1,7 +1,7 @@
 <div>
     <app-header></app-header>
   </div>
-  
+
   <div class="tabla_content" id="table_room">
     <table class="table table-striped table-hover">
       <thead>
@@ -15,25 +15,25 @@
           <th scope="col">Acciones</th>
         </tr>
       </thead>
-  
+
       <tbody>
-    <tr *ngFor="let type of Typerooms">
-      
-      <td class="table-light">{{ type.TIPO_HABITACION }}</td>
-      <td class="table-light">{{ type.DESCRIPCION }}</td>
-      <td class="table-light">{{ type.PRECIOXNOCHE }}</td>
-      <td class="table-light">{{ type.CANTIDAD_ADULTOS}}</td>
-      <td class="table-light">{{ type.CANTIDAD_NINOS}}</td>
-      <td class="table-light1"> <img class="imagen" src ="{{ type.FOTO}} " ></td>
-      <td class="btns">
-        <button (click)="redireccionarActualizar(type.IDTIPOHABITACION)" type="button" class="btn btn-warning">Actualizar</button>
-        <button (click)="eliminarTipoHabitacion(type.IDTIPOHABITACION)" type="button" class="btn btn-danger">Eliminar</button>
-      </td>
-    </tr>
-  </tbody>
-  
+        <tr *ngFor="let type of Typerooms">
+
+          <td class="table-light">{{ type.TIPO_HABITACION }}</td>
+          <td class="table-light">{{ type.DESCRIPCION }}</td>
+          <td class="table-light">{{ type.PRECIOXNOCHE }}</td>
+          <td class="table-light">{{ type.CANTIDAD_ADULTOS}}</td>
+          <td class="table-light">{{ type.CANTIDAD_NINOS}}</td>
+          <td class="table-light1"> <img class="imagen" src ="{{ type.FOTO}} " ></td>
+          <td class="btns">
+            <button (click)="redireccionarActualizar(type.IDTIPOHABITACION)" type="button" class="btn btn-warning">Actualizar</button>
+            <button (click)="eliminarTipoHabitacion(type.IDTIPOHABITACION)" type="button" class="btn btn-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+
     </table>
-    <a routerLink="/insertar-tipo-habitacion">Adicionar Tipo habitación</a>
-    
-  </div>
-  
+    <div class="btns">
+      <a routerLink="/insertar-tipo-habitacion">Crear Tipo habitación</a>
+    </div>
+</div>

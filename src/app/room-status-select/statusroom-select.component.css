@@ -79,3 +79,24 @@ body{
    font-size: 15px;
 }
 
+.btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 60px;
+
+}
+
+.btns a {
+  text-decoration: none;
+  padding: 5px 10px 5px 10px;
+  color: #fff;
+  background-color: #5eb319;
+  border-radius: 5px;
+
+}
+.btns  a:hover{
+  color: #fff;
+  padding: 5px 15px;
+}

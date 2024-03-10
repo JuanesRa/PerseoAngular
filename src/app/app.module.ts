@@ -47,6 +47,9 @@ import { ServiceUpdateComponent } from './service-update/service-update.componen
 import { InventoryCategorySelectComponent } from './inventory-category-select/inventory-category-select.component';
 import { InventoryCategoryInsertComponent } from './inventory-category-insert/inventory-category-insert.component';
 import { InventoryCategoryUpdateComponent } from './inventory-category-update/inventory-category-update.component';
+import { RoomInventorySelectComponent } from './room-inventory-select/room-inventory-select.component';
+import { RoomInventoryInsertComponent } from './room-inventory-insert/room-inventory-insert.component';
+import { RoomInventoryUpdateComponent } from './room-inventory-update/room-inventory-update.component';
 
 
 @NgModule({
@@ -94,6 +97,9 @@ import { InventoryCategoryUpdateComponent } from './inventory-category-update/in
     InventoryCategorySelectComponent,
     InventoryCategoryInsertComponent,
     InventoryCategoryUpdateComponent,
+    RoomInventorySelectComponent,
+    RoomInventoryInsertComponent,
+    RoomInventoryUpdateComponent,
   ],
   imports: [
     BrowserModule,

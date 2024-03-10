@@ -4,7 +4,7 @@
 
 <div class="signup">
     <span class="title">Actualizar Usuario</span>
-    <form [formGroup]="formulario">
+    <form [formGroup]="formulario" (ngSubmit)="actualizarUsuario()">
         <div class="input-field">
             <input type="text" formControlName="NOMBRE" name="nombre" required>
             <i class="uil uil-user"></i>
@@ -22,7 +22,7 @@
 
 
         <div class="input-field">
-            <input type="text" formControlName="NRODOCUMENTO" name="documento" required>
+            <input type="text" formControlName="NRODOCUMENTO" name="documento" readonly >
             <i class="fa-solid fa-id-card"></i>
         </div>
 
@@ -41,7 +41,7 @@
             <option *ngFor="let tipoUsuario of tiposUsuario" [value]="tipoUsuario.IDTIPOPERSONA">{{ tipoUsuario.TIPO_PERSONA }}</option>
         </select>
 
-        
+
         <select class="input-select" formControlName="ESTADO_USUARIO_IDESTADO" name="id_estadoPersona" required>
             <option *ngFor="let estado of estadoUsuario" [value]="estado.IDESTADO">{{ estado.ESTADO }}</option>
         </select>
@@ -55,10 +55,10 @@
 
         <div class="botones">
             <div class="input-field button">
-                <button (click)="actualizarUsuario()">Actualizar</button>
+                <input type="submit" value="Actualizar"/>
             </div>
             <div class="input-field button">
-                <a routerLink="/inicio">Volver</a>
+                <a routerLink="/lista-usuarios">Volver</a>
             </div>
         </div>
     </form>

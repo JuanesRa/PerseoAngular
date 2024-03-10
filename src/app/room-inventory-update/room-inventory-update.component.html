@@ -1,0 +1,44 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Actualizar Inventario Habitación {{nroHabitacion}}</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="actualizarInventoryXRoom()">
+        <div class="input-field" [hidden]="true">
+            <input formControlName="HABITACION_NROHABITACION" type="text" name="nro_hab" placeholder="Ingrese Numero Habitación" readonly />
+        </div>
+
+      <select class="input-select"  [formControl]="$any(formulario).controls['INVENTARIO_IDINVENTARIO']" name="producto" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Producto
+            </option>
+            <option *ngFor="let producto of productos" [value]="producto.IDINVENTARIO">
+              {{ producto.NOMBRE_PRODUCTO  }}
+            </option>
+          </select>
+
+        <select class="input-select"  [formControl]="$any(formulario).controls['ESTADO_PRODUCTO_IDESTADOPRODUCTO']" name="estado" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Estado Producto
+            </option>
+            <option *ngFor="let estado of estados" [value]="estado.IDESTADOPRODUCTO">
+              {{ estado.ESTADO }}
+            </option>
+          </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-habitacion-inventario/{{nroHabitacion}}" >Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

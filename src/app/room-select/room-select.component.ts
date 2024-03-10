@@ -8,8 +8,6 @@ import { RoomService } from '../services/room.service';
   styleUrls: ['./room-select.component.css']
 })
 export class RoomSelectComponent implements OnInit {
-
-
   rooms: any[] = [];
 
   constructor(private roomService: RoomService, private router: Router) { }
@@ -39,14 +37,12 @@ export class RoomSelectComponent implements OnInit {
     this.router.navigate(['/actualizar-habitacion', roomId]);
   }
 
-
-
   eliminarHabitacion(roomId: number): void {
     if (confirm('¿Está seguro de eliminar la habitación?')) {
       this.roomService.deleteRoom(roomId).subscribe(() => {
         window.location.reload()
       })
- 
+
    }
 }
 }

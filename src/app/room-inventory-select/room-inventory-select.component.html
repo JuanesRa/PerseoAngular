@@ -12,37 +12,33 @@
   <app-header></app-header>
 </div>
 
+
 <div class="tabla_content" id="table_room">
+<span class="title">Inventario Habitación {{habitacionId}} </span>
   <table class="table table-striped table-hover">
     <thead>
       <tr>
-        <th scope="col">Inventario</th>
-        <th scope="col">Nro Habitación</th>
-        <th scope="col">Estado Habitación</th>
-        <th scope="col">Tipo Habitación</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Estado</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
 
     <tbody>
-  <tr *ngFor="let room of rooms">
-    <td class="table-light" scope="row">
-     <div class="icons">
-      <a href="lista-habitacion-inventario/{{room.NROHABITACION}}"> <i class="fa-solid fa-boxes-stacked"></i> </a>
-    </div>
-    </td>
-    <td class="table-light">{{ room.NROHABITACION }}</td>
-    <td class="table-light">{{ room.tipoEstado }}</td>
-    <td class="table-light">{{ room.tipoHabitacion}}</td>
-    <td class="btns">
-      <button (click)="redireccionarActualizar(room.NROHABITACION)" type="button" class="btn btn-warning">Actualizar</button>
-      <button (click)="eliminarHabitacion(room.NROHABITACION)" type="button" class="btn btn-danger">Eliminar</button>
-    </td>
-  </tr>
-</tbody>
-
+      <tr *ngFor="let roomxinv of roomxinventory">
+        <td class="table-light">{{ roomxinv.producto}}</td>
+        <td class="table-light">{{ roomxinv.estado}}</td>
+        <td class="btns">
+          <button (click)="redireccionarActualizar(roomxinv.ID_INVENTARIO_HABITACION)" type="button" class="btn btn-warning">Actualizar</button>
+          <button (click)="eliminarHabitacionxInventario(roomxinv.ID_INVENTARIO_HABITACION)" type="button" class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
   </table>
+
   <div class="btns">
-    <a routerLink="/insertar-habitacion">Crear habitación</a>
+    <a routerLink="/insertar-habitacion-inventario/{{habitacionId}}">Crear</a>
+    <a routerLink="/lista-habitaciones">Volver</a>
   </div>
+
 </div>

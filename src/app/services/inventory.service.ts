@@ -9,6 +9,7 @@ export class InventoryService {
 
   private urlApi = 'http://127.0.0.1:8000/inventory/inventario/';
   private urlApiInventoryCategory = 'http://127.0.0.1:8000/inventory/categoria/';
+  private urlApiStatuProduct = 'http://127.0.0.1:8000/inventory/estadoproducto/';
 
   constructor(private http: HttpClient) { }
 
@@ -58,6 +59,15 @@ export class InventoryService {
   public deleteInventoryCategory(inventoryId: number): Observable<any> {
     const url = `${this.urlApiInventoryCategory}${inventoryId}/`;
     return this.http.delete(url)
+  }
+
+   //ESTADO PRODUCTO INVENTARIO
+  public getStatusInventory(): Observable<any> {
+    return this.http.get(this.urlApiStatuProduct)
+  }
+  public getStatusInventoryById(inventoryId: number): Observable<any> {
+    const url = `${this.urlApiStatuProduct}${inventoryId}/`;
+    return this.http.get(url);
   }
 
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-room-update',
@@ -8,48 +9,47 @@ import { RoomService } from '../services/room.service';
   styleUrls: ['./room-update.component.css']
 })
 export class RoomUpdateComponent {
-
-  
+  formulario: FormGroup;
   Statusrooms: any[] = [];
   Typerooms: any[] = [];
-  habitacion: any = {};
-  habitacionOriginal: any = {};
+  habitacionId!: number;
 
-  constructor(private router: Router, private route: ActivatedRoute, private roomService: RoomService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private roomService: RoomService, public fb: FormBuilder) {
+    this.formulario = this.fb.group({
+      NROHABITACION: ['', [Validators.required, Validators.maxLength(4)]],
+      ESTADO_HABITACION_IDESTADOHABITACION: [null, [Validators.required, Validators.maxLength(3)]],
+      TIPO_HABITACION_IDTIPOHABITACION: [null, [Validators.required, Validators.maxLength(3)]],
+    })
+  }
 
   ngOnInit(): void {
+    // Obtener el ID del servicio de los parámetros de la ruta
+    this.habitacionId = +this.route.snapshot.params['id'];
+
     this.roomService.getStatusRoom().subscribe((data) => {
       this.Statusrooms = data;
-     });
-
+    });
     this.roomService.getTypeRoom().subscribe((data) => {
       this.Typerooms = data;
-     });
-  
+    });
 
-    this.route.params.subscribe(params => {
-      const roomId = +params['id'];
-      this.roomService.getRoomById(roomId).subscribe((room) => {
-        this.habitacion = room;
+    // Obtener datos del servicio por su ID
+    this.roomService.getRoomById(this.habitacionId).subscribe((habitacion) => {
+      // Establecer los valores del formulario con los datos del servicio
+      this.formulario.patchValue({
+        NROHABITACION: habitacion.NROHABITACION,
+        ESTADO_HABITACION_IDESTADOHABITACION: habitacion.ESTADO_HABITACION_IDESTADOHABITACION,
+        TIPO_HABITACION_IDTIPOHABITACION: habitacion.TIPO_HABITACION_IDTIPOHABITACION,
       });
-
-    
-    })
-    
+    });
   }
 
   actualizarHabitacion(): void {
-    const roomId = this.habitacion.NROHABITACION;
-    const camposModificados = Object.keys(this.habitacion).filter(
-      key => this.habitacion[key] !== this.habitacionOriginal[key]
-    );
+    // Obtener los valores del formulario
+    const valoresFormulario = this.formulario.value;
+    this.roomService.putRoom(this.habitacionId, valoresFormulario).subscribe(() => {
+      this.router.navigate(['/lista-habitaciones']);
+    });
 
-    if (camposModificados.length > 0) {
-      this.roomService.putRoom(roomId, this.habitacion).subscribe(() => {
-        this.router.navigate(['/lista-habitaciones']);
-      });
-    } else {
-      console.log('No se han realizado cambios');
-    }
   }
 }

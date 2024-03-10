@@ -45,25 +45,69 @@ body{
   align-items: center;
 }
 
+
+.title {
+  position: relative;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  background-color: #5eb319;
+  border-radius: 25px;
+}
+
+.icons{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.icons a{
+ font-size: 25px;
+ margin-left: 20px;
+ color: #5eb319;
+}
+
+.flex .icons a i:hover {
+ cursor: pointer;
+}
+
+
+
 .tabla_content table {
   width: 100%;
   font-size: 15px;
   margin: auto;
+
 }
 
 
 .tabla_content table thead tr th {
   background-color: #5eb319;
   color: #fff;
+
+
 }
 
 .tabla_content th,
 .tabla_content td {
   text-align: center;
+  vertical-align: baseline;
+
+
 }
 
 .tabla_content .table-light {
   color: #333333;
+  margin: auto;
 }
 
 .tabla_content table tbody tr .btns {
@@ -71,7 +115,7 @@ body{
   align-items: center;
   justify-content: center;
   gap: 7px;
-
+  height: 60px;
 }
 
 .tabla_content table tbody tr .btns button {

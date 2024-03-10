@@ -26,9 +26,9 @@
     <nav class="navbar">
         <a routerLink="/inicio">Inicio</a>
         <ng-container *ngIf="isAdmin">
-            <a routerLink="/lista-usuarios">Usuarios</a>
+            <a routerLink="/lista-usuarios">Gestión Usuarios</a>
             <li class="dropdown">
-                <a>Modúlo Habitación</a>
+                <a>Gestión Habitación</a>
                 <ul class="submenu">
                     <li><a routerLink="/lista-habitaciones" class="opcion">Habitación</a></li>
                     <li><a routerLink="/lista-tipohabitaciones" class="opcion">Tipo Habitación</a></li>
@@ -37,7 +37,7 @@
             </li>
 
             <li class="dropdown">
-                <a>Modúlo Reserva</a>
+                <a>Gestión Reserva</a>
                 <ul class="submenu">
                     <li><a routerLink="/lista-reservas" class="opcion">Reservaciones</a></li>
                     <li><a routerLink="/lista-huespedes" class="opcion">Húesped</a></li>
@@ -45,7 +45,7 @@
             </li>
 
             <li class="dropdown">
-                <a>Gestión de Servicios</a>
+                <a>Gestión Servicios</a>
                 <ul class="submenu">
                     <li><a routerLink="/lista-servicios" class="opcion">Servicios</a></li>
                     <li><a routerLink="/lista-tiposervicios" class="opcion">Tipo Servicios</a></li>

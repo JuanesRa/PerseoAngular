@@ -19,11 +19,18 @@ export class RoomSelectClientComponent implements OnInit {
       this.rooms = data;
       console.log(this.rooms);
 
-      // Obtener el tipo de habitación para cada habitación 
+      // Obtener el tipo de habitación para cada habitación
       this.roomService.getTypeRoom().subscribe((statusData) => {
         this.Typerooms = statusData; // Asigna los tipos de habitaciones a this.Typerooms
         console.log(this.Typerooms);
       });
+
+      // Obtener el estado para cada habitación
+        this.rooms.forEach((room) => {
+          this.roomService.getStatusRoomById(room.ESTADO_HABITACION_IDESTADOHABITACION).subscribe((statusData) => {
+            room.tipoEstado = statusData.TIPO_ESTADO;
+          });
+       });
 
       // Obtener foto de habitacion para cada habitación
       this.rooms.forEach((room)=> {
@@ -43,7 +50,7 @@ export class RoomSelectClientComponent implements OnInit {
   redireccionarReservar(room: any): void {
     this.router.navigate(['/insertar-reserva', room.NROHABITACION], { state: { habitacion: room } });
   }
-  
+
 
 
 }

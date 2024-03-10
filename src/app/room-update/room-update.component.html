@@ -5,20 +5,20 @@
 <div class="signup">
     <span class="title">Actualizar Habitación</span>
 
-    <form (ngSubmit)="actualizarHabitacion()">
+    <form [formGroup]="formulario" (ngSubmit)="actualizarHabitacion()">
         <div class="input-field">
-            <input [(ngModel)]="habitacion.NROHABITACION" type="text" name="num_habitacion"
-                placeholder="Ingrese el número de habitación" required />
+            <input formControlName="NROHABITACION" type="text" name="num_habitacion"
+                placeholder="Ingrese el número de habitación" readonly />
         </div>
 
-        <select class="input-select" [(ngModel)]="habitacion.ESTADO_HABITACION_IDESTADOHABITACION" name="Status Room" required>
+        <select class="input-select" formControlName="ESTADO_HABITACION_IDESTADOHABITACION" name="Status Room" required>
             <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
             <option *ngFor="let tipoEstado of Statusrooms" [value]="tipoEstado.IDESTADOHABITACION">
                 {{ tipoEstado.TIPO_ESTADO}}
               </option>
         </select>
 
-        <select class="input-select" [(ngModel)]="habitacion.TIPO_HABITACION_IDTIPOHABITACION" name="Type Room" required>
+        <select class="input-select" formControlName="TIPO_HABITACION_IDTIPOHABITACION" name="Type Room" required>
             <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
             <option *ngFor="let tipohabitacion of Typerooms" [value]="tipohabitacion.IDTIPOHABITACION">
                 {{ tipohabitacion.TIPO_HABITACION}}
