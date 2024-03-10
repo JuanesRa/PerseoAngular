@@ -54,7 +54,7 @@ export class ReservationSelectComponent implements OnInit {
   eliminarReserva(reservaId: number): void {
     if (confirm('¿Está seguro de eliminar la reserva?')) {
       this.reservationService.deleteReserva(reservaId).subscribe(() => {
-        this.router.navigate(['/lista-reservaciones']);
+        window.location.reload()
       });
     }
   }

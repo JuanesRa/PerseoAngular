@@ -34,6 +34,11 @@ private urlApiRoomInventory= 'http://127.0.0.1:8000/room/inventariohab/';
     return this.http.put<any>(url, updatedRoomData)
   }
 
+  public patchRoom(roomId: number, updatedRoomData: any):Observable<any> {
+    const url = `${this.urlApi}${roomId}/`;
+    return this.http.patch<any>(url, updatedRoomData)
+  }
+
   public deleteRoom(roomId: number): Observable<any> {
     const url = `${this.urlApi}${roomId}/`;
     return this.http.delete<any>(url);

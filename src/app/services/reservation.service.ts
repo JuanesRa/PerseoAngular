@@ -5,6 +5,10 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ReservationService {
 
   private urlApi = 'http://127.0.0.1:8000/reservation/reserva/';
@@ -93,5 +97,6 @@ export class ReservationService {
     return this.http.delete(url);
   }
 
+ 
 
 }
