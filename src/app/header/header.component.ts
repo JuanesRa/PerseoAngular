@@ -38,6 +38,7 @@ export class HeaderComponent implements OnInit {
       next: (response) => {
         alert('Sesión cerrada exitosamente')
         this.router.navigate(['/inicio']);
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Error al cerrar sesión:', error);
