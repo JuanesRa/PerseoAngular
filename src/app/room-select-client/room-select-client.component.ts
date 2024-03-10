@@ -10,47 +10,57 @@ import { RoomService } from '../services/room.service';
 export class RoomSelectClientComponent implements OnInit {
   rooms: any[] = [];
   Typerooms: any[] = [];
+  estados: any[] = [];
+
+  // Variable para almacenar el ID del estado "Disponible"
+  estadoDisponibleId: number = 0;
 
   constructor(private roomService: RoomService, private router: Router) { }
 
   ngOnInit(): void {
     // Obtener todas las habitaciones
     this.roomService.getRooms().subscribe((data) => {
-      this.rooms = data;
-      console.log(this.rooms);
+      // Obtener el estado "Disponible" y filtrar las habitaciones
+      this.roomService.getStatusRoom().subscribe((statusData) => {
+        // Asignar los estados
+        this.estados = statusData;
+        // Obtener el ID del estado "Disponible"
+        this.estadoDisponibleId = this.getEstadoDisponibleId();
 
-      // Obtener el tipo de habitación para cada habitación
-      this.roomService.getTypeRoom().subscribe((statusData) => {
-        this.Typerooms = statusData; // Asigna los tipos de habitaciones a this.Typerooms
-        console.log(this.Typerooms);
-      });
+        // Filtrar las habitaciones por el estado "Disponible"
+        this.rooms = data.filter((item: any) => item.ESTADO_HABITACION_IDESTADOHABITACION == this.estadoDisponibleId);
+        console.log(this.rooms);
 
-      // Obtener el estado para cada habitación
-        this.rooms.forEach((room) => {
-          this.roomService.getStatusRoomById(room.ESTADO_HABITACION_IDESTADOHABITACION).subscribe((statusData) => {
-            room.tipoEstado = statusData.TIPO_ESTADO;
+        // Obtener el tipo de habitación para cada habitación
+        this.roomService.getTypeRoom().subscribe((typeData) => {
+          this.Typerooms = typeData;
+          console.log(this.Typerooms);
+        });
+
+        // Obtener foto de habitación para cada habitación
+        this.rooms.forEach((room)=> {
+          this.roomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData)=>{
+            room.foto = statusData.FOTO; // Asignar la foto al objeto de la habitación
+            room.tipo = statusData.TIPO_HABITACION
+            room.precio = statusData.PRECIOXNOCHE
+            room.descripcion = statusData.DESCRIPCION
+            room.cap_adultos = statusData.CANTIDAD_ADULTOS
+            room.cap_ninos = statusData.CANTIDAD_NINOS
           });
-       });
-
-      // Obtener foto de habitacion para cada habitación
-      this.rooms.forEach((room)=> {
-        this.roomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData)=>{
-          room.foto = statusData.FOTO; // Asigna la foto al objeto de la habitación
-          room.tipo = statusData.TIPO_HABITACION
-          room.precio = statusData.PRECIOXNOCHE
-          room.descripcion = statusData.DESCRIPCION
-          room.cap_adultos = statusData.CANTIDAD_ADULTOS
-          room.cap_ninos = statusData.CANTIDAD_NINOS
-
         });
       });
-
-    })
+    });
   }
+
+
+  // Método para obtener el ID del estado "Disponible"
+  getEstadoDisponibleId(): number {
+    const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');
+    return estadoDisponible ? estadoDisponible.IDESTADOHABITACION : 0;
+  }
+
   redireccionarReservar(room: any): void {
     this.router.navigate(['/insertar-reserva', room.NROHABITACION], { state: { habitacion: room } });
   }
-
-
 
 }
