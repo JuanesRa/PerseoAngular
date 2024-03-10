@@ -7,7 +7,7 @@
 
     <form [formGroup]="formulario" (ngSubmit)="crearNuevoGuestXReservation()">
 
-      <select class="input-select"  [formControl]="$any(formulario).controls['HUESPED_IDHUESPED']" name="Type service" required>
+      <select class="input-select"  [formControl]="$any(formulario).controls['HUESPED_IDHUESPED']" name="huesped" required>
             <option selected="selected" disabled="disabled">
               Seleccione Húesped
             </option>

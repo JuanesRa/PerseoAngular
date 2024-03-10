@@ -7,6 +7,8 @@
         <thead>
             <tr>
                 <th scope="col">Huespedes</th>
+                <th scope="col">Habitaciones</th>
+                <th scope="col">Codigo</th>
                 <th scope="col">Fecha Reservación</th>
                 <th scope="col">Fecha Entrada</th>
                 <th scope="col">Hora Entrada</th>
@@ -26,9 +28,15 @@
             <tr *ngFor="let reserva of reservas">
                 <td>
                     <div class="icons">
-                      <a href="lista-huesped-reserva/{{reserva.IDRESERVA}}"> <i class="fa-solid fa-users"></i> </a>
+                      <a href="lista-huesped-reserva/{{reserva.IDRESERVA}}"> <i class="fa-solid fa-users"></i></a>
                     </div>
                 </td>
+                <td>
+                    <div class="icons">
+                      <a href="lista-habitacion-reserva/{{reserva.IDRESERVA}}"> <i class="fa-solid fa-bed"></i></a>
+                    </div>
+                </td>
+                <td class="table-light">{{ reserva.IDRESERVA }}</td>
                 <td class="table-light">{{ reserva.FECHA_RESERVACION }}</td>
                 <td class="table-light">{{ reserva.FECHA_ENTRADA }}</td>
                 <td class="table-light">{{ reserva.HORA_ENTRADA }}</td>

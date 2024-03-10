@@ -60,6 +60,7 @@ body{
 .tabla_content th,
 .tabla_content td {
    text-align: center;
+   vertical-align: baseline;
 }
 
 .tabla_content .table-light {

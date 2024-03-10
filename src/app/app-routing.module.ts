@@ -46,6 +46,9 @@ import { RoomInventoryUpdateComponent } from './room-inventory-update/room-inven
 import { ReservationGuestSelectComponent } from './reservation-guest-select/reservation-guest-select.component';
 import { ReservationGuestInsertComponent } from './reservation-guest-insert/reservation-guest-insert.component';
 import { ReservationGuestUpdateComponent } from './reservation-guest-update/reservation-guest-update.component';
+import { ReservationRoomSelectComponent } from './reservation-room-select/reservation-room-select.component';
+import { ReservationRoomInsertComponent } from './reservation-room-insert/reservation-room-insert.component';
+import { ReservationRoomUpdateComponent } from './reservation-room-update/reservation-room-update.component';
 
 import { AuthGuardService } from './services/auth-guard.service';
 
@@ -55,33 +58,37 @@ const routes: Routes = [
   {path: 'registro', component: SignupComponent},
   {path: 'login', component: LoginComponent},
 
-  //USUARIOS
+  // USUARIOS
   {path: 'lista-usuarios', component: UserSelectComponent},
   {path: 'insertar-usuario', component: UserInsertComponent},
   {path: 'actualizar-usuario/:id', component: UserUpdateComponent},
 
-  //HABITACIONES
+  // HABITACIONES
   {path: 'lista-habitaciones', component: RoomSelectComponent},
   {path: 'habitaciones', component: RoomSelectClientComponent},
   {path: 'lista-habitaciones/:id', component: RoomSelectComponent},
   {path: 'insertar-habitacion', component: RoomInsertComponent},
   {path: 'actualizar-habitacion/:id', component: RoomUpdateComponent},
 
-  //TIPO HABITACION
+  // TIPO HABITACION
   {path: 'lista-tipohabitaciones', component: TypeRoomSelectComponent},
   {path: 'actualizar-tipohabitaciones/:id', component: TyperoomUpdateComponent},
   {path: 'insertar-tipo-habitacion', component: TyperoomInsertComponent},
 
-  //ESTADO HABITACION
+  // ESTADO HABITACION
   {path: 'lista-estadohabitaciones', component: StatusroomSelectComponent},
   {path: 'insertar-estado-habitacion', component: RoomStatusInsertComponent},
   {path: 'actualizar-estado/:id', component: RoomStatusUpdateComponent},
 
-  //HABITACION X INVENTARIO
+  // HABITACION X INVENTARIO
   {path: 'lista-habitacion-inventario/:id', component: RoomInventorySelectComponent},
   {path: 'insertar-habitacion-inventario/:id', component: RoomInventoryInsertComponent},
   {path: 'actualizar-habitacion-inventario/:id', component: RoomInventoryUpdateComponent},
 
+  // HABITACION X RESERVA
+  {path: 'lista-habitacion-reserva/:id', component: ReservationRoomSelectComponent},
+  {path: 'insertar-habitacion-reserva/:id', component: ReservationRoomInsertComponent},
+  {path: 'actualizar-habitacion-reserva/:id', component: ReservationRoomUpdateComponent},
 
   // TIPO SERVICIOS
   {path: 'lista-tiposervicios', component: ServiceTypeSelectComponent},
@@ -93,7 +100,7 @@ const routes: Routes = [
   {path: 'insertar-servicio', component: ServiceInsertComponent},
   {path: 'actualizar-servicio/:id', component: ServiceUpdateComponent},
 
-  //RESERVAS
+  // RESERVAS
   {path: 'lista-reservas', component: ReservationSelectComponent},
   {path: 'insertar-reserva/:id', component: ReservationInsertComponent, canActivate: [AuthGuardService]},
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
@@ -108,24 +115,24 @@ const routes: Routes = [
   {path: 'insertar-categoria-inventario', component: InventoryCategoryInsertComponent},
   {path: 'actualizar-categoria-inventario/:id', component: InventoryCategoryUpdateComponent},
 
-  //HUESPED
+  // HUESPED
   {path: 'lista-huespedes', component: GuestSelectComponent},
   {path: 'insertar-huesped', component: GuestInsertComponent},
   {path: 'actualizar-huesped/:id', component: GuestUpdateComponent},
 
 
-  //HUESPED X RESERVA
+  // HUESPED X RESERVA
   {path: 'lista-huesped-reserva/:id', component: ReservationGuestSelectComponent},
   {path: 'insertar-huesped-reserva/:id', component: ReservationGuestInsertComponent},
   {path: 'actualizar-huesped-reserva/:id', component: ReservationGuestUpdateComponent},
 
 
-  //DETALLES FACTURA
+  // DETALLES FACTURA
   {path: 'lista-detalles-facturas', component: InvoiceDetailsSelectComponent},
   {path: 'insertar-detalle-factura', component: InvoiceDetailsInsertComponent},
   {path: 'actualizar-detalle-factura/:id', component: InvoiceDetailsUpdateComponent},
 
-  //FACTURA
+  // FACTURA
   {path: 'lista-facturas', component: InvoiceSelectComponent},
   {path: 'insertar-factura', component: InvoiceInsertComponent},
   {path: 'actualizar-factura/:id', component: InvoiceUpdateComponent},

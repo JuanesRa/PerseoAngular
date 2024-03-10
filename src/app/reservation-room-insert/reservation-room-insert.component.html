@@ -1,0 +1,32 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Habitación Reserva Nro: {{reservationId}}</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="crearNuevoHabitacionXReserva()">
+
+      <select class="input-select"  [formControl]="$any(formulario).controls['HABITACION_NROHABITACION']" name="habitacion" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Habitación
+            </option>
+            <option *ngFor="let room of habitaciones" [value]="room.NROHABITACION ">
+              {{room.NROHABITACION}}
+            </option>
+          </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-habitacion-reserva/{{reservationId}}" >Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

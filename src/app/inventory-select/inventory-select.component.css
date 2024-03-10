@@ -60,6 +60,7 @@ body{
 .tabla_content th,
 .tabla_content td {
   text-align: center;
+  vertical-align: baseline;
 }
 
 .tabla_content .table-light {
@@ -71,7 +72,7 @@ body{
   align-items: center;
   justify-content: center;
   gap: 7px;
-  height: 100px;
+  height: 60px;
 }
 
 .tabla_content table tbody tr .btns button {

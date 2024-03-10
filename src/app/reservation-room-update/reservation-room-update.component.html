@@ -3,19 +3,19 @@
 </div>
 
 <div class="signup">
-    <span class="title">Actualizar Húesped de la Reserva {{nroReserva}}</span>
+    <span class="title">Actualizar Habitación de la Reserva {{nroReserva}}</span>
 
-    <form [formGroup]="formulario" (ngSubmit)="actualizarGuestXReservation()">
+    <form [formGroup]="formulario" (ngSubmit)="actualizarRoomXReservation()">
         <div class="input-field" [hidden]="true">
             <input formControlName="RESERVA_IDRESERVA" type="text" name="nro_reserva" placeholder="Ingrese ID Reaerva" readonly />
         </div>
 
-      <select class="input-select"  [formControl]="$any(formulario).controls['HUESPED_IDHUESPED']" name="huesped" required>
+      <select class="input-select"  [formControl]="$any(formulario).controls['HABITACION_NROHABITACION']" name="habitacion" required>
             <option selected="selected" disabled="disabled">
-              Seleccione Húesped
+              Seleccione Habitación
             </option>
-            <option *ngFor="let huesped of huespedes" [value]="huesped.NRODOCUMENTO">
-              {{ huesped.NOMBRE  }}
+            <option *ngFor="let room of habitaciones" [value]="room.NROHABITACION ">
+              {{ room.NROHABITACION  }}
             </option>
           </select>
 
@@ -24,7 +24,7 @@
                 <input type="submit" value="Actualizar" />
             </div>
             <div class="input-field button">
-                   <a routerLink="/lista-huesped-reserva/{{nroReserva}}" >Volver</a>
+                   <a routerLink="/lista-habitacion-reserva/{{nroReserva}}" >Volver</a>
             </div>
         </div>
     </form>

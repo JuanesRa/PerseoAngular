@@ -26,7 +26,7 @@ export class ReservationGuestInsertComponent {
     // Obtener el ID del servicio de los parámetros de la ruta
     this.reservationId =+this.route.snapshot.params['id'];
 
-    // Establecer el valor de HUESPED_IDHUESPED en el formulario
+    // Establecer el valor de RESERVA_IDRESERVA en el formulario
     this.formulario.patchValue({
       RESERVA_IDRESERVA: this.reservationId
     });
@@ -43,6 +43,5 @@ export class ReservationGuestInsertComponent {
       this.router.navigate(['/lista-huesped-reserva', this.reservationId]);
     });
   }
-
 
 }

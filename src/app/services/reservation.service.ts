@@ -10,6 +10,7 @@ export class ReservationService {
   private urlApi = 'http://127.0.0.1:8000/reservation/reserva/';
   private urlApiStatusReservation = 'http://127.0.0.1:8000/reservation/estadoreserva/';
   private urlApiReservationXGuest = 'http://127.0.0.1:8000/reservation/huexres/';
+  private urlApiReservationXRoom = 'http://127.0.0.1:8000/reservation/habxres/';
 
   constructor(private http: HttpClient) { }
 
@@ -65,6 +66,30 @@ export class ReservationService {
 
   public deleteReservationXGuest(ReservationXGuestId: number): Observable<any> {
     const url = `${this.urlApiReservationXGuest}${ReservationXGuestId}/`;
+    return this.http.delete(url);
+  }
+
+   //RESERVA X HABITACION
+   public getReservationXRoom(): Observable<any> {
+    return this.http.get(this.urlApiReservationXRoom);
+  }
+
+  public postReservationXRoom(ReservationXRoomtId: any): Observable<any> {
+    return this.http.post(this.urlApiReservationXRoom, ReservationXRoomtId);
+  }
+
+  public getReservationXRoomById(ReservationXRoomtId: number): Observable<any> {
+    const url = `${this.urlApiReservationXRoom}${ReservationXRoomtId}/`;
+    return this.http.get(url)
+  }
+
+  public putReservationXRoom(ReservationXRoomtId: number, updatedReservaData: any): Observable<any> {
+    const url = `${this.urlApiReservationXRoom}${ReservationXRoomtId}/`;
+    return this.http.put<any>(url, updatedReservaData);
+  }
+
+  public deleteReservationXRoom(ReservationXRoomtId: number): Observable<any> {
+    const url = `${this.urlApiReservationXRoom}${ReservationXRoomtId}/`;
     return this.http.delete(url);
   }
 
