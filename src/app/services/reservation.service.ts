@@ -9,9 +9,11 @@ export class ReservationService {
 
   private urlApi = 'http://127.0.0.1:8000/reservation/reserva/';
   private urlApiStatusReservation = 'http://127.0.0.1:8000/reservation/estadoreserva/';
+  private urlApiReservationXGuest = 'http://127.0.0.1:8000/reservation/huexres/';
 
   constructor(private http: HttpClient) { }
 
+  //RESERVA
   public getReservas(): Observable<any> {
     return this.http.get(this.urlApi);
   }
@@ -35,10 +37,35 @@ export class ReservationService {
     return this.http.delete(url);
   }
 
-  //Estado reserva 
+  //Estado reserva
   public getStatusReservationById(statusreservationId: number): Observable<any> {
     const url = `${this.urlApiStatusReservation}${statusreservationId}/`;
     return this.http.get(url);
+  }
+
+
+  //RESERVA X HUESPED
+  public getReservationXGuest(): Observable<any> {
+    return this.http.get(this.urlApiReservationXGuest);
+  }
+
+  public postReservationXGuest(ReservationXGuestId: any): Observable<any> {
+    return this.http.post(this.urlApiReservationXGuest, ReservationXGuestId);
+  }
+
+  public getReservationXGuestById(ReservationXGuestId: number): Observable<any> {
+    const url = `${this.urlApiReservationXGuest}${ReservationXGuestId}/`;
+    return this.http.get(url)
+  }
+
+  public putReservationXGuest(ReservationXGuestId: number, updatedReservaData: any): Observable<any> {
+    const url = `${this.urlApiReservationXGuest}${ReservationXGuestId}/`;
+    return this.http.put<any>(url, updatedReservaData);
+  }
+
+  public deleteReservationXGuest(ReservationXGuestId: number): Observable<any> {
+    const url = `${this.urlApiReservationXGuest}${ReservationXGuestId}/`;
+    return this.http.delete(url);
   }
 
 

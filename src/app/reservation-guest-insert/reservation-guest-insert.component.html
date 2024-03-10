@@ -1,0 +1,32 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Crear Húesped en la Reserva {{reservationId}}</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="crearNuevoGuestXReservation()">
+
+      <select class="input-select"  [formControl]="$any(formulario).controls['HUESPED_IDHUESPED']" name="Type service" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Húesped
+            </option>
+            <option *ngFor="let huesped of huespedes" [value]="huesped.NRODOCUMENTO">
+              {{ huesped.NOMBRE  }}
+            </option>
+          </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+            <div class="input-field button">
+                <a routerLink="/lista-huesped-reserva/{{reservationId}}" >Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

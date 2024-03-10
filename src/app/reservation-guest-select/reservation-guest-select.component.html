@@ -1,0 +1,50 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Perseo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<div>
+  <app-header></app-header>
+</div>
+
+
+<div class="tabla_content" id="table_room">
+<span class="title">Huespedes de la Reserva Nro {{reservationId}} </span>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nro Documento</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let guest of guestxreservation">
+        <td class="table-light">{{ guest.NroDocumento }}</td>
+        <td class="table-light">{{ guest.Nombre }}</td>
+        <td class="table-light">{{ guest.Apellido }}</td>
+        <td class="table-light">{{ guest.Telefono }}</td>
+        <td class="table-light">{{ guest.Email }}</td>
+        <td class="btns">
+          <button (click)="redireccionarActualizar(guest.ID_HUESPED_RESERVA)" type="button" class="btn btn-warning">Actualizar</button>
+          <button (click)="eliminarHuespedxReserva(guest.ID_HUESPED_RESERVA)" type="button" class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="btns">
+    <a routerLink="/insertar-huesped-reserva/{{reservationId}}">Crear</a>
+    <a routerLink="/lista-reservas">Volver</a>
+  </div>
+
+</div>

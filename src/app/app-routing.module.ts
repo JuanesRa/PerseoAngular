@@ -43,6 +43,9 @@ import { InventoryCategoryUpdateComponent } from './inventory-category-update/in
 import { RoomInventorySelectComponent } from './room-inventory-select/room-inventory-select.component';
 import { RoomInventoryInsertComponent } from './room-inventory-insert/room-inventory-insert.component';
 import { RoomInventoryUpdateComponent } from './room-inventory-update/room-inventory-update.component';
+import { ReservationGuestSelectComponent } from './reservation-guest-select/reservation-guest-select.component';
+import { ReservationGuestInsertComponent } from './reservation-guest-insert/reservation-guest-insert.component';
+import { ReservationGuestUpdateComponent } from './reservation-guest-update/reservation-guest-update.component';
 
 import { AuthGuardService } from './services/auth-guard.service';
 
@@ -109,6 +112,13 @@ const routes: Routes = [
   {path: 'lista-huespedes', component: GuestSelectComponent},
   {path: 'insertar-huesped', component: GuestInsertComponent},
   {path: 'actualizar-huesped/:id', component: GuestUpdateComponent},
+
+
+  //HUESPED X RESERVA
+  {path: 'lista-huesped-reserva/:id', component: ReservationGuestSelectComponent},
+  {path: 'insertar-huesped-reserva/:id', component: ReservationGuestInsertComponent},
+  {path: 'actualizar-huesped-reserva/:id', component: ReservationGuestUpdateComponent},
+
 
   //DETALLES FACTURA
   {path: 'lista-detalles-facturas', component: InvoiceDetailsSelectComponent},

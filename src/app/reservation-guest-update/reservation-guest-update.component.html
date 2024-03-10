@@ -1,0 +1,35 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Actualizar Húesped de la Reserva {{nroReserva}}</span>
+
+    <form [formGroup]="formulario" (ngSubmit)="actualizarGuestXReservation()">
+        <div class="input-field" [hidden]="true">
+            <input formControlName="RESERVA_IDRESERVA" type="text" name="nro_reserva" placeholder="Ingrese ID Reaerva" readonly />
+        </div>
+
+      <select class="input-select"  [formControl]="$any(formulario).controls['HUESPED_IDHUESPED']" name="huesped" required>
+            <option selected="selected" disabled="disabled">
+              Seleccione Húesped
+            </option>
+            <option *ngFor="let huesped of huespedes" [value]="huesped.NRODOCUMENTO">
+              {{ huesped.NOMBRE  }}
+            </option>
+          </select>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Crear" />
+            </div>
+            <div class="input-field button">
+                   <a routerLink="/lista-huesped-reserva/{{nroReserva}}" >Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

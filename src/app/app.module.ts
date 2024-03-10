@@ -50,6 +50,9 @@ import { InventoryCategoryUpdateComponent } from './inventory-category-update/in
 import { RoomInventorySelectComponent } from './room-inventory-select/room-inventory-select.component';
 import { RoomInventoryInsertComponent } from './room-inventory-insert/room-inventory-insert.component';
 import { RoomInventoryUpdateComponent } from './room-inventory-update/room-inventory-update.component';
+import { ReservationGuestSelectComponent } from './reservation-guest-select/reservation-guest-select.component';
+import { ReservationGuestInsertComponent } from './reservation-guest-insert/reservation-guest-insert.component';
+import { ReservationGuestUpdateComponent } from './reservation-guest-update/reservation-guest-update.component';
 
 
 @NgModule({
@@ -100,6 +103,9 @@ import { RoomInventoryUpdateComponent } from './room-inventory-update/room-inven
     RoomInventorySelectComponent,
     RoomInventoryInsertComponent,
     RoomInventoryUpdateComponent,
+    ReservationGuestSelectComponent,
+    ReservationGuestInsertComponent,
+    ReservationGuestUpdateComponent,
   ],
   imports: [
     BrowserModule,

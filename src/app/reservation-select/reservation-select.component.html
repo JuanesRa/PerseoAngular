@@ -6,6 +6,7 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+                <th scope="col">Huespedes</th>
                 <th scope="col">Fecha Reservación</th>
                 <th scope="col">Fecha Entrada</th>
                 <th scope="col">Hora Entrada</th>
@@ -23,6 +24,11 @@
 
         <tbody>
             <tr *ngFor="let reserva of reservas">
+                <td>
+                    <div class="icons">
+                      <a href="lista-huesped-reserva/{{reserva.IDRESERVA}}"> <i class="fa-solid fa-users"></i> </a>
+                    </div>
+                </td>
                 <td class="table-light">{{ reserva.FECHA_RESERVACION }}</td>
                 <td class="table-light">{{ reserva.FECHA_ENTRADA }}</td>
                 <td class="table-light">{{ reserva.HORA_ENTRADA }}</td>
