@@ -36,7 +36,7 @@ body{
 }
 /* TABLA CSS */
 .tabla_content {
-  width: 60%;
+  max-width: 1150px;
   margin: auto;
   margin-top: 10px;
   display: flex;
