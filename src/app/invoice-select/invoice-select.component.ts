@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InvoiceService } from '../services/invoice.service';
-import { HomeComponent } from '../home/home.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-invoice-select',
@@ -12,12 +12,22 @@ export class InvoiceSelectComponent implements OnInit{
 
   facturas: any[] = [];
 
-  constructor(private invoiceService: InvoiceService, private router: Router) { }
+  constructor(private UserService:UserService, private invoiceService: InvoiceService, private router: Router) { }
 
   ngOnInit(): void {
     this.invoiceService.getInvoice().subscribe((data) => {
-      this.facturas = data
+      this.facturas = data;
+
+       // Obtener el tipo de estado para cada habitación
+       this.facturas.forEach((factura) => {
+        this.UserService.getUserById(factura.PERSONA_NRODOCUMENTO ).subscribe((statusData) => {
+          factura.Nombre = statusData.NOMBRE;
+          factura.Apellido = statusData.APELLIDO;
+          factura.Correo = statusData.email;
+        });
+      });
     })
+
   }
 
   redireccionarActualizar(invoiceId: number): void {
@@ -27,7 +37,7 @@ export class InvoiceSelectComponent implements OnInit{
   eliminarFactura(invoiceId: number): void {
     if (confirm('¿Está seguro de eliminar la factura?')) {
       this.invoiceService.deleteInvoice(invoiceId).subscribe(() => {
-        this.router.navigate(['/lista-facturas']);
+        window.location.reload()
       })
     }
   }

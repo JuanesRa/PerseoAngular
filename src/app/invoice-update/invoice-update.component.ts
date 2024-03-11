@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 import { InvoiceService } from '../services/invoice.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-invoice-update',
@@ -8,39 +10,51 @@ import { InvoiceService } from '../services/invoice.service';
   styleUrls: ['./invoice-update.component.css']
 })
 export class InvoiceUpdateComponent {
+  fechaMinimaIn: string;
+  formulario: FormGroup;
+  clientes: any[] = [];
+  facturaId!: number;
 
-  metodoPago = [
-    { id: 1, nombre: 'Tarjeta Crédito' },
-    { id: 2, nombre: 'Efectivo' }
-  ]
-
-  factura: any = {};
-  facturaOriginal: any = {}
-
-  constructor(private invoiceService: InvoiceService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private UserService:UserService, private invoiceService: InvoiceService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) {
+    this.formulario = this.fb.group({
+      FECHA_FACTURA  : ['', [Validators.required, Validators.maxLength(4)]],
+      MONTO_TOTAL_RESERVA  : [null, [Validators.required, Validators.maxLength(3)]],
+      PERSONA_NRODOCUMENTO  : [null, [Validators.required, Validators.maxLength(3)]],
+    })
+    // Inicialización de la fecha mínima
+  const today = new Date();
+  this.fechaMinimaIn = today.toISOString().split('T')[0];
+  }
 
   ngOnInit(): void {
+     // Obtener el ID del servicio de los parámetros de la ruta
+     this.facturaId = +this.route.snapshot.params['id'];
+
+
     this.route.params.subscribe(params => {
-      const invoiceId = +params['id'];
-      this.invoiceService.getInvoiceById(invoiceId).subscribe((data) => {
-        this.factura = data
-      })
+      this.UserService.getUsers().subscribe((data) => {
+        this.clientes = data;
+       });
     })
+
+    // Obtener datos del servicio por su ID
+    this.invoiceService.getInvoiceById(this.facturaId).subscribe((factura) => {
+      // Establecer los valores del formulario con los datos de la factura
+      this.formulario.patchValue({
+        FECHA_FACTURA: factura.FECHA_FACTURA,
+        MONTO_TOTAL_RESERVA: factura.MONTO_TOTAL_RESERVA,
+        PERSONA_NRODOCUMENTO: factura.PERSONA_NRODOCUMENTO,
+      });
+    });
   }
 
   actualizarFactura(): void {
-    const invoiceId = this.factura.id;
-    const camposModificados = Object.keys(this.factura).filter(
-      key => this.factura[key] !== this.facturaOriginal[key]
-    );
+    // Obtener los valores del formulario
+    const valoresFormulario = this.formulario.value;
+    this.invoiceService.putInvoice(this.facturaId, valoresFormulario).subscribe(() => {
+      this.router.navigate(['/lista-facturas']);
+    });
 
-    if (camposModificados.length > 0) {
-      this.invoiceService.putInvoice(invoiceId, this.factura).subscribe(() => {
-        this.router.navigate(['/lista-facturas'])
-      });
-    } else {
-      console.log('No se han realizado cambios')
-    }
   }
 
 }
