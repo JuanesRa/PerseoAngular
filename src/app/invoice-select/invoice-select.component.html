@@ -6,6 +6,9 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+                <th scope="col">Detalles Factura</th>
+                <th scope="col">Método Pago </th>
+                <th scope="col">Codigo </th>
                 <th scope="col">Fecha Expedición</th>
                 <th scope="col">Monto Total</th>
                 <th scope="col">Documento</th>
@@ -17,6 +20,17 @@
 
         <tbody>
             <tr *ngFor="let df of facturas">
+                <td class="table-light" scope="row">
+                    <div class="icons">
+                     <a href="lista-detalles-facturas/{{df.IDFACTURA}}"> <i class="fa-solid fa-newspaper"></i> </a>
+                   </div>
+                </td>
+                <td class="table-light" scope="row">
+                    <div class="icons">
+                     <a href="lista-metodos-facturas/{{df.IDFACTURA}}"><i class="fa-solid fa-credit-card"></i> </a>
+                   </div>
+                </td>
+                <td class="table-light">{{ df.IDFACTURA  }}</td>
                 <td class="table-light">{{ df.FECHA_FACTURA  }}</td>
                 <td class="table-light">{{ df.MONTO_TOTAL_RESERVA  }}</td>
                 <td class="table-light">{{ df.PERSONA_NRODOCUMENTO  }}</td>

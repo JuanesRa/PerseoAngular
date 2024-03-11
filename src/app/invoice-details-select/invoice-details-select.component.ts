@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceDetailsService } from '../services/invoice-details.service';
-import { HomeComponent } from '../home/home.component';
+import { ServiceService } from '../services/service.service';
 
 @Component({
   selector: 'app-invoice-details-select',
@@ -11,12 +11,25 @@ import { HomeComponent } from '../home/home.component';
 export class InvoiceDetailsSelectComponent implements OnInit {
 
   detallesFacturas: any[] = [];
+  facturaId!: number;
 
-  constructor(private invoiceDetailsService: InvoiceDetailsService, private router: Router) { }
+  constructor(private ServiceService:ServiceService, private route: ActivatedRoute, private invoiceDetailsService: InvoiceDetailsService, private router: Router) { }
 
   ngOnInit(): void {
     this.invoiceDetailsService.getInvoiceDetails().subscribe((data) => {
-      this.detallesFacturas = data
+    // Obtener el ID del servicio de los parámetros de la ruta
+    this.facturaId = +this.route.snapshot.params['id'];
+    // Filtrar los registros según el valor de FACTURA_IDFACTURA
+    this.detallesFacturas = data.filter((item: any) => item.FACTURA_IDFACTURA  == this.facturaId);
+ 
+    
+    // Obtener los productos 
+    this.detallesFacturas.forEach((detalles) => {
+     this.ServiceService.getServiceById(detalles.PRODUCTO_IDPRODUCTO).subscribe((statusData)=>{
+       detalles.producto = statusData.NOMBRE_PRODUCTO 
+       detalles.precio = statusData.VALOR  
+     });
+     });
     })
   }
 
@@ -27,7 +40,7 @@ export class InvoiceDetailsSelectComponent implements OnInit {
   eliminarDetalleFatura(invDetId: number): void {
     if (confirm('¿Está seguro de eliminar el detalle de factura?')) {
       this.invoiceDetailsService.deleteInvoiceDetail(invDetId).subscribe(() => {
-        this.router.navigate(['/lista-detalles-facturas']);
+        window.location.reload()
       })
     }
   }

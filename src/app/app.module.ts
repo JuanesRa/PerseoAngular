@@ -56,6 +56,9 @@ import { ReservationGuestUpdateComponent } from './reservation-guest-update/rese
 import { ReservationRoomSelectComponent } from './reservation-room-select/reservation-room-select.component';
 import { ReservationRoomInsertComponent } from './reservation-room-insert/reservation-room-insert.component';
 import { ReservationRoomUpdateComponent } from './reservation-room-update/reservation-room-update.component';
+import { InvoicePaymentMethodSelectComponent } from './invoice-payment-method-select/invoice-payment-method-select.component';
+import { InvoicePaymentMethodInsertComponent } from './invoice-payment-method-insert/invoice-payment-method-insert.component';
+import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-update/invoice-payment-method-update.component';
 
 
 @NgModule({
@@ -112,6 +115,9 @@ import { ReservationRoomUpdateComponent } from './reservation-room-update/reserv
     ReservationRoomSelectComponent,
     ReservationRoomInsertComponent,
     ReservationRoomUpdateComponent,
+    InvoicePaymentMethodSelectComponent,
+    InvoicePaymentMethodInsertComponent,
+    InvoicePaymentMethodUpdateComponent,
   ],
   imports: [
     BrowserModule,

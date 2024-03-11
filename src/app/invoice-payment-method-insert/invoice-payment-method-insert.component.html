@@ -1,0 +1,27 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="signup">
+    <span class="title">Añadir Método de Pago</span>
+    <form [formGroup]="formulario"  (ngSubmit)="crearNuevoMetodoFactura()">
+      
+    <select class="input-select" [formControl]="$any(formulario).controls['METODO_PAGO_IDMETODOPAGO']" name="id_cliente" required>
+        <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
+        <option *ngFor="let metodo of metodos" value="{{metodo.IDMETODOPAGO}}"> {{metodo.METODO}} </option>
+    </select>
+
+      <div class="botones">
+        <div class="input-field button">
+          <input type="submit" value="Añadir" />
+        </div>
+        <div class="input-field button">
+            <a routerLink="/lista-detalles-facturas/{{facturaId}}" >Volver</a>
+        </div>
+      </div>
+    </form>
+  </div>
+
+<div>
+    <app-footer></app-footer>
+</div>

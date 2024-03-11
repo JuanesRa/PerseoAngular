@@ -1,22 +1,32 @@
+<div>
+  <app-header></app-header>
+</div>
+
 <div class="signup">
-    <span class="title">Actualizar detalle de factura</span>
+  <span class="title">Actualizar detalle de factura</span>
 
-    <form (ngSubmit)="actualizarDetalleFactura()">
-      <div class="input-field">
-        <input [(ngModel)]="detalleFactura.fecha_emision" type="date" name="FfechaEmision" placeholder="Ingrese fecha emision" required />
+  <form [formGroup]="formulario"  (ngSubmit)="actualizarDetalleFactura()">
+    
+  <select class="input-select" formControlName="PRODUCTO_IDPRODUCTO" name="id_cliente" required>
+      <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
+      <option *ngFor="let producto of productos" value="{{producto.IDPRODUCTO}}"> {{producto.NOMBRE_PRODUCTO }} </option>
+  </select>
+
+    <div class="input-field">
+        <input formControlName="CANTIDAD" type="number" name="FtotalFactura" placeholder="Ingrese Cantidad" required />
       </div>
 
-      <div class="input-field">
-          <input [(ngModel)]="detalleFactura.total_factura" type="number" name="FtotalFactura" placeholder="Ingrese el total de la factura" required />
-        </div>
-
-      <div class="botones">
-        <div class="input-field button">
-          <input type="submit" value="Actualiar" />
-        </div>
-        <div class="input-field button">
-            <a routerLink="/inicio" >Volver</a>
-        </div>
+    <div class="botones">
+      <div class="input-field button">
+        <input type="submit" value="Actualizar" />
       </div>
-    </form>
-  </div>
+      <div class="input-field button">
+          <a routerLink="/lista-detalles-facturas/{{nroFactura}}">Volver</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div>
+  <app-footer></app-footer>
+</div>

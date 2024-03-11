@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { InvoiceDetailsService } from '../services/invoice-details.service';
-import { Router } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
+import { ServiceService } from '../services/service.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-invoice-details-insert',
@@ -9,19 +11,42 @@ import { HomeComponent } from '../home/home.component';
   styleUrls: ['./invoice-details-insert.component.css']
 })
 export class InvoiceDetailsInsertComponent {
-
-  detallesFacturas: any[] = [];
-  nuevoDetalleFactura: any = {
-    id : '',
-    fecha_emision: '',
-    total_factura: ''
+  facturaId!: number;
+  formulario: FormGroup;
+  productos: any[] = [];
+ 
+  constructor(private ServiceService:ServiceService,  private invoiceDetailsService: InvoiceDetailsService,private route: ActivatedRoute, public fb: FormBuilder, private router: Router) {
+    this.formulario = this.fb.group({
+      CANTIDAD : [null, Validators.required],
+      PRODUCTO_IDPRODUCTO : [null, [Validators.required, Validators.maxLength(30)]],
+      FACTURA_IDFACTURA : [null, [Validators.required, Validators.maxLength(30)]],
+    });
   }
 
-  constructor(private invoiceDetailsService: InvoiceDetailsService, private router: Router) {}
+  
+  ngOnInit(): void {
+    this.invoiceDetailsService.getInvoiceDetails().subscribe((data) => {
+    // Obtener el ID del servicio de los parámetros de la ruta
+    this.facturaId = +this.route.snapshot.params['id'];
+
+    
+    // Establecer el valor de FACTURA_IDFACTURA en el formulario
+    this.formulario.patchValue({
+      FACTURA_IDFACTURA: this.facturaId
+    });
+    
+    // Obtener los productos
+    this.ServiceService.getServices().subscribe((data) => {
+      this.productos = data;
+      console.log(this.productos)
+    });
+   
+    })
+  }
 
   crearNuevoDetalleFactura(): void {
-    this.invoiceDetailsService.postInvoiceDetail(this.nuevoDetalleFactura).subscribe((data) => {
-      this.router.navigate(['/lista-detalles-facturas'])
+    this.invoiceDetailsService.postInvoiceDetail(this.formulario.value).subscribe((data) => {
+      this.router.navigate(['/lista-detalles-facturas/', this.facturaId])
     })
   }
 }
