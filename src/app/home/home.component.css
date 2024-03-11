@@ -23,38 +23,55 @@
     text-align: start;
 }
 
-.contenido .inicio {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+.home .box img{
+    border-radius: .5rem;
+    height: 60vh;
+    width: 100%;
+    object-fit: cover;
+ }
+ 
+ .swiper-button-prev{
+    left: 0%;
+ }
+ 
+ .swiper-button-next{
+    right: 0;
+ }
+ 
+ .swiper-button-next,
+ .swiper-button-prev{
+    padding: 3rem 2rem;
+    background-color: var(--white);
+    top: 40%;
+    opacity: .7;
+ }
+ 
+ .swiper-button-next::after,
+ .swiper-button-prev::after{
+    color: var(--black);
+    font-size: 2rem;
+ }
+ 
+ .swiper-button-next:hover,
+ .swiper-button-prev:hover{
+    opacity: 1;
+ }
+
+.contenido .servicios {
+    margin-top: 80px;
 }
 
-.contenido h1 {
-    margin-bottom: 20px;
-    font-size: 25px;
-    font-weight: bold;
+.contenido .servicios .tit {
+    text-align: center;
+    font-size: 27px;
+    margin: 50px;
 }
 
-.contenido p {
-    margin: 10px 0px;
+.contenido .servicios p {
+    text-align: center;
 }
 
-.contenido span {
-    font-style: italic;
-    font-weight: bold;
-}
-
-.imagen {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.logo {
-    border-radius: 50%;
-    height: 200px;
-    width: 200px;
-}
 
 .contenido .servicio {
     display: flex;
@@ -139,27 +156,42 @@
 
 .contenido .servicioPlus {
     display: flex;
-    height: 250px;
+    flex-direction: column;
+    align-items: center;
     margin: 100px 0px;
+    padding: 30px;
     border-top: 1px solid #333333;
     border-bottom: 1px solid #333333;
 }
 
-.contenido .servicioPlus span {
-    margin: 20px auto;
+.contenido .servicioPlus .titulo {
+    margin: 10px auto 50px;
     font-size: 18px;
-    top: 20%;
-    left: 45%;
+    font-weight: bold;
 }
 
 .contenido .servicioPlus .seccionServicios {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.contenido .servicioPlus .seccionServicios i{
+.contenido .servicioPlus .seccionServicios .columna {
+    width: calc(100% / 3); /* Dividir el espacio en 3 columnas */
     display: flex;
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+    margin-bottom: 30px; /* Espacio entre cada fila */
 }
 
-.contenido .servicioPlus .seccionServicios span{
-    display: flex;
+.contenido .servicioPlus .seccionServicios i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+
+.contenido .servicioPlus .seccionServicios span {
+    font-size: 15px;
+    font-weight: 400;
+    font-style: normal;
+    margin-left: 0px; /* Ajuste del margen izquierdo del texto */
 }

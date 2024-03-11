@@ -4,42 +4,35 @@
 
 <div class="contenido">
 
-    <div class="inicio">
-        <h1>Bienvenido al Hotel Perseo</h1>
+    <section class="home" id="home">
 
-        <p>Tu destino de excelencia y confort en el corazón de la encantadora Soacha. Nos enorgullecemos de ofrecer una
-            experiencia única que combina lujo, hospitalidad excepcional y una ubicación privilegiada en esta vibrante
-            ciudad.
-        </p>
+        <div class="swiper home-slider">
 
-        <p>Nuestro equipo dedicado está aquí para asegurarse de que tu estancia sea inolvidable. Con un servicio
-            personalizado y
-            una atención meticulosa a tus necesidades, nos esforzamos por superar tus expectativas en cada momento de tu
-            visita.
-        </p>
+            <div class="swiper-wrapper">
 
-        <p>Además de nuestras comodidades de primer nivel y una cocina exquisita que deleitará tu paladar, el Hotel
-            Perseo
-            se
-            encuentra estratégicamente ubicado cerca de los principales puntos de interés de Soacha, permitiéndote
-            explorar
-            y
-            sumergirte en la riqueza cultural de esta ciudad dinámica.</p>
+                <div class="box swiper-slide">
+                    <img src="../../assets/Lobby.jpg" alt="">
+                </div>
 
-        <p>En el Hotel Perseo, nuestro compromiso es crear experiencias memorables para cada uno de nuestros huéspedes.
-            Te
-            invitamos a descubrir el lujo auténtico y la hospitalidad excepcional que nos distingue.</p>
+                <div class="box swiper-slide">
+                    <img src="../../assets/restaurante.jpg" alt="">
+                </div>
 
-        <p><span>¡Esperamos hacerte sentir como en casa en el Hotel Perseo de Soacha!</span></p>
+                <div class="box swiper-slide">
+                    <img src="../../assets/bedroom.jpg" alt="">
+                </div>
 
-        <div class="imagen">
-            <img src="../../assets/LogoPerseo.png" class="logo">
+            </div>
+
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
         </div>
 
-    </div>
+    </section>
 
     <div class="servicios">
-        <h1>Servicios</h1>
+        <h1 class="tit">Servicios</h1>
         <p>Descubre los servicios exclusivos que Tequendama Suites Bogotá tiene para ti, pensados para hacer de tu
             estadía
             en Bogotá una experiencia inigualable. Desde habitaciones lujosas y cómodas hasta opciones de
@@ -73,14 +66,56 @@
             </div>
         </div>
         <div class="servicioPlus">
-            <img src="" alt="">
-            <span>Más servicios</span>
+            <span class="titulo">Más servicios</span>
             <div class="seccionServicios">
-                <i class="uil uil-lock icon"><span>Wifi</span></i>
+                <div class="columna">
+                    <i class="fa-solid fa-wifi"></i>
+                    <span>Wifi gratuito en todo el Hotel</span>
+                </div>
+                <div class="columna">
+                    <i class="fa-solid fa-car"></i>
+                    <span>Parqueadero</span>
+                </div>
+                <div class="columna">
+                    <i class="fa-solid fa-tv"></i>
+                    <span>TV</span>
+                </div>
+                <div class="columna">
+                    <i class="fa-solid fa-bell-concierge"></i>
+                    <span>Servicio de habitaciones</span>
+                </div>
+                <div class="columna">
+                    <i class="fa-solid fa-couch"></i>
+                    <span>Sala de estar</span>
+                </div>
+                <div class="columna">
+                    <i class="fa-solid fa-paw"></i>
+                    <span>Pet Friendly</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    var swiper = new Swiper(".home-slider", {
+        loop: true,
+        effect: "coverflow",
+        spaceBetween: 30,
+        grabCursor: true,
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+</script>
 
 <div>
     <app-footer></app-footer>
