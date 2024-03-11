@@ -2,9 +2,11 @@
     <app-header></app-header>
 </div>
 
+<div *ngIf="noRoomsAvailable">
+  <h1 class="title">No hay habitaciones disponibles en este momento.</h1>
+</div>
 
-
-<div class="div_habitacion">
+<div class="div_habitacion" *ngIf="!noRoomsAvailable">
     <div class="card" style="width: 18rem;" *ngFor="let room of rooms">
         <img src="{{room.foto}}" class="card-img-top" alt="Room Image">
       <div class="card-body">
