@@ -17,13 +17,16 @@
 }
 
 .contenido {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 10px 20px;
     width: 60%;
     margin: 20px auto;
     text-align: start;
+}
+
+.contenido .inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .contenido h1 {
@@ -51,4 +54,112 @@
     border-radius: 50%;
     height: 200px;
     width: 200px;
+}
+
+.contenido .servicio {
+    display: flex;
+    flex-direction: row;
+    height: 250px;
+    margin: 100px 0px;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+}
+
+.contenido .servicio .img {
+    width: 40%;
+    height: 100%;
+}
+
+.contenido .servicio .imgService {
+    max-height: 250px;
+}
+
+.contenido .servicio .descripcion {
+    position: relative;
+    width: 60%;
+    height: 100%;
+}
+
+.contenido .servicio .descripcion span {
+    position: absolute;
+    font-size: 18px;
+    top: 20%;
+    left: 45%;
+}
+
+.contenido .servicio .descripcion p {
+    position: absolute;
+    padding: 25px;
+    top: 30%;
+    font-size: 15px;
+    font-style: italic;
+}
+
+
+.contenido .servicio2 {
+    display: flex;
+    flex-direction: row;
+    height: 250px;
+    margin: 100px 0px;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+}
+
+.contenido .servicio2 .img {
+    width: 40%;
+    height: 100%;
+    background-color: #5eb319;
+}
+
+.contenido .servicio2 .imgService {
+    width: 100%;
+    height: 100%;
+}
+
+.contenido .servicio2 .descripcion {
+    position: relative;
+    width: 60%;
+    height: 100%;
+}
+
+.contenido .servicio2 .descripcion span {
+    position: absolute;
+    font-size: 18px;
+    top: 20%;
+    left: 45%;
+}
+
+.contenido .servicio2 .descripcion p {
+    position: absolute;
+    padding: 25px;
+    top: 30%;
+    font-size: 15px;
+    font-style: italic;
+}
+
+.contenido .servicioPlus {
+    display: flex;
+    height: 250px;
+    margin: 100px 0px;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+}
+
+.contenido .servicioPlus span {
+    margin: 20px auto;
+    font-size: 18px;
+    top: 20%;
+    left: 45%;
+}
+
+.contenido .servicioPlus .seccionServicios {
+    display: flex;
+}
+
+.contenido .servicioPlus .seccionServicios i{
+    display: flex;
+}
+
+.contenido .servicioPlus .seccionServicios span{
+    display: flex;
 }

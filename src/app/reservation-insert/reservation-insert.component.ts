@@ -69,9 +69,25 @@ export class ReservationInsertComponent implements OnInit {
           const minDate = new Date(fechaEntrada);
           minDate.setDate(minDate.getDate() + 1); // Sumar un día
           this.fechaMinimaOut = minDate.toISOString().split('T')[0];
+    
+          // Obtener la fecha de salida actual
+          const fechaSalidaActual = this.ReservationForm.get('FECHA_SALIDA')?.value;
+    
+          // Verificar si la fecha de salida actual es anterior a la nueva fecha mínima de salida
+          if (fechaSalidaActual) {
+            const minDateOut = new Date(this.fechaMinimaOut);
+            const fechaSalida = new Date(fechaSalidaActual);
+            if (fechaSalida < minDateOut) {
+              // Actualizar la fecha de salida para que sea al menos un día después de la nueva fecha de entrada
+              const nuevaFechaSalida = new Date(minDateOut);
+              nuevaFechaSalida.setDate(nuevaFechaSalida.getDate());
+              this.ReservationForm.get('FECHA_SALIDA')?.patchValue(nuevaFechaSalida.toISOString().split('T')[0]);
+            }
+          }
         }
       });
     }
+    
   }
 
   ngOnInit(): void {
