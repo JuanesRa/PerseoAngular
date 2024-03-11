@@ -1,29 +1,38 @@
+<div>
+    <app-header></app-header>
+</div>
+
 <div class="signup">
     <span class="title">Actualizar factura</span>
 
-    <form (ngSubmit)="actualizarFactura()">
+    <form [formGroup]="formulario" (ngSubmit)="actualizarFactura()">
+
         <div class="input-field">
-            <input [(ngModel)]="factura.numero_documento" type="number" name="numero_documento"
-                placeholder="Ingrese documento del usuario" required />
+            <input [formControl]="$any(formulario).controls['FECHA_FACTURA']" type="date" name="Ffecha_factura" placeholder="Fecha Factura" required [min]="fechaMinimaIn">
+            <i class="uil uil-calendar"></i>
         </div>
 
         <div class="input-field">
-            <input [(ngModel)]="factura.id_detalleFactura" type="number" name="id_detalleFactura"
-                placeholder="Ingrese ID del detalle de factura" required />
+            <input [formControl]="$any(formulario).controls['MONTO_TOTAL_RESERVA']"  type="number" name="total"
+                placeholder="Ingrese Monto Total" required />
         </div>
 
-        <select class="input-select" [(ngModel)]="factura.id_metodoPago" name="id_metodoPago" required>
+        <select class="input-select" [formControl]="$any(formulario).controls['PERSONA_NRODOCUMENTO']" name="id_cliente" required>
             <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
-            <option *ngFor="let m of metodoPago" value="{{m.id}}"> {{m.nombre}} </option>
+            <option *ngFor="let cliente of clientes" value="{{cliente.NRODOCUMENTO}}"> {{cliente.NOMBRE}} </option>
         </select>
-
         <div class="botones">
             <div class="input-field button">
                 <input type="submit" value="Actualizar" />
             </div>
             <div class="input-field button">
-                <a routerLink="/inicio">Volver</a>
+                <a routerLink="/lista-facturas">Volver</a>
             </div>
         </div>
     </form>
+</div>
+
+
+<div>
+    <app-footer></app-footer>
 </div>

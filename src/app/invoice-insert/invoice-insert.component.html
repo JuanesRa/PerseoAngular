@@ -1,33 +1,32 @@
 <div>
-    <app-home></app-home>
+    <app-header></app-header>
 </div>
 
 <div class="signup">
     <span class="title">Crear factura</span>
 
-    <form (ngSubmit)="crearNuevaFactura()">
-        <div class="input-field">
-            <input [(ngModel)]="nuevaFactura.numero_documento" type="number" name="numero_documento"
-                placeholder="Ingrese documento del usuario" required />
-        </div>
+    <form [formGroup]="formulario" (ngSubmit)="crearNuevaFactura()">
 
         <div class="input-field">
-            <input [(ngModel)]="nuevaFactura.id_detalleFactura" type="number" name="id_detalleFactura"
-                placeholder="Ingrese ID del detalle de factura" required />
+            <input [formControl]="$any(formulario).controls['MONTO_TOTAL_RESERVA']"  type="number" name="total"
+                placeholder="Ingrese Monto Total" required />
         </div>
 
-        <select class="input-select" [(ngModel)]="nuevaFactura.id_metodoPago" name="id_metodoPago" required>
+        <select class="input-select" [formControl]="$any(formulario).controls['PERSONA_NRODOCUMENTO']" name="id_cliente" required>
             <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
-            <option *ngFor="let m of metodoPago" value="{{m.id}}"> {{m.nombre}} </option>
+            <option *ngFor="let cliente of clientes" value="{{cliente.NRODOCUMENTO}}"> {{cliente.NOMBRE}} </option>
         </select>
-
         <div class="botones">
             <div class="input-field button">
                 <input type="submit" value="Crear" />
             </div>
             <div class="input-field button">
-                <a routerLink="/inicio">Volver</a>
+                <a routerLink="/lista-facturas">Volver</a>
             </div>
         </div>
     </form>
+</div>
+
+<div>
+    <app-footer></app-footer>
 </div>

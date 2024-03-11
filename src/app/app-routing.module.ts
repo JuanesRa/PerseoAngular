@@ -110,7 +110,7 @@ const routes: Routes = [
   {path: 'insertar-inventario', component: InventoryInsertComponent},
   {path: 'actualizar-inventario/:id', component: InventoryUpdateComponent},
 
-  //CATEGORIA INVENTARIO
+  // CATEGORIA INVENTARIO
   {path: 'lista-categoria-inventario', component: InventoryCategorySelectComponent},
   {path: 'insertar-categoria-inventario', component: InventoryCategoryInsertComponent},
   {path: 'actualizar-categoria-inventario/:id', component: InventoryCategoryUpdateComponent},

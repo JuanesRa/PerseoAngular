@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { InvoiceService } from '../services/invoice.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-invoice-insert',
@@ -9,26 +10,43 @@ import { HomeComponent } from '../home/home.component';
   styleUrls: ['./invoice-insert.component.css']
 })
 export class InvoiceInsertComponent {
+  fechaMinimaIn: string;
+  formulario: FormGroup;
+  clientes: any[] = [];
 
-  metodoPago = [
-    { id: 1, nombre: 'Tarjeta Crédito' },
-    { id: 2, nombre: 'Efectivo' }
-  ]
+  constructor(
+    private UserService: UserService,
+    private invoiceService: InvoiceService,
+    private router: Router,
+    public fb: FormBuilder
+  ) {
+    // Crear el formulario
+    this.formulario = this.fb.group({
+      FECHA_FACTURA: [this.getTodayDate(), [Validators.required]],
+      MONTO_TOTAL_RESERVA: [null, [Validators.required, Validators.maxLength(3)]],
+      PERSONA_NRODOCUMENTO: [null, [Validators.required, Validators.maxLength(3)]],
+    });
 
-  facturas: any[] = [];
-  nuevaFactura: any = {
-    id : '',
-    id_metodoPago: '',
-    id_detalleFactura: '',
-    numero_documento: ''
+    // Inicialización de la fecha mínima
+    const today = new Date();
+    this.fechaMinimaIn = today.toISOString().split('T')[0];
   }
 
-  constructor(private invoiceService: InvoiceService, private router: Router) {}
+  ngOnInit(): void {
+    this.UserService.getUsers().subscribe((data) => {
+      this.clientes = data;
+    });
+  }
+
+  // Obtener la fecha actual en formato ISO para establecerla en el formulario
+  getTodayDate(): string {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  }
 
   crearNuevaFactura(): void {
-    this.invoiceService.postInvoice(this.nuevaFactura).subscribe((data) => {
-      this.router.navigate(['/lista-facturas'])
-    })
+    this.invoiceService.postInvoice(this.formulario.value).subscribe((data) => {
+      this.router.navigate(['/lista-facturas']);
+    });
   }
-
 }
