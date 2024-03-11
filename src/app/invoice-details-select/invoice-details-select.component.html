@@ -3,27 +3,28 @@
 </div>
 
 <div class="tabla_content" id="table_invoice_details">
+    <span class="title">Detalles de Factura Cod:{{facturaId}} </span>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Fecha de Emisión</th>
-                <th scope="col">Total Factura</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
 
         <tbody>
             <tr *ngFor="let df of detallesFacturas, let i = index">
-                <th class="table-light" scope="row">{{ df.id }}</th>
-                <td class="table-light">{{ df.fecha_emision }}</td>
-                <td class="table-light">{{ df.total_factura }}</td>
+                <th class="table-light" scope="row">{{ df.producto  }}</th>
+                <th class="table-light" scope="row">{{ df.precio  }}</th>
+                <td class="table-light">{{ df.CANTIDAD  }}</td>
                 <td class="btns">
-                    <button (click)="redireccionarActualizar(df.id)" type="button"
+                    <button (click)="redireccionarActualizar(df.IDDETALLESFACTURA)" type="button"
                         class="btn btn-warning">
                         Actualizar
                     </button>
-                    <button (click)="eliminarDetalleFatura(df.id)" type="button"
+                    <button (click)="eliminarDetalleFatura(df.IDDETALLESFACTURA)" type="button"
                         class="btn btn-danger">
                         Eliminar
                     </button>
@@ -31,5 +32,9 @@
             </tr>
         </tbody>
     </table>
+    <div class="btns">
+        <a routerLink="/insertar-detalle-factura/{{facturaId}}">Crear</a>
+        <a routerLink="/lista-facturas">Volver</a>
+      </div>
 </div>
 

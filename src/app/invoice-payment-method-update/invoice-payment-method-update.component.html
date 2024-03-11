@@ -1,0 +1,28 @@
+<div>
+    <app-header></app-header>
+  </div>
+  
+  <div class="signup">
+    <span class="title">Actualizar detalle de factura</span>
+  
+    <form [formGroup]="formulario"  (ngSubmit)="actualizarMetodoFactura()">
+      
+    <select class="input-select" formControlName="METODO_PAGO_IDMETODOPAGO" name="id_cliente" required>
+        <option selected="selected" disabled="disabled"> Seleccione Una Opción </option>
+        <option *ngFor="let metodo of metodos" value="{{metodo.IDMETODOPAGO}}"> {{metodo.METODO}} </option>
+    </select>
+  
+      <div class="botones">
+        <div class="input-field button">
+          <input type="submit" value="Actualizar" />
+        </div>
+        <div class="input-field button">
+            <a routerLink="/lista-metodos-facturas/{{nroFactura}}">Volver</a>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div>
+    <app-footer></app-footer>
+  </div>

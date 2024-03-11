@@ -1,0 +1,36 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="tabla_content" id="table_invoice_details">
+    <span class="title">Metodos de Pago Factura Cod:{{facturaId}} </span>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Método Pago</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let Mf of FacturaMetodosPago, let i = index">
+                <th class="table-light" scope="row">{{ Mf.metodo }}</th>
+                <td class="btns">
+                    <button (click)="redireccionarActualizar(Mf.ID_METODO_FACTURA)" type="button"
+                        class="btn btn-warning">
+                        Actualizar
+                    </button>
+                    <button (click)="eliminarMetodoFatura(Mf.ID_METODO_FACTURA)" type="button"
+                        class="btn btn-danger">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="btns">
+        <a routerLink="/insertar-metodo-factura/{{facturaId}}">Crear</a>
+        <a routerLink="/lista-facturas">Volver</a>
+      </div>
+</div>
+

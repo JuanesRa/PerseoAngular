@@ -49,7 +49,9 @@ import { ReservationGuestUpdateComponent } from './reservation-guest-update/rese
 import { ReservationRoomSelectComponent } from './reservation-room-select/reservation-room-select.component';
 import { ReservationRoomInsertComponent } from './reservation-room-insert/reservation-room-insert.component';
 import { ReservationRoomUpdateComponent } from './reservation-room-update/reservation-room-update.component';
-
+import { InvoicePaymentMethodSelectComponent } from './invoice-payment-method-select/invoice-payment-method-select.component';
+import { InvoicePaymentMethodInsertComponent } from './invoice-payment-method-insert/invoice-payment-method-insert.component';
+import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-update/invoice-payment-method-update.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
@@ -58,86 +60,92 @@ const routes: Routes = [
   {path: 'registro', component: SignupComponent},
   {path: 'login', component: LoginComponent},
 
+  
   // USUARIOS
   {path: 'lista-usuarios', component: UserSelectComponent},
   {path: 'insertar-usuario', component: UserInsertComponent},
   {path: 'actualizar-usuario/:id', component: UserUpdateComponent},
-
+  
   // HABITACIONES
   {path: 'lista-habitaciones', component: RoomSelectComponent},
   {path: 'habitaciones', component: RoomSelectClientComponent},
   {path: 'lista-habitaciones/:id', component: RoomSelectComponent},
   {path: 'insertar-habitacion', component: RoomInsertComponent},
   {path: 'actualizar-habitacion/:id', component: RoomUpdateComponent},
-
+  
   // TIPO HABITACION
   {path: 'lista-tipohabitaciones', component: TypeRoomSelectComponent},
   {path: 'actualizar-tipohabitaciones/:id', component: TyperoomUpdateComponent},
   {path: 'insertar-tipo-habitacion', component: TyperoomInsertComponent},
-
+  
   // ESTADO HABITACION
   {path: 'lista-estadohabitaciones', component: StatusroomSelectComponent},
   {path: 'insertar-estado-habitacion', component: RoomStatusInsertComponent},
   {path: 'actualizar-estado/:id', component: RoomStatusUpdateComponent},
-
+  
   // HABITACION X INVENTARIO
   {path: 'lista-habitacion-inventario/:id', component: RoomInventorySelectComponent},
   {path: 'insertar-habitacion-inventario/:id', component: RoomInventoryInsertComponent},
   {path: 'actualizar-habitacion-inventario/:id', component: RoomInventoryUpdateComponent},
-
+  
   // HABITACION X RESERVA
   {path: 'lista-habitacion-reserva/:id', component: ReservationRoomSelectComponent},
   {path: 'insertar-habitacion-reserva/:id', component: ReservationRoomInsertComponent},
   {path: 'actualizar-habitacion-reserva/:id', component: ReservationRoomUpdateComponent},
-
+  
   // TIPO SERVICIOS
   {path: 'lista-tiposervicios', component: ServiceTypeSelectComponent},
   {path: 'insertar-tiposervicio', component: ServiceTypeInsertComponent},
   {path: 'actualizar-tiposervicio/:id', component: ServiceTypeUpdateComponent},
-
+  
   // SERVICIOS
   {path: 'lista-servicios', component: ServiceSelectComponent},
   {path: 'insertar-servicio', component: ServiceInsertComponent},
   {path: 'actualizar-servicio/:id', component: ServiceUpdateComponent},
-
+  
   // RESERVAS
   {path: 'lista-reservas', component: ReservationSelectComponent},
   {path: 'insertar-reserva/:id', component: ReservationInsertComponent, canActivate: [AuthGuardService]},
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
-
+  
   // INVENTARIO
   {path: 'lista-inventario', component: InventorySelectComponent},
   {path: 'insertar-inventario', component: InventoryInsertComponent},
   {path: 'actualizar-inventario/:id', component: InventoryUpdateComponent},
-
+  
   // CATEGORIA INVENTARIO
   {path: 'lista-categoria-inventario', component: InventoryCategorySelectComponent},
   {path: 'insertar-categoria-inventario', component: InventoryCategoryInsertComponent},
   {path: 'actualizar-categoria-inventario/:id', component: InventoryCategoryUpdateComponent},
-
+  
   // HUESPED
   {path: 'lista-huespedes', component: GuestSelectComponent},
   {path: 'insertar-huesped', component: GuestInsertComponent},
   {path: 'actualizar-huesped/:id', component: GuestUpdateComponent},
-
-
+  
+  
   // HUESPED X RESERVA
   {path: 'lista-huesped-reserva/:id', component: ReservationGuestSelectComponent},
   {path: 'insertar-huesped-reserva/:id', component: ReservationGuestInsertComponent},
   {path: 'actualizar-huesped-reserva/:id', component: ReservationGuestUpdateComponent},
-
-
+  
+  
   // DETALLES FACTURA
-  {path: 'lista-detalles-facturas', component: InvoiceDetailsSelectComponent},
-  {path: 'insertar-detalle-factura', component: InvoiceDetailsInsertComponent},
+  {path: 'lista-detalles-facturas/:id', component: InvoiceDetailsSelectComponent},
+  {path: 'insertar-detalle-factura/:id', component: InvoiceDetailsInsertComponent},
   {path: 'actualizar-detalle-factura/:id', component: InvoiceDetailsUpdateComponent},
-
+  
   // FACTURA
   {path: 'lista-facturas', component: InvoiceSelectComponent},
   {path: 'insertar-factura', component: InvoiceInsertComponent},
   {path: 'actualizar-factura/:id', component: InvoiceUpdateComponent},
-
+  
+  // METODOS DE PAGO
+  {path: 'lista-metodos-facturas/:id', component: InvoicePaymentMethodSelectComponent},
+  {path: 'insertar-metodo-factura/:id', component: InvoicePaymentMethodInsertComponent},
+  {path: 'actualizar-metodo-factura/:id', component: InvoicePaymentMethodUpdateComponent},
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
