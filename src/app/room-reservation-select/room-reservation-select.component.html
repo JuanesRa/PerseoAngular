@@ -1,0 +1,21 @@
+<div class="div_habitacion" *ngIf="!noRoomsAvailable && showRoomSection">
+    <div class="card" style="width: 18rem;" *ngFor="let room of rooms">
+        <img src="{{room.foto}}" class="card-img-top" alt="Room Image">
+      <div class="card-body">
+        <h5 class="card-title">Habitación Nro: {{room.NROHABITACION }}</h5>
+        <p class="card-text">{{ room.description }}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"></li>
+        <li class="list-group-item">{{room.tipo}} </li>
+        <li class="list-group-item">Descripción:{{room.descripcion}} </li>
+        <li class="list-group-item">Precio:{{room.precio}} </li>
+        <li class="list-group-item">Capacidad</li>
+        <li class="list-group-item">Adultos: {{room.cap_adultos}}</li>
+        <li class="list-group-item">Niños: {{room.cap_ninos}}</li>
+      </ul>
+      <div class="btns">
+        <button (click)="redireccionarReservar(room)" type="button" class="btn btn-success">Añadir</button>
+      </div>
+    </div>
+</div>

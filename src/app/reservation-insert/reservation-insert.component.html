@@ -1,3 +1,12 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Perseo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
 <div>
     <app-header></app-header>
 </div>
@@ -62,7 +71,23 @@
                 El campo es obligatorio.
             </div>
         </ng-container>
-      
+
+        <div class="icons">
+            <a  class="link" (click)="toggleOverlay()"> <i class="fa-solid fa-circle-plus icon" style="color:#5eb319;"></i>  Añadir otra habitación </a>
+        </div>
+    </form>
+
+    <div id="overlay" class="overlay">
+        <div class="nuevaHab">
+            <div class="overlay-header">
+                <span class="title">Añadir otra habitación</span>
+                <a (click)="toggleOverlay()"> <i class="fa-solid fa-xmark"></i> </a>
+            </div>
+            <app-room-reservation-select></app-room-reservation-select>
+        </div>
+    </div>
+
+
         <div class="botones">
             <div class="input-field button">
                 <input type="submit" value="Reservar">
@@ -72,5 +97,4 @@
                 <a routerLink="/lista-reservas">Volver</a>
             </div>
         </div>
-    </form>
 </div>

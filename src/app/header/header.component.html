@@ -65,9 +65,15 @@
         </ng-container>
         <ng-container *ngIf="isCliente || isRecepcionista">
             <a routerLink="/habitaciones">Habitaciones</a>
-            <a routerLink="">Reservaciones</a>
-            <a routerLink="">Servicios</a>
-            <a routerLink="">Factura</a>
+            <li class="dropdown">
+                <a>Gestión Reserva</a>
+                <ul class="submenu">
+                    <li><a routerLink="/lista-reservas" class="opcion">Reservaciones</a></li>
+                    <li><a routerLink="/lista-huespedes" class="opcion">Húesped</a></li>
+                </ul>
+            </li>
+
+            <li><a routerLink="/lista-facturas" class="opcion">Gestión Factura</a></li>
         </ng-container>
         <ng-container *ngIf="!isLoggedIn">
             <a routerLink="/habitaciones">Habitaciones</a>

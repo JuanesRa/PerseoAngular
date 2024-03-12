@@ -59,6 +59,7 @@ import { ReservationRoomUpdateComponent } from './reservation-room-update/reserv
 import { InvoicePaymentMethodSelectComponent } from './invoice-payment-method-select/invoice-payment-method-select.component';
 import { InvoicePaymentMethodInsertComponent } from './invoice-payment-method-insert/invoice-payment-method-insert.component';
 import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-update/invoice-payment-method-update.component';
+import { RoomReservationSelectComponent } from './room-reservation-select/room-reservation-select.component';
 
 
 @NgModule({
@@ -118,6 +119,7 @@ import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-up
     InvoicePaymentMethodSelectComponent,
     InvoicePaymentMethodInsertComponent,
     InvoicePaymentMethodUpdateComponent,
+    RoomReservationSelectComponent,
   ],
   imports: [
     BrowserModule,
