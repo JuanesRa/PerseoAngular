@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ReservationService } from '../services/reservation.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { RoomService } from '../services/room.service';
@@ -11,7 +11,14 @@ import { RoomService } from '../services/room.service';
   styleUrls: ['./reservation-insert.component.css']
 })
 export class ReservationInsertComponent implements OnInit {
-
+  
+  toggleOverlay(): void {
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+        overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
+    }
+}
+  
   // Referencia al elemento de fecha en el HTML
   @ViewChild('fechaInput', { static: true }) fechaInput!: ElementRef;
 
@@ -35,7 +42,8 @@ export class ReservationInsertComponent implements OnInit {
     private ReservationService: ReservationService,
     private authService: AuthService,
     private router: Router,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private route: ActivatedRoute,
   ) {
     // Inicialización de formularios y validaciones
     this.ReservationForm = this.fb.group({
@@ -91,6 +99,7 @@ export class ReservationInsertComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     // Verificación del usuario y su rol
     const user = this.authService.getAuthId();
     const rol = this.authService.getRolId();

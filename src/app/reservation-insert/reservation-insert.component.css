@@ -223,3 +223,96 @@ body {
     border-bottom-color: #91d856;
     /* Cambia el color del borde inferior al pasar el cursor */
 }
+
+
+.icons{
+    margin-top: 0;
+    margin-top: 15px;
+}
+
+ 
+/* Estilo del enlace */
+.icons .link {
+    font-size: 16px;
+    margin-left: 1px;
+    color: black; 
+}
+
+.header .flex .fa-bars{
+    font-size: 3rem;
+    cursor: pointer;
+    color: var(--green);
+    display: none;
+}
+
+
+.icons .link:hover {
+    color: #5eb319;
+ }
+
+
+.icons .link  i:hover {
+    cursor: pointer;
+}
+ 
+
+.icons .link:hover {
+    cursor: pointer;
+}
+
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    z-index: 1000; /* Asegura que la capa se muestre encima de todo */
+}
+
+
+
+
+.overlay .nuevaHab {
+    width: 30%;
+    height: 30%;
+   
+    margin-top: 100px;
+    position: relative;
+    background-color: #fff;
+    overflow-y: auto; /* Agrega desplazamiento vertical cuando sea necesario */
+}
+
+.overlay .nuevaHab .overlay-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.overlay .nuevaHab .overlay-header i {
+    font-size: 35px;
+    padding: auto;
+}
+
+    
+.title {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #5eb319;
+    border-radius: 25px;
+  }

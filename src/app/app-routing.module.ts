@@ -52,6 +52,7 @@ import { ReservationRoomUpdateComponent } from './reservation-room-update/reserv
 import { InvoicePaymentMethodSelectComponent } from './invoice-payment-method-select/invoice-payment-method-select.component';
 import { InvoicePaymentMethodInsertComponent } from './invoice-payment-method-insert/invoice-payment-method-insert.component';
 import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-update/invoice-payment-method-update.component';
+import { RoomReservationSelectComponent } from './room-reservation-select/room-reservation-select.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
@@ -72,6 +73,7 @@ const routes: Routes = [
   {path: 'lista-habitaciones/:id', component: RoomSelectComponent},
   {path: 'insertar-habitacion', component: RoomInsertComponent},
   {path: 'actualizar-habitacion/:id', component: RoomUpdateComponent},
+  {path: 'muchas-habitacion/:id', component: RoomUpdateComponent},
   
   // TIPO HABITACION
   {path: 'lista-tipohabitaciones', component: TypeRoomSelectComponent},
@@ -105,7 +107,7 @@ const routes: Routes = [
   
   // RESERVAS
   {path: 'lista-reservas', component: ReservationSelectComponent},
-  {path: 'insertar-reserva/:id', component: ReservationInsertComponent, canActivate: [AuthGuardService]},
+  {path: 'insertar-reserva/:ids', component: ReservationInsertComponent, canActivate: [AuthGuardService] },
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
   
   // INVENTARIO
