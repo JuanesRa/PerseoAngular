@@ -7,30 +7,46 @@
 
     <form [formGroup]="formulario" (ngSubmit)="crearNuevaSerivicio()">
         <div class="input-field">
-            <input  [formControl]="$any(formulario).controls['NOMBRE_PRODUCTO']" type="text" name="nombre_producto"
+            <input [formControl]="$any(formulario).controls['NOMBRE_PRODUCTO']" type="text" name="nombre_producto"
                 placeholder="Ingrese producto" required />
         </div>
+
+        <div *ngIf="formulario.get('NOMBRE_PRODUCTO')?.hasError('required') && formulario.get('NOMBRE_PRODUCTO')?.touched"
+            class="error-message">
+            El campo es obligatorio.
+        </div>
+
         <div class="input-field">
-            <input [formControl]="$any(formulario).controls['VALOR']"  type="number" name="valor"
+            <input [formControl]="$any(formulario).controls['VALOR']" type="number" name="valor"
                 placeholder="Ingrese valor del producto" required />
         </div>
 
+        <div *ngIf="formulario.get('VALOR')?.hasError('required') && formulario.get('VALOR')?.touched"
+            class="error-message">
+            El campo es obligatorio.
+        </div>
 
-        <select class="input-select"  [formControl]="$any(formulario).controls['TIPO_SERVICIO_IDTIPOSERVICIO']" name="Type service" required>
+        <select class="input-select" [formControl]="$any(formulario).controls['TIPO_SERVICIO_IDTIPOSERVICIO']"
+            name="Type service" required>
             <option selected="selected" disabled="disabled">
-              Seleccione Tipo Servicio
+                Seleccione Tipo Servicio
             </option>
             <option *ngFor="let tipservice of typeService" [value]="tipservice.IDTIPOSERVICIO">
-              {{ tipservice.TIPO_SERVICIO}}
+                {{ tipservice.TIPO_SERVICIO}}
             </option>
-          </select>
+        </select>
+
+        <div *ngIf="formulario.get('TIPO_SERVICIO_IDTIPOSERVICIO')?.hasError('required') && formulario.get('TIPO_SERVICIO_IDTIPOSERVICIO')?.touched"
+            class="error-message">
+            El campo es obligatorio.
+        </div>
 
         <div class="botones">
             <div class="input-field button">
                 <input type="submit" value="Crear" />
             </div>
             <div class="input-field button">
-                <a routerLink="/lista-servicios" >Volver</a>
+                <a routerLink="/lista-servicios">Volver</a>
             </div>
         </div>
     </form>

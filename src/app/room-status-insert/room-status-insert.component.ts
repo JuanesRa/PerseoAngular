@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -9,16 +10,19 @@ import { RoomService } from '../services/room.service';
   styleUrls: ['./room-status-insert.component.css']
 })
 export class RoomStatusInsertComponent {
-  nuevoEstadoHabitacion: any = {
-    TIPO_ESTADO : '',
-    DESCRIPCION : '',
+  formulario: FormGroup;
 
-  };
-  constructor(private roomService: RoomService, private router: Router) { }
+  constructor(private roomService: RoomService, private router: Router, public fb: FormBuilder) {
+    this.formulario = this.fb.group({
+      TIPO_ESTADO : ['', [Validators.required, Validators.maxLength(4)]],
+      DESCRIPCION : [null, [Validators.required, Validators.maxLength(3)]],
+    })
+   }
+
+
   crearNuevoEstadoHabitacion(): void {
-    this.roomService.postStatusRoom(this.nuevoEstadoHabitacion).subscribe((data) => {
+    this.roomService.postStatusRoom(this.formulario.value).subscribe((data) => {
       this.router.navigate(['/lista-estadohabitaciones'])
     })
 }
-
 }

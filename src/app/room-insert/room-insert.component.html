@@ -5,10 +5,15 @@
 <div class="signup">
     <span class="title">Crear Habitación</span>
 
-    <form [formGroup]="formulario"  (ngSubmit)="crearNuevaHabitacion()">
+    <form [formGroup]="formulario" (ngSubmit)="crearNuevaHabitacion()">
         <div class="input-field">
             <input [formControl]="$any(formulario).controls['NROHABITACION']" type="text" name="num_habitacion"
-                placeholder="Ingrese el número de habitación" required />
+                placeholder="Ingrese el número de habitación" required maxlength="4" (keydown)="validateInput($event)"/>
+        </div>
+
+        <div *ngIf="formulario.get('NROHABITACION')?.hasError('required') && formulario.get('NROHABITACION')?.touched"
+            class="error-message">
+            El campo es obligatorio.
         </div>
 
         <select class="input-select" [formControl]="$any(formulario).controls['ESTADO_HABITACION_IDESTADOHABITACION']" name="Status Room" required>
@@ -20,6 +25,11 @@
             </option>
           </select>
 
+          <div *ngIf="formulario.get('ESTADO_HABITACION_IDESTADOHABITACION')?.hasError('required') && formulario.get('ESTADO_HABITACION_IDESTADOHABITACION')?.touched"
+              class="error-message">
+              El campo es obligatorio.
+          </div>
+
           <select class="input-select" [formControl]="$any(formulario).controls['TIPO_HABITACION_IDTIPOHABITACION']" name="Type Room" required>
             <option selected="selected" disabled="disabled">
               Seleccione Tipo Habitación
@@ -28,6 +38,11 @@
               {{ tipohabitacion.TIPO_HABITACION}}
             </option>
           </select>
+
+          <div *ngIf="formulario.get('TIPO_HABITACION_IDTIPOHABITACION')?.hasError('required') && formulario.get('TIPO_HABITACION_IDTIPOHABITACION')?.touched"
+              class="error-message">
+              El campo es obligatorio.
+          </div>
 
         <div class="botones">
             <div class="input-field button">

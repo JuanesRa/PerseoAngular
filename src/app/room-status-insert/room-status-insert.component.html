@@ -1,43 +1,42 @@
 <div>
-    <app-header></app-header>
-  </div>
-  
-  <div class="signup">
-    <span class="title">Crear Estado Habitación</span>
-  
-    <form (ngSubmit)="crearNuevoEstadoHabitacion()">
-      <div class="input-field">
-        <input
-          [(ngModel)]="nuevoEstadoHabitacion.TIPO_ESTADO"
-          type="text"
-          name="tipo_hab"
-          placeholder="Ingrese estado habitación"
-          required
-        />
+  <app-header></app-header>
+</div>
+
+<div class="signup">
+  <span class="title">Crear Estado Habitación</span>
+
+  <form [formGroup]="formulario" (ngSubmit)="crearNuevoEstadoHabitacion()">
+    <div class="input-field">
+      <input [formControl]="$any(formulario).controls['TIPO_ESTADO']" type="text" name="tipo_hab"
+        placeholder="Ingrese estado habitación" required />
+    </div>
+
+    <div *ngIf="formulario.get('TIPO_ESTADO')?.hasError('required') && formulario.get('TIPO_ESTADO')?.touched"
+      class="error-message">
+      El campo es obligatorio.
+    </div>
+
+    <div class="input-field">
+      <input [formControl]="$any(formulario).controls['DESCRIPCION']" type="text" name="descripcion"
+        placeholder="Ingrese descripcion" required />
+    </div>
+
+    <div *ngIf="formulario.get('DESCRIPCION')?.hasError('required') && formulario.get('DESCRIPCION')?.touched"
+      class="error-message">
+      El campo es obligatorio.
+    </div>
+
+    <div class="botones">
+      <div class="input-field button">
+        <input type="submit" value="Registrar" />
       </div>
-  
-      <div class="input-field">
-        <input
-          [(ngModel)]="nuevoEstadoHabitacion.DESCRIPCION"
-          type="text"
-          name="descripcion"
-          placeholder="Ingrese descripcion"
-          required
-        />
+      <div class="input-field button">
+        <a routerLink="/lista-estadohabitaciones">Volver</a>
       </div>
-  
-      <div class="botones">
-        <div class="input-field button">
-          <input type="submit" value="Registrar" />
-        </div>
-        <div class="input-field button">
-          <a routerLink="/lista-estadohabitaciones">Volver</a>
-        </div>
-      </div>
-    </form>
-  </div>
-  
-  <div>
-    <app-footer></app-footer>
-  </div>
-  
+    </div>
+  </form>
+</div>
+
+<div>
+  <app-footer></app-footer>
+</div>

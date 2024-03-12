@@ -40,4 +40,10 @@ export class RoomInsertComponent {
     });
   }
 
+  validateInput(event: KeyboardEvent): void {
+    const allowedKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+    if (!allowedKeys.includes(event.key) && !/\d/.test(event.key)) {
+      event.preventDefault();
+    }
+  }
 }
