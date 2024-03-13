@@ -4,6 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { RoomService } from '../services/room.service';
+import { FormControl } from '@angular/forms';
+
+// Dentro de la clase del componente
 
 @Component({
   selector: 'app-reservation-insert',
@@ -15,9 +18,16 @@ export class ReservationInsertComponent implements OnInit {
   toggleOverlay(): void {
     const overlay = document.getElementById('overlay');
     if (overlay) {
-        overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
+      overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
+      if (overlay.style.display === 'none') {
+        this.eliminarInput(`input${this.numInputs}`); // Eliminar el último input cuando se oculta el overlay
+      } else {
+        this.agregarInput(); // Agregar input cuando el overlay se muestra
+      }
     }
-}
+  }
+  
+  
   
   // Referencia al elemento de fecha en el HTML
   @ViewChild('fechaInput', { static: true }) fechaInput!: ElementRef;
@@ -36,6 +46,11 @@ export class ReservationInsertComponent implements OnInit {
   fechaMinimaOut: string = '';
   estados: any[] = [];
   estadoOcupadoId: number = 0; // ID del estado "Ocupado"
+  
+  // Variables mucho a muchos 
+  numInputs: number = 0; // Inicializamos con 1 input por defecto
+  additionalControls: FormControl[] = [];
+  showAdditionalInputs: boolean = false;
 
   constructor(
     private RoomService: RoomService,
@@ -55,6 +70,7 @@ export class ReservationInsertComponent implements OnInit {
       CANTIDAD_NINOS: [null, [Validators.required]],
       ESTADO_RESERVA: [2],
       PERSONA_NRODOCUMENTO: ['', [Validators.required]],
+      input1: ['', Validators.required] // Primer input
     });
 
     this.formularioRoomXReserva = this.fb.group({
@@ -222,4 +238,22 @@ export class ReservationInsertComponent implements OnInit {
     const estadoOcupado = estados.find((estado) => estado.TIPO_ESTADO == 'Ocupado');
     return estadoOcupado ? estadoOcupado.IDESTADOHABITACION : 0;
   }
+
+  agregarInput(): void {
+    if (this.numInputs < 4) { // Máximo 4 inputs
+      this.numInputs++;
+      const controlName = `input${this.numInputs}`;
+      const newControl = this.fb.control('', Validators.required);
+      this.ReservationForm.addControl(controlName, newControl);
+      this.additionalControls.push(newControl);
+      this.showAdditionalInputs = true; // Mostrar los inputs adicionales
+    }
+  }
+  
+  eliminarInput(controlName: string): void {
+    this.ReservationForm.removeControl(controlName);
+    this.numInputs--; // Decrementar la cantidad de inputs
+  }
+  
+
 }

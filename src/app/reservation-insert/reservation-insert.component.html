@@ -72,29 +72,40 @@
             </div>
         </ng-container>
 
-        <div class="icons">
-            <a  class="link" (click)="toggleOverlay()"> <i class="fa-solid fa-circle-plus icon" style="color:#5eb319;"></i>  Añadir otra habitación </a>
-        </div>
-    </form>
 
-    <div id="overlay" class="overlay">
-        <div class="nuevaHab">
-            <div class="overlay-header">
-                <span class="title">Añadir otra habitación</span>
-                <a (click)="toggleOverlay()"> <i class="fa-solid fa-xmark"></i> </a>
+
+        <div *ngIf="showAdditionalInputs">
+            <div *ngFor="let input of ReservationForm.controls | keyvalue">
+              <ng-container *ngIf="input.key.startsWith('input')">
+             
+                  <input formControlName="{{ input.key }}" type="text" placeholder="Ingrese un número" required>
+                  <button (click)="eliminarInput(input.key)">Eliminar</button>
+            
+              </ng-container>
             </div>
-            <app-room-reservation-select></app-room-reservation-select>
+          </div>
+          <button (click)="toggleOverlay()">Añadir otra habitación</button>
+          
+
+
+
+<div id="overlay" class="overlay">
+    <div class="nuevaHab">
+        <div class="overlay-header">
+            <span class="title">Añadir otra habitación</span>
+            <a (click)="toggleOverlay()"> <i class="fa-solid fa-xmark"></i> </a>
         </div>
+        <app-room-reservation-select></app-room-reservation-select>
     </div>
-
-
-        <div class="botones">
-            <div class="input-field button">
-                <input type="submit" value="Reservar">
-            </div>
-
-            <div class="input-field button">
-                <a routerLink="/lista-reservas">Volver</a>
-            </div>
-        </div>
 </div>
+
+
+<div class="botones">
+    <div class="input-field button">
+        <input type="submit" value="Reservar">
+    </div>
+    <div class="input-field button">
+        <a routerLink="/lista-reservas">Volver</a>
+    </div>
+</div>
+
