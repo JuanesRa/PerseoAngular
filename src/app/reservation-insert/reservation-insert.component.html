@@ -84,20 +84,45 @@
               </ng-container>
             </div>
           </div>
-          <button (click)="toggleOverlay()">Añadir otra habitación</button>
+
+          <div class="icons">
+          <a class="link" (click)="toggleOverlay()"> <i class="fa-solid fa-circle-plus" style= "color:#5eb319"></i> Añadir otra habitación</a>
+          </div>
           
 
 
 
-<div id="overlay" class="overlay">
-    <div class="nuevaHab">
-        <div class="overlay-header">
-            <span class="title">Añadir otra habitación</span>
-            <a (click)="toggleOverlay()"> <i class="fa-solid fa-xmark"></i> </a>
+          <div id="overlay" class="overlay">
+            <div class="nuevaHab">
+                <div class="overlay-header">
+                    <span class="title">Añadir otra habitación</span>
+                    <a (click)="toggle()"> <i class="fa-solid fa-xmark"></i> </a>
+                </div>
+                <div class="div_habitacion" *ngIf="!noRoomsAvailable && showRoomSection">
+                    <div class="card" style="width: 18rem;" *ngFor="let room of rooms">
+                        <img src="{{room.foto}}" class="card-img-top" alt="Room Image">
+                      <div class="card-body">
+                        <h5 class="card-title">Habitación Nro: {{room.NROHABITACION }}</h5>
+                        <p class="card-text">{{ room.description }}</p>
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item"></li>
+                        <li class="list-group-item">{{room.tipo}} </li>
+                        <li class="list-group-item">Descripción:{{room.descripcion}} </li>
+                        <li class="list-group-item">Precio:{{room.precio}} </li>
+                        <li class="list-group-item">Capacidad</li>
+                        <li class="list-group-item">Adultos: {{room.cap_adultos}}</li>
+                        <li class="list-group-item">Niños: {{room.cap_ninos}}</li>
+                      </ul>
+                      <div class="btns">
+                        <button type="button" class="btn btn-success" (click)="agregarInputWithRoomNumber(room.NROHABITACION)">Añadir</button>
+                      </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
-        <app-room-reservation-select></app-room-reservation-select>
-    </div>
-</div>
+        
 
 
 <div class="botones">
@@ -108,4 +133,3 @@
         <a routerLink="/lista-reservas">Volver</a>
     </div>
 </div>
-

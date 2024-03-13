@@ -219,6 +219,23 @@ body {
 
 }
 
+.title {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #5eb319;
+    border-radius: 25px;
+  }
 .input-field.button a:hover {
     border-bottom-color: #91d856;
     /* Cambia el color del borde inferior al pasar el cursor */
@@ -248,7 +265,7 @@ body {
 
 .icons .link:hover {
     color: #5eb319;
- }
+}
 
 
 .icons .link  i:hover {
@@ -276,13 +293,29 @@ body {
 
 
 .overlay .nuevaHab {
-    width: 30%;
-    height: 30%;
-   
+    width: 40%;
+    height: 70%;
+    margin: auto;
     margin-top: 100px;
     position: relative;
     background-color: #fff;
+    border-radius: 10px;
     overflow-y: auto; /* Agrega desplazamiento vertical cuando sea necesario */
+
+}
+
+
+.overlay .nuevaHab::-webkit-scrollbar {
+    width: 10px; /* Ancho del scrollbar */
+}
+
+.overlay .nuevaHab::-webkit-scrollbar-thumb {
+    background-color: #5eb319; /* Color del scrollbar */
+    border-radius: 5px; /* Borde redondeado del thumb */
+}
+
+.overlay .nuevaHab::-webkit-scrollbar-track {
+    background-color: #eee; /* Color de fondo del scrollbar */
 }
 
 .overlay .nuevaHab .overlay-header {
@@ -290,7 +323,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
 }
 
 .overlay .nuevaHab .overlay-header i {
@@ -298,15 +331,21 @@ body {
     padding: auto;
 }
 
-    
-.title {
+
+.div_habitacion {
+    margin: auto;
+    width: 450px;
+    padding: 50px;
+    border: 1px solid #ccc;
+}
+
+.div_habitacion .title {
     position: relative;
     font-size: 22px;
     font-weight: 600;
-    margin-bottom: 10px;
-  }
-  
-  .title::before {
+}
+
+.div_habitacion .title::before {
     content: '';
     position: absolute;
     left: 0;
@@ -315,4 +354,85 @@ body {
     width: 30px;
     background-color: #5eb319;
     border-radius: 25px;
-  }
+}
+
+.div_habitacion .input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+
+.input-field input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+
+}
+
+.input-field input:is(:focus, :valid) {
+    border-bottom-color: #5eb319;
+}
+
+.input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid)~i {
+    color: #5eb319;
+}
+
+.input-field i.icon {
+    left: 0;
+}
+
+.input-field i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+
+.card-body {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 60px;
+
+}
+
+.btns button {
+    text-decoration: none;
+    padding: 5px 10px 5px 10px;
+    color: #fff;
+    background-color: #5eb319;
+    border-radius: 5px;
+    
+}
+
+.btns button:hover {
+    color: #5eb319;
+    background-color: #fff;
+    border: 2px solid #5eb319;
+}
