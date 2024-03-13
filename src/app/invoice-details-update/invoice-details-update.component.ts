@@ -14,11 +14,11 @@ export class InvoiceDetailsUpdateComponent {
   nroFactura!: number;
   formulario: FormGroup;
   productos: any[] = [];
-  constructor(private ServiceService:ServiceService,  private invoiceDetailsService: InvoiceDetailsService,private route: ActivatedRoute, public fb: FormBuilder, private router: Router) {
+  constructor(private ServiceService: ServiceService, private invoiceDetailsService: InvoiceDetailsService, private route: ActivatedRoute, public fb: FormBuilder, private router: Router) {
     this.formulario = this.fb.group({
-      CANTIDAD : [null, Validators.required],
-      PRODUCTO_IDPRODUCTO : [null, [Validators.required, Validators.maxLength(30)]],
-      FACTURA_IDFACTURA : [null, [Validators.required, Validators.maxLength(30)]],
+      CANTIDAD: [null, Validators.required],
+      PRODUCTO_IDPRODUCTO: [null, [Validators.required, Validators.maxLength(30)]],
+      FACTURA_IDFACTURA: [null, [Validators.required, Validators.maxLength(30)]],
     });
   }
 
@@ -27,27 +27,27 @@ export class InvoiceDetailsUpdateComponent {
     // Obtener el ID de la factura
     this.detallesfacturaId = +this.route.snapshot.params['id'];
 
-     // Obtener los productos
-     this.ServiceService.getServices().subscribe((data) => {
+    // Obtener los productos
+    this.ServiceService.getServices().subscribe((data) => {
       this.productos = data;
       console.log(this.productos)
     });
-   
+
     // Obtener datos de los detalles de factura
     this.invoiceDetailsService.getInvoiceDetailById(this.detallesfacturaId).subscribe((detalles) => {
-    // Establecer los valores del formulario con los datos del servicio
-    this.formulario.patchValue({
+      // Establecer los valores del formulario con los datos del servicio
+      this.formulario.patchValue({
         CANTIDAD: detalles.CANTIDAD,
         PRODUCTO_IDPRODUCTO: detalles.PRODUCTO_IDPRODUCTO,
         FACTURA_IDFACTURA: detalles.FACTURA_IDFACTURA
+      });
+
+      // Asignar el valor de FACTURA_IDFACTURA a la variable nroFactura 
+      this.nroFactura = detalles.FACTURA_IDFACTURA;
     });
 
-    // Asignar el valor de FACTURA_IDFACTURA a la variable nroFactura 
-    this.nroFactura = detalles.FACTURA_IDFACTURA;
-    });
-   
-    
-    
+
+
   }
 
   actualizarDetalleFactura(): void {
@@ -56,10 +56,10 @@ export class InvoiceDetailsUpdateComponent {
 
     // Enviar actualización al servicio
     this.invoiceDetailsService.putInvoiceDetail(this.detallesfacturaId, valoresFormulario).subscribe(() => {
-      this.router.navigate(['/lista-detalles-facturas/',this.nroFactura]);
+      this.router.navigate(['/lista-detalles-facturas/', this.nroFactura]);
     });
- 
-    
+
+
   }
 
 }

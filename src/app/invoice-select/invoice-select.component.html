@@ -7,6 +7,7 @@
         <thead>
             <tr>
                 <th scope="col">Detalles Factura</th>
+                <th scope="col">Factura PDF</th>
                 <th scope="col">Método Pago </th>
                 <th scope="col">Codigo </th>
                 <th scope="col">Fecha Expedición</th>
@@ -23,6 +24,11 @@
                 <td class="table-light" scope="row">
                     <div class="icons">
                      <a href="lista-detalles-facturas/{{df.IDFACTURA}}"> <i class="fa-solid fa-newspaper"></i> </a>
+                   </div>
+                </td>
+                <td class="table-light" scope="row">
+                    <div class="icons">
+                     <a href="facturaPdf/{{df.IDFACTURA}}"><i class="fa-regular fa-file-pdf"></i></a>
                    </div>
                 </td>
                 <td class="table-light" scope="row">
