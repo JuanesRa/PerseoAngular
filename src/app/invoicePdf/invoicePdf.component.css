@@ -30,6 +30,12 @@ header {
     font-size: 18px;
 }
 
+.info span {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
 .logo img {
     max-width: 100px;
 }
