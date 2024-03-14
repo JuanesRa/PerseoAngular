@@ -248,12 +248,6 @@ crearNuevaReserva(): void {
     //console.log('Valores de los inputs:', this.roomsInput);
   }
   
-
-
-
-
-  
-
   crearNuevoHabitacionXReserva(reservaId: number, numeroHabitacion: number): void {
     this.formularioRoomXReserva.patchValue({
       HABITACION_NROHABITACION: numeroHabitacion,
@@ -284,6 +278,12 @@ crearNuevaReserva(): void {
 
 // Función agregarInput con parámetros para agregar el número de habitación
 agregarInputWithRoomNumber(numeroHabitacion: number): void {
+  // Verificar si la habitación ya está en la lista de inputs
+  if (this.additionalControls.some(control => control.value === numeroHabitacion) || numeroHabitacion === this.habitacion.NROHABITACION) {
+    alert('¡Esta habitación ya está en tu lista!');
+    return; // Salir de la función si la habitación ya está en la lista
+  }
+
   if (this.numInputs < 4) {
     this.numInputs++;
     const controlName = `input${this.numInputs}`;
@@ -299,6 +299,8 @@ agregarInputWithRoomNumber(numeroHabitacion: number): void {
     this.toggle();
   }
 }
+
+
 
 toggle() {
   const overlay = this.elementRef.nativeElement.querySelector('.overlay');
@@ -328,6 +330,11 @@ toggleOverlay(numeroHabitacion?: number): void {
 }
 
 eliminarInput(controlName: string): void {
+  const controlIndex = this.additionalControls.findIndex(control => controlName === controlName);
+  if (controlIndex !== -1) {
+    this.additionalControls.splice(controlIndex, 1); // Eliminar el control de la lista de controles adicionales
+  }
+  
   this.ReservationForm.removeControl(controlName);
   this.numInputs--;
 
@@ -342,6 +349,7 @@ eliminarInput(controlName: string): void {
     }
   }
 }
+
 
 getEstadoDisponibleId(): number {
   const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');
