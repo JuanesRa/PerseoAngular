@@ -60,10 +60,11 @@ import { InvoicePaymentMethodSelectComponent } from './invoice-payment-method-se
 import { InvoicePaymentMethodInsertComponent } from './invoice-payment-method-insert/invoice-payment-method-insert.component';
 import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-update/invoice-payment-method-update.component';
 import { RoomReservationSelectComponent } from './room-reservation-select/room-reservation-select.component';
+import { InvoicePdfComponent } from './invoicePdf/invoicePdf.component';
 
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     UserSelectComponent,
     UserInsertComponent,
@@ -120,7 +121,8 @@ import { RoomReservationSelectComponent } from './room-reservation-select/room-r
     InvoicePaymentMethodInsertComponent,
     InvoicePaymentMethodUpdateComponent,
     RoomReservationSelectComponent,
-  ],
+      InvoicePdfComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

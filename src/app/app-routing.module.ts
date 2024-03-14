@@ -52,6 +52,7 @@ import { ReservationRoomUpdateComponent } from './reservation-room-update/reserv
 import { InvoicePaymentMethodSelectComponent } from './invoice-payment-method-select/invoice-payment-method-select.component';
 import { InvoicePaymentMethodInsertComponent } from './invoice-payment-method-insert/invoice-payment-method-insert.component';
 import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-update/invoice-payment-method-update.component';
+import { InvoicePdfComponent } from './invoicePdf/invoicePdf.component';
 import { RoomReservationSelectComponent } from './room-reservation-select/room-reservation-select.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
@@ -141,6 +142,7 @@ const routes: Routes = [
   {path: 'lista-facturas', component: InvoiceSelectComponent},
   {path: 'insertar-factura', component: InvoiceInsertComponent},
   {path: 'actualizar-factura/:id', component: InvoiceUpdateComponent},
+  {path: 'facturaPdf/:id', component: InvoicePdfComponent},
   
   // METODOS DE PAGO
   {path: 'lista-metodos-facturas/:id', component: InvoicePaymentMethodSelectComponent},

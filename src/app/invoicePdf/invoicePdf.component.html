@@ -1,0 +1,61 @@
+<div class="all" id="contentToConvert">
+  <header>
+      <div class="info">
+          <h1>Factura</h1>
+          <p>Factura N° <span>{{ facturaId }}</span></p>
+          <p>Fecha <span>{{ factura.FECHA_FACTURA }}</span></p>
+      </div>
+      <div class="logo">
+          <img src="../../assets/LogoPerseo.png" alt="">
+      </div>
+  </header>
+
+  <div class="contenido">
+      <div class="usuario">
+          <span>{{ usuario.NOMBRE }} {{ usuario.APELLIDO }}</span>
+          <p>{{ usuario.TELEFONO }}</p>
+          <p>{{ usuario.email }}</p>
+      </div>
+      <table class="table table-striped table-hover">
+          <thead>
+              <tr>
+                  <th scope="col">Articulo</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Total</th>
+              </tr>
+          </thead>
+
+          <tbody>
+              <tr>
+                  <td class="table-light">Reservación</td>
+                  <td class="table-light">5</td>
+                  <td class="table-light">250.000</td>
+                  <td class="table-light">850.000</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+
+  <footer>
+      <div class="ty">
+          <span>¡Gracias por su estadía!</span>
+      </div>
+      <div class="infoPago-Contacto">
+          <div class="infoPago">
+              <span>Información de pago</span>
+              <p>Método de pago</p>
+              <p>Fecha de pago</p>
+          </div>
+          <div class="contacto">
+              <span>Contacto</span>
+              <p>+57-01800-0000</p>
+              <p>hotelPerseogmail.com</p>
+              <p>Soacha, Cundinamarca - Colombia</p>
+          </div>
+      </div>
+  </footer>
+</div>
+
+
+<button (click)="covertToPdf()">Descargar</button>
