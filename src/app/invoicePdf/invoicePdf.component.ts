@@ -107,6 +107,8 @@ export class InvoicePdfComponent implements OnInit {
                   // Almacenar el tipo de habitación y su precio en la reserva
                   RoomXReservation.tipo = statusData.TIPO_HABITACION;
                   RoomXReservation.precio = statusData.PRECIOXNOCHE;
+                  RoomXReservation.cantidad = reservas;
+                  RoomXReservation.precioTotal = RoomXReservation.precio * RoomXReservation.CANTIDAD_NOCHES;
                 });
               });
             });
@@ -126,6 +128,7 @@ export class InvoicePdfComponent implements OnInit {
               // Almacenar información adicional de los productos en los detalles de la factura
               detalles.producto = statusData.NOMBRE_PRODUCTO;
               detalles.precio = statusData.VALOR;
+              detalles.precioTotalDetalles = detalles.CANTIDAD * detalles.precio;
             });
           });
         });
