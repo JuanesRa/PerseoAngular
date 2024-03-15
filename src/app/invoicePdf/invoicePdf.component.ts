@@ -165,9 +165,10 @@ export class InvoicePdfComponent implements OnInit {
   }
 
   public covertToPdf() {
-    html2canvas(document.body).then(canvas => {
+    const DATA : any = document.getElementById('contentToConvert');
+    const pdf = new jsPDF('p', 'pt', 'a4');
+    html2canvas(DATA).then(canvas => {
       const contentDataUrl = canvas.toDataURL('image/png');
-      let pdf = new jsPDF('l', 'mm', 'a4');
       const aspectRatio = canvas.height / canvas.width;
       var width = pdf.internal.pageSize.getWidth();
       var height = width * aspectRatio;
