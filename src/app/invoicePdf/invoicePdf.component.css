@@ -52,13 +52,24 @@ header {
 
 .contenido .usuario span {
     font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+}
+
+.contenido .usuario .info-cliente {
+    display: flex;
+}
+
+.contenido .usuario .info-cliente span {
+    font-weight: 600;
     font-size: 18px;
     margin: 0;
 }
 
-.contenido .usuario p {
+.contenido .usuario .info-cliente p {
+    font-weight: normal;
     font-size: 18px;
-    margin: 0;
+    margin: 0 0 0 10px;
 }
 
 .table {
@@ -79,8 +90,14 @@ th {
     color: #333;
 }
 
+
+.borderless td, .borderless th {
+    border: none;
+    font-weight: bold;
+}
+
 footer {
-    position: sticky;
+    position: relative;
     bottom: 0;
     width: 100%;
     padding: 10px 20px;
@@ -105,12 +122,12 @@ footer .infoPago-Contacto {
     margin-top: 20px;
 }
 
-.infoPago span{
+.infoPago span {
     font-weight: bold;
 }
 
-.contacto span{
-    font-weight: bold;    
+.contacto span {
+    font-weight: bold;
 }
 
 footer p {

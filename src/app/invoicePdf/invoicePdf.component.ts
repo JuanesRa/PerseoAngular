@@ -8,6 +8,7 @@ import { ReservationService } from '../services/reservation.service';
 import { RoomService } from '../services/room.service';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { forkJoin, tap } from 'rxjs';
 
 // Define una interfaz llamada Reserva que especifica la estructura de los objetos de reserva.
 interface Reserva {
@@ -41,6 +42,12 @@ export class InvoicePdfComponent implements OnInit {
   reservas: any[] = [];
   habitacionesXreserva: any[] = [];
   roomxreservation: any[] = [];
+  fechaEntrada: any;
+  fechaSalida: any;
+  duracionEstadia: any;
+  totalServicios: number = 0;
+  totalReserva: number = 0;
+  totalGeneral: number = 0;
 
   constructor(
     // Inyección de dependencias
@@ -64,7 +71,7 @@ export class InvoicePdfComponent implements OnInit {
       // Almacenar los datos de la factura
       this.factura = data;
 
-              console.log(this.factura)
+      // console.log(this.factura)
 
       // Obtener el número de documento del usuario asociado a la factura
       this.nroDocumento = data.PERSONA_NRODOCUMENTO;
@@ -74,7 +81,7 @@ export class InvoicePdfComponent implements OnInit {
         // Almacenar datos del usuario
         this.usuario = user;
 
-              console.log(this.usuario)
+        // console.log(this.usuario)
 
         // Obtener las reservas del usuario
         this.reservationService.getReservas().subscribe((reservas: Reserva[]) => {
@@ -84,53 +91,77 @@ export class InvoicePdfComponent implements OnInit {
           this.reservas = reservas.filter(reserva => reserva.PERSONA_NRODOCUMENTO === nroDocumentoString);
           // Almacenar el ID de la reserva
           this.reservationId = this.reservas[0].IDRESERVA;
+          this.fechaEntrada = this.reservas[0].FECHA_ENTRADA;
+          this.fechaSalida = this.reservas[0].FECHA_SALIDA;
+          this.duracionEstadia = this.calcularDiasEntreFechas(this.fechaEntrada, this.fechaSalida);
 
-              console.log(this.reservas)
+          // console.log(reservas)
 
           // Obtener las habitaciones asociadas a la reserva
           this.reservationService.getReservationXRoom().subscribe((data) => {
             // Filtrar las habitaciones por el ID de la reserva actual
             this.roomxreservation = data.filter((item: any) => item.RESERVA_IDRESERVA == this.reservationId);
 
-
-                console.log(this.roomxreservation)
-
-
             // Para cada habitación reservada, obtener información adicional de la habitación
-            this.roomxreservation.forEach((RoomXReservation) => {
-              this.roomService.getRoomById(RoomXReservation.HABITACION_NROHABITACION).subscribe((statusData) => {
-                // Almacenar información adicional de la habitación en la reserva
-                RoomXReservation.NroHabitacion = statusData.NROHABITACION;
-                RoomXReservation.IDTIPOHABITACION = statusData.TIPO_HABITACION_IDTIPOHABITACION;
-                // Obtener el tipo de habitación
-                this.roomService.getTypeRoomById(RoomXReservation.IDTIPOHABITACION).subscribe((statusData) => {
-                  // Almacenar el tipo de habitación y su precio en la reserva
-                  RoomXReservation.tipo = statusData.TIPO_HABITACION;
-                  RoomXReservation.precio = statusData.PRECIOXNOCHE;
+            let roomRequests = this.roomxreservation.map(RoomXReservation =>
+              this.roomService.getRoomById(RoomXReservation.HABITACION_NROHABITACION).pipe(
+                tap(statusData => {
+                  // Almacenar información adicional de la habitación en la reserva
+                  RoomXReservation.NroHabitacion = statusData.NROHABITACION;
+                  RoomXReservation.IDTIPOHABITACION = statusData.TIPO_HABITACION_IDTIPOHABITACION;
+                  // Obtener el tipo de habitación
+                  return this.roomService.getTypeRoomById(RoomXReservation.IDTIPOHABITACION).subscribe((statusData) => {
+                    // Almacenar el tipo de habitación y su precio en la reserva
+                    RoomXReservation.tipo = statusData.TIPO_HABITACION;
+                    RoomXReservation.precio = statusData.PRECIOXNOCHE;
+                    RoomXReservation.precioTotalHabitacion = statusData.PRECIOXNOCHE * this.duracionEstadia;
+
+                    // console.log(RoomXReservation)
+
+                    this.totalReserva += RoomXReservation.precioTotalHabitacion;
+                    console.log(this.totalReserva)
+                  });
+                })
+              )
+            );
+
+            // Esperar a que todas las solicitudes de habitaciones terminen antes de continuar
+            forkJoin(roomRequests).subscribe(() => {
+              // Obtener detalles de la factura fuera del bloque del usuario
+              this.invoiceDetailsService.getInvoiceDetails().subscribe((detailsData) => {
+                // Filtrar los detalles de factura basados en el ID de la factura actual
+                this.detallesFacturas = detailsData;
+
+                // console.log(this.detallesFacturas)
+
+                // Obtener información adicional de los productos asociados a los detalles de la factura
+                this.detallesFacturas.forEach((detalles) => {
+                  this.serviceService.getServiceById(detalles.PRODUCTO_IDPRODUCTO).subscribe((statusData) => {
+                    // Almacenar información adicional de los productos en los detalles de la factura
+                    detalles.producto = statusData.NOMBRE_PRODUCTO;
+                    detalles.precio = statusData.VALOR;
+                    detalles.precioTotalProducto = detalles.CANTIDAD * statusData.VALOR;
+
+                    this.totalServicios += detalles.precioTotalProducto;
+                    console.log(this.totalServicios)
+                    // Calcular el total general fuera del bloque del usuario
+                    this.totalGeneral = this.totalReserva + this.totalServicios;
+                    console.log(this.totalGeneral)
+                  });
                 });
               });
             });
           });
         });
-
-        // Obtener detalles de la factura
-        this.invoiceDetailsService.getInvoiceDetails().subscribe((detailsData) => {
-          // Filtrar los detalles de factura basados en el ID de la factura actual
-          this.detallesFacturas = detailsData;
-
-                console.log(this.detallesFacturas)
-
-          // Obtener información adicional de los productos asociados a los detalles de la factura
-          this.detallesFacturas.forEach((detalles) => {
-            this.serviceService.getServiceById(detalles.PRODUCTO_IDPRODUCTO).subscribe((statusData) => {
-              // Almacenar información adicional de los productos en los detalles de la factura
-              detalles.producto = statusData.NOMBRE_PRODUCTO;
-              detalles.precio = statusData.VALOR;
-            });
-          });
-        });
       });
     });
+  }
+
+  calcularDiasEntreFechas(fechaInicio: string, fechaFin: string): number {
+    const inicio = new Date(fechaInicio);
+    const fin = new Date(fechaFin);
+    const diferencia = fin.getTime() - inicio.getTime();
+    return Math.ceil(diferencia / (1000 * 3600 * 24));
   }
 
   public covertToPdf() {
