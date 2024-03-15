@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-room-select',
   templateUrl: './room-select.component.html',
@@ -10,7 +10,7 @@ import { RoomService } from '../services/room.service';
 export class RoomSelectComponent implements OnInit {
   rooms: any[] = [];
 
-  constructor(private roomService: RoomService, private router: Router) { }
+  constructor(private roomService: RoomService, private router: Router,private AlertsService:AlertsService) { }
 
   ngOnInit(): void {
     this.roomService.getRooms().subscribe((data) => {
@@ -38,11 +38,6 @@ export class RoomSelectComponent implements OnInit {
   }
 
   eliminarHabitacion(roomId: number): void {
-    if (confirm('¿Está seguro de eliminar la habitación?')) {
-      this.roomService.deleteRoom(roomId).subscribe(() => {
-        window.location.reload()
-      })
-
-   }
-}
+    this.AlertsService.eliminarHabitacion(roomId);
+  }
 }

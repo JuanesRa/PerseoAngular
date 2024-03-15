@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InvoiceService } from '../services/invoice.service';
 import { UserService } from '../services/user.service';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-invoice-select',
   templateUrl: './invoice-select.component.html',
@@ -12,7 +12,12 @@ export class InvoiceSelectComponent implements OnInit{
 
   facturas: any[] = [];
 
-  constructor(private UserService:UserService, private invoiceService: InvoiceService, private router: Router) { }
+  constructor(
+    private UserService:UserService,
+    private invoiceService: InvoiceService,
+    private router: Router,
+    private AlertsService: AlertsService,
+    ) { }
 
   ngOnInit(): void {
     this.invoiceService.getInvoice().subscribe((data) => {
@@ -35,11 +40,7 @@ export class InvoiceSelectComponent implements OnInit{
   }
 
   eliminarFactura(invoiceId: number): void {
-    if (confirm('¿Está seguro de eliminar la factura?')) {
-      this.invoiceService.deleteInvoice(invoiceId).subscribe(() => {
-        window.location.reload()
-      })
-    }
+    this.AlertsService.eliminarFactura(invoiceId);
   }
 
 }
