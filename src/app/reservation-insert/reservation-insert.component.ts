@@ -17,6 +17,7 @@ export class ReservationInsertComponent implements OnInit {
   ReservationForm: FormGroup;
   formularioRoomXReserva: FormGroup;
   formularioActualizar: FormGroup;
+  formularioActualizarAnadidas: FormGroup;
   habitacion: any;
   precioPorNoche: number = 0;
   isAdmin: boolean = false;
@@ -66,6 +67,10 @@ export class ReservationInsertComponent implements OnInit {
     });
 
     this.formularioActualizar = this.fb.group({
+      ESTADO_HABITACION_IDESTADOHABITACION: [null, Validators.required],
+    });
+
+    this.formularioActualizarAnadidas = this.fb.group({
       ESTADO_HABITACION_IDESTADOHABITACION: [null, Validators.required],
     });
 
@@ -178,74 +183,66 @@ export class ReservationInsertComponent implements OnInit {
     return true;
   }
 
-crearNuevaReserva(): void {
-  this.imprimirValoresInputs();
-  console.log(this.roomsInput);
-  if (this.ReservationForm.valid) {
-    this.calcularPrecioTotal();
-    if (this.validarCantidadPersonas()) {
-      this.ReservationService.postReservas(this.ReservationForm.value).subscribe(
-        (data) => {
-          const reservaId = data.IDRESERVA;
-          console.log('Reserva creada:', data);
-
-          alert('Registro exitoso');
-           // Verificar si roomsInput no está vacío
-           if (Object.keys(this.roomsInput).length > 0) {
-            // Iterar sobre los valores de roomsInput y llamar a crearNuevoHabitacionXReserva() para cada uno
-            for (const roomId in this.roomsInput) {
-              if (this.roomsInput.hasOwnProperty(roomId)) {
-              
-                const roomNumber = this.roomsInput[roomId];
-                this.crearNuevoHabitacionXReserva(reservaId, roomNumber);
+  
+  crearNuevaReserva(): void {
+    this.imprimirValoresInputs();
+    console.log(this.roomsInput);
+    if (this.ReservationForm.valid) {
+      this.calcularPrecioTotal();
+      if (this.validarCantidadPersonas()) {
+        this.ReservationService.postReservas(this.ReservationForm.value).subscribe(
+          (data) => {
+            const reservaId = data.IDRESERVA;
+            console.log('Reserva creada:', data);
+            alert('Registro exitoso');
+            // Crear la reserva para la primera habitación seleccionada
+            this.crearNuevoHabitacionXReserva(reservaId, this.habitacion.NROHABITACION);
+            // Actualizar el estado de la primera habitación seleccionada
+            this.estadoOcupadoId = this.getEstadoOcuapdoId();
+            this.ActualizarEstadoHabitacion(this.estadoOcupadoId);
+  
+            // Verificar si roomsInput no está vacío
+            if (Object.keys(this.roomsInput).length > 0) {
+              // Iterar sobre los valores de roomsInput y llamar a crearNuevoHabitacionXReserva() para cada uno
+              // Actualizar el estado de todas las habitaciones seleccionadas
+              const estadoOcupadoId = this.getEstadoOcuapdoId();
+              for (const roomId in this.roomsInput) {
+                if (this.roomsInput.hasOwnProperty(roomId)) {
+                  const roomNumber = this.roomsInput[roomId];
+                  this.crearNuevoHabitacionXReserva(reservaId, roomNumber);
+                  this.ActualizarEstadoHabitacionAnadidas(roomNumber, estadoOcupadoId);
+                }
               }
             }
+          },
+          (error) => {
+            console.error('Error al crear reserva:', error);
+            alert('Error al crear reserva. Por favor, inténtelo de nuevo.');
           }
-
-         
-          // Crear la reserva para la primera habitación seleccionada
-          this.crearNuevoHabitacionXReserva(reservaId, this.habitacion.NROHABITACION);
-          // Actualizar el estado de la primera habitación seleccionada
-          this.RoomService.getStatusRoom().subscribe((statusData) => {
-            const estadoOcupadoId = this.getEstadoOcuapdoId(statusData);
-            this.ActualizarEstadoHabitacion(estadoOcupadoId);
-          });
-          this.router.navigate(['/']);
-        },
-        (error) => {
-          console.error('Error al crear reserva:', error);
-          alert('Error al crear reserva. Por favor, inténtelo de nuevo.');
-        }
-      );
-    } else {
-      console.log('Formulario inválido');
-      alert('Formulario inválido');
+        );
+      } else {
+        console.log('Formulario inválido');
+        alert('Formulario inválido');
+      }
     }
   }
-  } 
   
-  imprimirValoresInputs(): void {
-    // Crear un objeto para almacenar los valores de los inputs
-    const inputValues: { [key: string]: any } = {};
-  
-    // Obtener todos los nombres de los controles del formulario
-    const controlNames = Object.keys(this.ReservationForm.controls);
-    
-    // Filtrar solo los nombres de los controles que comienzan con "input"
-    const inputControlNames = controlNames.filter(name => name.startsWith('input'));
-  
-    // Iterar sobre los nombres de los controles filtrados y obtener sus valores
-    inputControlNames.forEach(name => {
-      const value = this.ReservationForm.get(name)?.value;
-      // Almacenar el valor en el objeto usando el nombre del control como clave
-      inputValues[name] = value;
+  ActualizarEstadoHabitacion(estadoId: number): void {
+    this.formularioActualizar.patchValue({
+      ESTADO_HABITACION_IDESTADOHABITACION: estadoId
     });
+    this.RoomService.patchRoom(this.habitacion.NROHABITACION, this.formularioActualizar.value).subscribe((data) => {
+      this.router.navigate(['/inicio']);
+    });
+  }
   
-    // Almacenar el objeto en la variable roomsInput
-    this.roomsInput = inputValues;
-  
-    // Imprimir el objeto JSON en la consola para verificar
-    //console.log('Valores de los inputs:', this.roomsInput);
+  ActualizarEstadoHabitacionAnadidas(nrohab: number, estadoId: number): void {
+    this.formularioActualizarAnadidas.patchValue({
+      ESTADO_HABITACION_IDESTADOHABITACION: estadoId
+    });
+    this.RoomService.patchRoom(nrohab, this.formularioActualizarAnadidas.value).subscribe((data) => {
+      this.router.navigate(['/inicio']);
+    });
   }
   
   crearNuevoHabitacionXReserva(reservaId: number, numeroHabitacion: number): void {
@@ -253,26 +250,46 @@ crearNuevaReserva(): void {
       HABITACION_NROHABITACION: numeroHabitacion,
       RESERVA_IDRESERVA: reservaId
     });
-
     this.ReservationService.postReservationXRoom(this.formularioRoomXReserva.value).subscribe((data) => {
       this.router.navigate(['/inicio']);
     });
   }
-
-  ActualizarEstadoHabitacion(estadoId: number): void {
-    this.formularioActualizar.patchValue({
-      ESTADO_HABITACION_IDESTADOHABITACION: estadoId
-    });
-
-    this.RoomService.patchRoom(this.habitacion.NROHABITACION, this.formularioActualizar.value).subscribe((data) => {
-      this.router.navigate(['/inicio']);
-    });
+  
+  getEstadoDisponibleId(): number {
+    const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');
+    return estadoDisponible ? estadoDisponible.IDESTADOHABITACION : 0;
   }
-
-  getEstadoOcuapdoId(estados: any[]): number {
-    const estadoOcupado = estados.find((estado) => estado.TIPO_ESTADO == 'Ocupado');
+  
+  getEstadoOcuapdoId(): number {
+    const estadoOcupado = this.estados.find((estado) => estado.TIPO_ESTADO == 'Ocupado');
     return estadoOcupado ? estadoOcupado.IDESTADOHABITACION : 0;
   }
+  
+  
+imprimirValoresInputs(): void {
+  // Crear un objeto para almacenar los valores de los inputs
+  const inputValues: { [key: string]: any } = {};
+
+  // Obtener todos los nombres de los controles del formulario
+  const controlNames = Object.keys(this.ReservationForm.controls);
+  
+  // Filtrar solo los nombres de los controles que comienzan con "input"
+  const inputControlNames = controlNames.filter(name => name.startsWith('input'));
+
+  // Iterar sobre los nombres de los controles filtrados y obtener sus valores
+  inputControlNames.forEach(name => {
+    const value = this.ReservationForm.get(name)?.value;
+    // Almacenar el valor en el objeto usando el nombre del control como clave
+    inputValues[name] = value;
+  });
+
+  // Almacenar el objeto en la variable roomsInput
+  this.roomsInput = inputValues;
+
+  // Imprimir el objeto JSON en la consola para verificar
+  //console.log('Valores de los inputs:', this.roomsInput);
+}
+
 
 
 
@@ -351,10 +368,7 @@ eliminarInput(controlName: string): void {
 }
 
 
-getEstadoDisponibleId(): number {
-  const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');
-  return estadoDisponible ? estadoDisponible.IDESTADOHABITACION : 0; }
- 
 
+  
 
 }
