@@ -1,12 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ReservationService } from '../services/reservation.service';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { RoomService } from '../services/room.service';
-import { FormControl } from '@angular/forms';
-
-// Dentro de la clase del componente
+import { ReservationService } from '../services/reservation.service';
 
 @Component({
   selector: 'app-reservation-insert',
@@ -14,25 +11,8 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./reservation-insert.component.css']
 })
 export class ReservationInsertComponent implements OnInit {
-  
-  toggleOverlay(): void {
-    const overlay = document.getElementById('overlay');
-    if (overlay) {
-      overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
-      if (overlay.style.display === 'none') {
-        this.eliminarInput(`input${this.numInputs}`); // Eliminar el último input cuando se oculta el overlay
-      } else {
-        this.agregarInput(); // Agregar input cuando el overlay se muestra
-      }
-    }
-  }
-  
-  
-  
-  // Referencia al elemento de fecha en el HTML
   @ViewChild('fechaInput', { static: true }) fechaInput!: ElementRef;
 
-  // Variables de clase
   reservas: any[] = [];
   ReservationForm: FormGroup;
   formularioRoomXReserva: FormGroup;
@@ -45,12 +25,19 @@ export class ReservationInsertComponent implements OnInit {
   fechaMinimaIn: string;
   fechaMinimaOut: string = '';
   estados: any[] = [];
-  estadoOcupadoId: number = 0; // ID del estado "Ocupado"
-  
-  // Variables mucho a muchos 
-  numInputs: number = 0; // Inicializamos con 1 input por defecto
+  estadoOcupadoId: number = 0;
+  habitacionId!: number;
+  numInputs: number = 1;
   additionalControls: FormControl[] = [];
   showAdditionalInputs: boolean = false;
+
+  showRoomSection: boolean = true;
+  habitacionSeleccionada: any;
+  rooms: any[] = [];
+  Typerooms: any[] = [];
+  noRoomsAvailable: boolean = false;
+  estadoDisponibleId: number = 0;
+  roomsInput: { [key: string]: any } = {};
 
   constructor(
     private RoomService: RoomService,
@@ -59,8 +46,8 @@ export class ReservationInsertComponent implements OnInit {
     private router: Router,
     public fb: FormBuilder,
     private route: ActivatedRoute,
+    private elementRef: ElementRef
   ) {
-    // Inicialización de formularios y validaciones
     this.ReservationForm = this.fb.group({
       FECHA_RESERVACION: ['', [Validators.required]],
       FECHA_ENTRADA: ['', [Validators.required]],
@@ -70,7 +57,7 @@ export class ReservationInsertComponent implements OnInit {
       CANTIDAD_NINOS: [null, [Validators.required]],
       ESTADO_RESERVA: [2],
       PERSONA_NRODOCUMENTO: ['', [Validators.required]],
-      input1: ['', Validators.required] // Primer input
+      input1: ['',]
     });
 
     this.formularioRoomXReserva = this.fb.group({
@@ -82,27 +69,22 @@ export class ReservationInsertComponent implements OnInit {
       ESTADO_HABITACION_IDESTADOHABITACION: [null, Validators.required],
     });
 
-    // Inicialización de la fecha mínima
     const today = new Date();
     this.fechaMinimaIn = today.toISOString().split('T')[0];
 
-    // Suscripción al cambio de fecha de entrada para actualizar la fecha mínima de salida
     if (this.ReservationForm) {
       this.ReservationForm.get('FECHA_ENTRADA')?.valueChanges.subscribe((fechaEntrada: string) => {
         if (fechaEntrada) {
           const minDate = new Date(fechaEntrada);
-          minDate.setDate(minDate.getDate() + 1); // Sumar un día
+          minDate.setDate(minDate.getDate() + 1);
           this.fechaMinimaOut = minDate.toISOString().split('T')[0];
-    
-          // Obtener la fecha de salida actual
+
           const fechaSalidaActual = this.ReservationForm.get('FECHA_SALIDA')?.value;
-    
-          // Verificar si la fecha de salida actual es anterior a la nueva fecha mínima de salida
+
           if (fechaSalidaActual) {
             const minDateOut = new Date(this.fechaMinimaOut);
             const fechaSalida = new Date(fechaSalidaActual);
             if (fechaSalida < minDateOut) {
-              // Actualizar la fecha de salida para que sea al menos un día después de la nueva fecha de entrada
               const nuevaFechaSalida = new Date(minDateOut);
               nuevaFechaSalida.setDate(nuevaFechaSalida.getDate());
               this.ReservationForm.get('FECHA_SALIDA')?.patchValue(nuevaFechaSalida.toISOString().split('T')[0]);
@@ -111,12 +93,34 @@ export class ReservationInsertComponent implements OnInit {
         }
       });
     }
-    
   }
 
   ngOnInit(): void {
+    this.RoomService.getRooms().subscribe((data) => {
+      this.RoomService.getStatusRoom().subscribe((statusData) => {
+        this.estados = statusData;
+        this.estadoDisponibleId = this.getEstadoDisponibleId();
+        this.rooms = data.filter((item: any) => item.ESTADO_HABITACION_IDESTADOHABITACION == this.estadoDisponibleId);
+        if (this.rooms.length === 0) {
+          this.noRoomsAvailable = true;
+        } else {
+          this.RoomService.getTypeRoom().subscribe((typeData) => {
+            this.Typerooms = typeData;
+            this.rooms.forEach((room) => {
+              this.RoomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData) => {
+                room.foto = statusData.FOTO;
+                room.tipo = statusData.TIPO_HABITACION;
+                room.precio = statusData.PRECIOXNOCHE;
+                room.descripcion = statusData.DESCRIPCION;
+                room.cap_adultos = statusData.CANTIDAD_ADULTOS;
+                room.cap_ninos = statusData.CANTIDAD_NINOS;
+              });
+            });
+          });
+        }
+      });
+    });
 
-    // Verificación del usuario y su rol
     const user = this.authService.getAuthId();
     const rol = this.authService.getRolId();
     if (rol === '1') {
@@ -132,20 +136,15 @@ export class ReservationInsertComponent implements OnInit {
       });
     }
 
-    // Inicialización de la fecha de reservación
     this.ReservationForm.patchValue({
       FECHA_RESERVACION: new Date().toISOString().split('T')[0]
     });
 
-    // Obtener datos de la habitación
     this.habitacion = history.state.habitacion;
-    console.log(this.habitacion);
-
-    // Precio por noche de la habitación
+    console.log(this.habitacionId = history.state.habitacion.NROHABITACION);
     this.precioPorNoche = this.habitacion.precio;
   }
 
-  // Método para calcular la diferencia en días entre dos fechas
   calcularDiasEntreFechas(fechaInicio: string, fechaFin: string): number {
     const inicio = new Date(fechaInicio);
     const fin = new Date(fechaFin);
@@ -153,7 +152,6 @@ export class ReservationInsertComponent implements OnInit {
     return Math.ceil(diferencia / (1000 * 3600 * 24));
   }
 
-  // Método para calcular el precio total de la reserva
   calcularPrecioTotal(): void {
     const fechaEntrada = this.ReservationForm.value.FECHA_ENTRADA;
     const fechaSalida = this.ReservationForm.value.FECHA_SALIDA;
@@ -165,7 +163,6 @@ export class ReservationInsertComponent implements OnInit {
     console.log('Precio total de la reserva:', this.ReservationForm.value.PRECIO_CALCULADO);
   }
 
-  // Método para validar la cantidad de personas en la reserva
   validarCantidadPersonas(): boolean {
     const capacidadAdultos = this.habitacion.cap_adultos;
     const capacidadNinos = this.habitacion.cap_ninos;
@@ -181,36 +178,82 @@ export class ReservationInsertComponent implements OnInit {
     return true;
   }
 
-  // Método para crear una nueva reserva
-  crearNuevaReserva(): void {
-    if (this.ReservationForm.valid) {
-      this.calcularPrecioTotal();
-      if (this.validarCantidadPersonas()) {
-        this.ReservationService.postReservas(this.ReservationForm.value).subscribe(
-          (data) => {
-            const reservaId = data.IDRESERVA;
-            console.log('Reserva creada:', data);
-            alert('Registro exitoso');
-            this.crearNuevoHabitacionXReserva(reservaId, this.habitacion.NROHABITACION);
-            this.RoomService.getStatusRoom().subscribe((statusData) => {
-              const estadoOcupadoId = this.getEstadoOcuapdoId(statusData);
-              this.ActualizarEstadoHabitacion(estadoOcupadoId);
-            });
-            this.router.navigate(['/']);
-          },
-          (error) => {
-            console.error('Error al crear reserva:', error);
-            alert('Error al crear reserva. Por favor, inténtelo de nuevo.');
+crearNuevaReserva(): void {
+  this.imprimirValoresInputs();
+  console.log(this.roomsInput);
+  if (this.ReservationForm.valid) {
+    this.calcularPrecioTotal();
+    if (this.validarCantidadPersonas()) {
+      this.ReservationService.postReservas(this.ReservationForm.value).subscribe(
+        (data) => {
+          const reservaId = data.IDRESERVA;
+          console.log('Reserva creada:', data);
+
+          alert('Registro exitoso');
+           // Verificar si roomsInput no está vacío
+           if (Object.keys(this.roomsInput).length > 0) {
+            // Iterar sobre los valores de roomsInput y llamar a crearNuevoHabitacionXReserva() para cada uno
+            for (const roomId in this.roomsInput) {
+              if (this.roomsInput.hasOwnProperty(roomId)) {
+              
+                const roomNumber = this.roomsInput[roomId];
+                this.crearNuevoHabitacionXReserva(reservaId, roomNumber);
+              }
+            }
           }
-        );
-      } else {
-        console.log('Formulario inválido');
-        alert('Formulario inválido');
-      }
+
+         
+          // Crear la reserva para la primera habitación seleccionada
+          this.crearNuevoHabitacionXReserva(reservaId, this.habitacion.NROHABITACION);
+          // Actualizar el estado de la primera habitación seleccionada
+          this.RoomService.getStatusRoom().subscribe((statusData) => {
+            const estadoOcupadoId = this.getEstadoOcuapdoId(statusData);
+            this.ActualizarEstadoHabitacion(estadoOcupadoId);
+          });
+          this.router.navigate(['/']);
+        },
+        (error) => {
+          console.error('Error al crear reserva:', error);
+          alert('Error al crear reserva. Por favor, inténtelo de nuevo.');
+        }
+      );
+    } else {
+      console.log('Formulario inválido');
+      alert('Formulario inválido');
     }
   }
+  } 
+  
+  imprimirValoresInputs(): void {
+    // Crear un objeto para almacenar los valores de los inputs
+    const inputValues: { [key: string]: any } = {};
+  
+    // Obtener todos los nombres de los controles del formulario
+    const controlNames = Object.keys(this.ReservationForm.controls);
+    
+    // Filtrar solo los nombres de los controles que comienzan con "input"
+    const inputControlNames = controlNames.filter(name => name.startsWith('input'));
+  
+    // Iterar sobre los nombres de los controles filtrados y obtener sus valores
+    inputControlNames.forEach(name => {
+      const value = this.ReservationForm.get(name)?.value;
+      // Almacenar el valor en el objeto usando el nombre del control como clave
+      inputValues[name] = value;
+    });
+  
+    // Almacenar el objeto en la variable roomsInput
+    this.roomsInput = inputValues;
+  
+    // Imprimir el objeto JSON en la consola para verificar
+    //console.log('Valores de los inputs:', this.roomsInput);
+  }
+  
 
-  // Método para crear un nuevo registro de habitación por reserva
+
+
+
+  
+
   crearNuevoHabitacionXReserva(reservaId: number, numeroHabitacion: number): void {
     this.formularioRoomXReserva.patchValue({
       HABITACION_NROHABITACION: numeroHabitacion,
@@ -222,7 +265,6 @@ export class ReservationInsertComponent implements OnInit {
     });
   }
 
-  // Método para actualizar el estado de la habitación
   ActualizarEstadoHabitacion(estadoId: number): void {
     this.formularioActualizar.patchValue({
       ESTADO_HABITACION_IDESTADOHABITACION: estadoId
@@ -233,27 +275,78 @@ export class ReservationInsertComponent implements OnInit {
     });
   }
 
-  // Método para obtener el ID del estado "Ocupado"
   getEstadoOcuapdoId(estados: any[]): number {
     const estadoOcupado = estados.find((estado) => estado.TIPO_ESTADO == 'Ocupado');
     return estadoOcupado ? estadoOcupado.IDESTADOHABITACION : 0;
   }
 
-  agregarInput(): void {
-    if (this.numInputs < 4) { // Máximo 4 inputs
-      this.numInputs++;
-      const controlName = `input${this.numInputs}`;
-      const newControl = this.fb.control('', Validators.required);
-      this.ReservationForm.addControl(controlName, newControl);
-      this.additionalControls.push(newControl);
-      this.showAdditionalInputs = true; // Mostrar los inputs adicionales
+
+
+// Función agregarInput con parámetros para agregar el número de habitación
+agregarInputWithRoomNumber(numeroHabitacion: number): void {
+  if (this.numInputs < 4) {
+    this.numInputs++;
+    const controlName = `input${this.numInputs}`;
+    // Crear el nuevo control con un valor inicial igual al número de habitación
+    const newControl = this.fb.control(numeroHabitacion, Validators.required);
+    // Agregar el nuevo control al formulario
+    this.ReservationForm.addControl(controlName, newControl);
+    // Agregar el nuevo control a la lista de controles adicionales
+    this.additionalControls.push(newControl);
+    // Mostrar los inputs adicionales
+    this.showAdditionalInputs = true;
+    // Cerrar el overlay
+    this.toggle();
+  }
+}
+
+toggle() {
+  const overlay = this.elementRef.nativeElement.querySelector('.overlay');
+
+  // Si el estilo display del overlay es 'none', cambia a 'block', de lo contrario, cambia a 'none'
+  if (overlay.style.display === 'none' || !overlay.style.display) {
+    overlay.style.display = 'block';
+  } else {
+    overlay.style.display = 'none';
+  }
+}
+
+
+toggleOverlay(numeroHabitacion?: number): void {
+  const overlay = document.getElementById('overlay');
+  if (overlay) {
+    overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
+    if (overlay.style.display === 'none') {
+      // Si se está ocultando el overlay, eliminamos el último input
+      this.eliminarInput(`input${this.numInputs}`);
+    } else {
+      if (numeroHabitacion) {
+        this.agregarInputWithRoomNumber(numeroHabitacion); // Agregar input con el número de habitación si se proporciona
+      } 
     }
   }
-  
-  eliminarInput(controlName: string): void {
-    this.ReservationForm.removeControl(controlName);
-    this.numInputs--; // Decrementar la cantidad de inputs
+}
+
+eliminarInput(controlName: string): void {
+  this.ReservationForm.removeControl(controlName);
+  this.numInputs--;
+
+  // Actualizar los nombres de los controles restantes
+  for (let i = 2; i <= this.numInputs + 1; i++) {
+    const oldName = `input${i}`;
+    const newName = `input${i - 1}`;
+    const control = this.ReservationForm.get(oldName);
+    if (control) {
+      this.ReservationForm.removeControl(oldName); // Eliminar el control con el nombre antiguo
+      this.ReservationForm.addControl(newName, control); // Agregar el control con el nuevo nombre
+    }
   }
-  
+}
+
+getEstadoDisponibleId(): number {
+  const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');
+  return estadoDisponible ? estadoDisponible.IDESTADOHABITACION : 0; }
+ 
+
 
 }
