@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { AlertsService } from '../services/alerts.service';
+import { MatPaginator } from '@angular/material/paginator'; // Importa MatPaginator
+
 @Component({
   selector: 'app-room-select',
   templateUrl: './room-select.component.html',
@@ -9,8 +11,9 @@ import { AlertsService } from '../services/alerts.service';
 })
 export class RoomSelectComponent implements OnInit {
   rooms: any[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // Obtén una referencia al paginador
 
-  constructor(private roomService: RoomService, private router: Router,private AlertsService:AlertsService) { }
+  constructor(private roomService: RoomService, private router: Router, private alertsService: AlertsService) { }
 
   ngOnInit(): void {
     this.roomService.getRooms().subscribe((data) => {
@@ -23,14 +26,19 @@ export class RoomSelectComponent implements OnInit {
         });
       });
 
-    // Obtener el tipo de habitación para cada habitación
-    this.rooms.forEach((room) => {
-      this.roomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData)=>{
-      room.tipoHabitacion = statusData.TIPO_HABITACION
-      });
+      // Obtener el tipo de habitación para cada habitación
+      this.rooms.forEach((room) => {
+        this.roomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData) => {
+          room.tipoHabitacion = statusData.TIPO_HABITACION;
+        });
       });
 
-     });
+      // Configura el paginador después de recibir los datos
+      if (this.paginator) {
+        this.paginator.pageSize = 10;
+        this.paginator.hidePageSize = true; // Oculta la selección de tamaño de página
+      }
+    });
   }
 
   redireccionarActualizar(roomId: number): void {
@@ -38,6 +46,6 @@ export class RoomSelectComponent implements OnInit {
   }
 
   eliminarHabitacion(roomId: number): void {
-    this.AlertsService.eliminarHabitacion(roomId);
+    this.alertsService.eliminarHabitacion(roomId);
   }
 }

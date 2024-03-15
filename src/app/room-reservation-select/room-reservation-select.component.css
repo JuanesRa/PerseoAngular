@@ -113,7 +113,6 @@
     justify-content: center;
     gap: 7px;
     height: 60px;
-
 }
 
 .btns button {
@@ -130,3 +129,22 @@
     background-color: #fff;
     border: 2px solid #5eb319;
 }
+
+.boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 60px;
+    margin-top: 5px;
+  
+  }
+  
+  .boton a {
+    text-decoration: none;
+    padding: 5px 10px 5px 10px;
+    color: #fff;
+    background-color: #5eb319;
+    border-radius: 5px;
+  
+  }

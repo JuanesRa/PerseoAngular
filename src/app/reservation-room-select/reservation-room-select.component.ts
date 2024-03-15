@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { RoomService } from '../services/room.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-reservation-room-select',
@@ -17,6 +18,7 @@ export class ReservationRoomSelectComponent implements OnInit {
   estadoOcupadoId: number = 0;
   nroHab: number = 0;
   formularioActualizar: FormGroup;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private ReservationService: ReservationService,
@@ -40,7 +42,6 @@ export class ReservationRoomSelectComponent implements OnInit {
       this.estadoOcupadoId = this.getEstadoOcupadoId();
     });
 
-
     this.reservationId = +this.route.snapshot.params['id'];
 
     this.ReservationService.getReservationXRoom().subscribe((data) => {
@@ -56,6 +57,12 @@ export class ReservationRoomSelectComponent implements OnInit {
           });
         });
       });
+
+      // Configurar el paginador después de recibir los datos
+      if (this.paginator) {
+        this.paginator.pageSize = 10;
+        this.paginator.hidePageSize = true; // Oculta la selección de tamaño de página
+      }
     });
   }
 

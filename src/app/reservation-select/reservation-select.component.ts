@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { UserService } from '../services/user.service';
-
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-reservation-select',
   templateUrl: './reservation-select.component.html',
@@ -10,7 +10,7 @@ import { UserService } from '../services/user.service';
 })
 export class ReservationSelectComponent implements OnInit {
   reservas: any[] = [];
-
+  @ViewChild(MatPaginator) paginatorR!: MatPaginator;
   constructor(
     private router: Router,
     private reservationService: ReservationService,
@@ -18,16 +18,15 @@ export class ReservationSelectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getReservas();
-  }
-
-  getReservas(): void {
     this.reservationService.getReservas().subscribe((data) => {
       this.reservas = data;
       console.log(this.reservas);
-
       this.getEstadoReserva();
-      this.getUsuario();
+      this.getUsuario(); 
+      if (this.paginatorR) {
+        this.paginatorR.pageSize = 10;
+        this.paginatorR.hidePageSize = true; // Oculta la selección de tamaño de página
+      }
     });
   }
 

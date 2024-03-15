@@ -15,26 +15,27 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let df of detallesFacturas, let i = index">
-                <th class="table-light" scope="row">{{ df.producto  }}</th>
-                <th class="table-light" scope="row">{{ df.precio  }}</th>
-                <td class="table-light">{{ df.CANTIDAD  }}</td>
+            <tr
+                *ngFor="let df of detallesFacturas.slice((paginator.pageIndex * paginator.pageSize), ((paginator.pageIndex + 1) * paginator.pageSize)); let i = index">
+                <th class="table-light" scope="row">{{ df.producto }}</th>
+                <th class="table-light" scope="row">{{ df.precio }}</th>
+                <td class="table-light">{{ df.CANTIDAD }}</td>
                 <td class="btns">
                     <button (click)="redireccionarActualizar(df.IDDETALLESFACTURA)" type="button"
                         class="btn btn-warning">
                         Actualizar
                     </button>
-                    <button (click)="eliminarDetalleFatura(df.IDDETALLESFACTURA)" type="button"
-                        class="btn btn-danger">
+                    <button (click)="eliminarDetalleFatura(df.IDDETALLESFACTURA)" type="button" class="btn btn-danger">
                         Eliminar
                     </button>
                 </td>
             </tr>
         </tbody>
     </table>
-    <div class="btns">
+    <mat-paginator [pageSize]="10" [length]="detallesFacturas.length" #paginator></mat-paginator>
+
+    <div class="boton">
         <a routerLink="/insertar-detalle-factura/{{facturaId}}">Crear</a>
         <a routerLink="/lista-facturas">Volver</a>
-      </div>
+    </div>
 </div>
-

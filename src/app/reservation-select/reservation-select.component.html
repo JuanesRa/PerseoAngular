@@ -25,7 +25,7 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let reserva of reservas">
+            <tr *ngFor="let reserva of reservas.slice((paginatorR.pageIndex * paginatorR.pageSize), ((paginatorR.pageIndex + 1) * paginatorR.pageSize)), let i = index">
                 <td>
                     <div class="icons">
                       <a href="lista-huesped-reserva/{{reserva.IDRESERVA}}"> <i class="fa-solid fa-users"></i></a>
@@ -56,7 +56,9 @@
             </tr>
         </tbody>
     </table>
-    <div class="btns">
-      <a routerLink="/habitaciones">Crear Reserva</a>
+    <mat-paginator [pageSize]="10" [length]="reservas.length" #paginatorR></mat-paginator>
+
+    <div class="boton">
+        <a routerLink="/habitaciones">Crear Reserva</a>
     </div>
 </div>

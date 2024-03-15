@@ -82,12 +82,11 @@ body{
 
 
 .btns {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  height: 60px;
-
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 7px;
+   height: 60px;
 }
 
 .btns a {
@@ -102,3 +101,56 @@ body{
   color: #fff;
   padding: 5px 15px;
 }
+
+.boton {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 7px;
+   height: 40px;
+   margin-top: 25px;
+ 
+ }
+ 
+.boton a {
+  text-decoration: none;
+  padding: 10px 10px 30px 10px;
+  color: #fff;
+  background-color: #5eb319;
+  border-radius: 8px;
+  height: 100%;
+  font-size: 17px;
+  border-color: #5eb319;
+  border: 2px solid;
+  text-align: center;
+}
+
+.boton  a:hover{
+  color: #5eb319;
+  background-color: #fff;
+  border-color: #5eb319;
+  border: 2px solid;
+}
+
+
+::ng-deep .mat-mdc-paginator-outer-container {
+  display: flex;
+  width: 1150px;
+  height: 40px;
+}
+
+
+::ng-deep .mat-mdc-paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  flex-wrap: wrap-reverse;
+  width: 100%;
+  height: 100%;
+  background-color: #5eb319;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+ 

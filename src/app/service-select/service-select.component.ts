@@ -1,29 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
+import { MatPaginator } from '@angular/material/paginator'; 
 
 @Component({
   selector: 'app-service-select',
   templateUrl: './service-select.component.html',
   styleUrls: ['./service-select.component.css']
 })
-export class ServiceSelectComponent {
+export class ServiceSelectComponent implements OnInit {
 
-  servicios: any[] =[];
+  servicios: any[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // Obtén una referencia al paginador
+
   constructor(private serviceService: ServiceService, private router: Router) { }
+
   ngOnInit(): void {
     this.serviceService.getServices().subscribe((data) => {
       this.servicios = data;
-      console.log(this.servicios)
+       // Configura el paginador después de recibir los datos
+       if (this.paginator) {
+        this.paginator.pageSize = 10;
+        this.paginator.hidePageSize = true; 
+    }
 
-     // Obtener el tipo de habitación para cada habitación
-     this.servicios.forEach((servicio) => {
-      this.serviceService.getTypeServiceById(servicio.TIPO_SERVICIO_IDTIPOSERVICIO).subscribe((statusData)=>{
-        servicio.tipoServicio = statusData.TIPO_SERVICIO
+      // Obtener el tipo de servicio para cada servicio
+      this.servicios.forEach((servicio) => {
+        this.serviceService.getTypeServiceById(servicio.TIPO_SERVICIO_IDTIPOSERVICIO).subscribe((statusData)=>{
+          servicio.tipoServicio = statusData.TIPO_SERVICIO;
+        });
       });
-      });
-
-     });
+    });
   }
 
   redireccionarActualizar(serviceId: number): void {
@@ -31,10 +38,10 @@ export class ServiceSelectComponent {
   }
 
   eliminarServicio(serviceId: number): void {
-    if (confirm('¿Está seguro de eliminar el producto? ')) {
+    if (confirm('¿Está seguro de eliminar el producto?')) {
       this.serviceService.deleteService(serviceId).subscribe(() => {
-        window.location.reload()
-      })
-   }
-}
+        window.location.reload();
+      });
+    }
+  }
 }

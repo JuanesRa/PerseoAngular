@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { forkJoin } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-user-select',
@@ -13,6 +14,7 @@ export class UserSelectComponent implements OnInit {
   users: any[] = [];
   roles: any[] = [];
   tipodocumentos: any[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator; 
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -26,6 +28,12 @@ export class UserSelectComponent implements OnInit {
       this.users = usersData;
       this.roles = rolesData;
       this.tipodocumentos = tipodocumentosData;
+
+      // Configura el paginador después de recibir los datos
+      if (this.paginator) {
+        this.paginator.pageSize = 10;
+        this.paginator.hidePageSize = true; // Oculta la selección de tamaño de página
+    }
 
       // Asignar roles y tipos de documento a los usuarios
       this.users.forEach((user) => {

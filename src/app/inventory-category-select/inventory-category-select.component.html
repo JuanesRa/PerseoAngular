@@ -13,7 +13,7 @@
       </thead>
 
     <tbody>
-      <tr *ngFor="let category of categoriaInv">
+      <tr *ngFor="let category of categoriaInv.slice((paginator.pageIndex * paginator.pageSize), ((paginator.pageIndex + 1) * paginator.pageSize)), let i = index">
         <td class="table-light">{{ category.NOMBRE_CATEGORIA}}</td>
         <td class="table-light">{{ category.DESCRIPCION  }}</td>
         <td class="btns">
@@ -24,7 +24,9 @@
     </tbody>
    </table>
 
-  <div class="btns">
-  <a routerLink="/insertar-categoria-inventario">Crear categoria</a>
+  <mat-paginator [pageSize]="10" [length]="categoriaInv.length" #paginator></mat-paginator>
+  
+  <div class="boton">
+    <a routerLink="/insertar-categoria-inventario">Crear categoria</a>
   </div>
 </div>

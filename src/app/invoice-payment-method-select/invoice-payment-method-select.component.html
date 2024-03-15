@@ -3,7 +3,7 @@
 </div>
 
 <div class="tabla_content" id="table_invoice_details">
-    <span class="title">Metodos de Pago Factura Cod:{{facturaId}} </span>
+    <span class="title">Métodos de Pago Factura Cod:{{facturaId}} </span>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -13,24 +13,23 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let Mf of FacturaMetodosPago, let i = index">
+            <tr *ngFor="let Mf of FacturaMetodosPago.slice((paginator.pageIndex * paginator.pageSize), ((paginator.pageIndex + 1) * paginator.pageSize)); let i = index">
                 <th class="table-light" scope="row">{{ Mf.metodo }}</th>
                 <td class="btns">
-                    <button (click)="redireccionarActualizar(Mf.ID_METODO_FACTURA)" type="button"
-                        class="btn btn-warning">
+                    <button (click)="redireccionarActualizar(Mf.ID_METODO_FACTURA)" type="button" class="btn btn-warning">
                         Actualizar
                     </button>
-                    <button (click)="eliminarMetodoFatura(Mf.ID_METODO_FACTURA)" type="button"
-                        class="btn btn-danger">
+                    <button (click)="eliminarMetodoFatura(Mf.ID_METODO_FACTURA)" type="button" class="btn btn-danger">
                         Eliminar
                     </button>
                 </td>
             </tr>
         </tbody>
     </table>
-    <div class="btns">
+    <mat-paginator [pageSize]="10" [length]="FacturaMetodosPago.length" #paginator></mat-paginator>
+
+    <div class="boton">
         <a routerLink="/insertar-metodo-factura/{{facturaId}}">Crear</a>
         <a routerLink="/lista-facturas">Volver</a>
-      </div>
+    </div>
 </div>
-

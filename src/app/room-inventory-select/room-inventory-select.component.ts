@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { InventoryService } from '../services/inventory.service';
+import { MatPaginator } from '@angular/material/paginator'; // Importa MatPaginator
 
 @Component({
   selector: 'app-room-inventory-select',
@@ -11,6 +12,7 @@ import { InventoryService } from '../services/inventory.service';
 export class RoomInventorySelectComponent implements OnInit {
   roomxinventory: any[] = [];
   habitacionId!: number;
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // Obtén una referencia al paginador
 
   constructor(private roomService: RoomService, private route: ActivatedRoute, private router: Router, private InventoryService: InventoryService) { }
 
@@ -37,6 +39,12 @@ export class RoomInventorySelectComponent implements OnInit {
           inventory.estado = statusData.ESTADO;
         });
       });
+
+      // Configura el paginador después de recibir los datos
+      if (this.paginator) {
+        this.paginator.pageSize = 10;
+        this.paginator.hidePageSize = true; // Oculta la selección de tamaño de página
+      }
     });
   }
 

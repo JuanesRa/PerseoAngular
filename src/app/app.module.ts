@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -61,7 +60,8 @@ import { InvoicePaymentMethodInsertComponent } from './invoice-payment-method-in
 import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-update/invoice-payment-method-update.component';
 import { RoomReservationSelectComponent } from './room-reservation-select/room-reservation-select.component';
 import { InvoicePdfComponent } from './invoicePdf/invoicePdf.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [	
@@ -121,14 +121,16 @@ import { InvoicePdfComponent } from './invoicePdf/invoicePdf.component';
     InvoicePaymentMethodInsertComponent,
     InvoicePaymentMethodUpdateComponent,
     RoomReservationSelectComponent,
-      InvoicePdfComponent
-   ],
+    InvoicePdfComponent,
+  ],
   imports: [
+    MatPaginatorModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

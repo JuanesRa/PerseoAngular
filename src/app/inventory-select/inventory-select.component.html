@@ -1,31 +1,34 @@
 <div>
    <app-header></app-header>
-</div>
-
-<div class="tabla_content" id="table_inventory">
-    <table class="table table-striped table-hover">
-       <thead>
-          <tr>
-             <th scope="col">Producto</th>
-             <th scope="col">Descripción</th>
-             <th scope="col">Categoria</th>
-             <th scope="col">Acciones</th>
-          </tr>
-       </thead>
-
-       <tbody>
-        <tr *ngFor="let inventario of inventarios">
-             <td class="table-light">{{ inventario.NOMBRE_PRODUCTO }}</td>
-             <td class="table-light">{{ inventario.DESCRIPCION_PRODUCTO }}</td>
-             <td class="table-light">{{ inventario.categoria }}</td>
-             <td class="btns">
-                <button (click)="redireccionarActualizar(inventario.IDINVENTARIO)" type="button" class="btn btn-warning">Actualizar</button>
-                <button (click)="eliminarInventario(inventario.IDINVENTARIO)" type="button" class="btn btn-danger">Eliminar</button>
-            </td>
-          </tr>
-       </tbody>
-    </table>
-    <div class="btns">
-      <a routerLink="/insertar-inventario">Crear Inventario</a>
-    </div>
  </div>
+ 
+ <div class="tabla_content" id="table_inventory">
+   <table class="table table-striped table-hover">
+     <thead>
+       <tr>
+         <th scope="col">Producto</th>
+         <th scope="col">Descripción</th>
+         <th scope="col">Categoria</th>
+         <th scope="col">Acciones</th>
+       </tr>
+     </thead>
+ 
+     <tbody>
+       <tr *ngFor="let inventario of inventarios.slice((paginator.pageIndex * paginator.pageSize), ((paginator.pageIndex + 1) * paginator.pageSize)); let i = index">
+         <td class="table-light">{{ inventario.NOMBRE_PRODUCTO }}</td>
+         <td class="table-light">{{ inventario.DESCRIPCION_PRODUCTO }}</td>
+         <td class="table-light">{{ inventario.categoria }}</td>
+         <td class="btns">
+           <button (click)="redireccionarActualizar(inventario.IDINVENTARIO)" type="button" class="btn btn-warning">Actualizar</button>
+           <button (click)="eliminarInventario(inventario.IDINVENTARIO)" type="button" class="btn btn-danger">Eliminar</button>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+   <mat-paginator [pageSize]="10" [length]="inventarios.length" #paginator></mat-paginator>
+ 
+   <div class="boton">
+     <a routerLink="/insertar-inventario">Crear Inventario</a>
+   </div>
+ </div>
+ 
