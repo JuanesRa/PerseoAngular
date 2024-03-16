@@ -13,7 +13,7 @@ import { UserService } from '../services/user.service';
 export class SignupComponent {
 
   formulario: FormGroup;
-
+  showPassword: boolean = false;
   users: any[] = [];
   TiposDocumento: any[] = [];
 
@@ -83,6 +83,10 @@ export class SignupComponent {
       console.log('Formulario inválido')
       alert('Formulario inválido')
     }
-
   }
+
+  togglePasswordVisibility(passwordField: HTMLInputElement): void {
+    this.showPassword = !this.showPassword;
+    passwordField.type = this.showPassword ? 'text' : 'password';
+  } 
 }

@@ -13,6 +13,7 @@ import { UserDataService } from '../services/user-data.service';
 export class LoginComponent {
 
   formulario: FormGroup;
+  showPassword: boolean = false;
 
   constructor(private authService: AuthService, private router: Router, private UserDataService: UserDataService, public fb: FormBuilder) {
     this.formulario = this.fb.group({
@@ -22,8 +23,6 @@ export class LoginComponent {
   }
 
   iniciarSesion(): void {
-
-
     if (this.formulario.valid) {
       this.authService.login(this.formulario.value).subscribe((data) => {
         console.log('Inicio de sesión exitoso:', data);
@@ -36,6 +35,11 @@ export class LoginComponent {
       })
     }
   }
+
+  togglePasswordVisibility(passwordField: HTMLInputElement): void {
+    this.showPassword = !this.showPassword;
+    passwordField.type = this.showPassword ? 'text' : 'password';
+  } 
 
 
 }
