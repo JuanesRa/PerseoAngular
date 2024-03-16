@@ -53,6 +53,7 @@ body {
     width: 450px;
     padding: 50px;
     border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 .signup .title {
@@ -156,8 +157,8 @@ body {
     border-bottom: 2px solid #ccc;
     padding: 0 35px;
     font-size: 16px;
-    color: var(--black);
-    background-color: var(--white);
+    color: black;
+    background-color:#fff;
 }
 
 .input-select {
@@ -197,7 +198,10 @@ body {
 
 .botones {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    width: 55%;
+    margin: auto;
 }
 
 .input-field.button a:is(:focus, :valid) {
@@ -228,7 +232,7 @@ body {
     width: 90%;
     height: 100%;
     margin: auto;
-    color: var(--white);
+    color: #fff;
     font-size: 17px;
     font-weight: 500;
     padding: 15px 35px 0 65px;
@@ -236,7 +240,7 @@ body {
     margin-top: 30px;
     letter-spacing: 1px;
     border-radius: 6px;
-    background-color: var(--green);
+    background-color: #5eb319;
     transition: all 0.2s ease;
 
 }
@@ -244,4 +248,16 @@ body {
 .input-field.button a:hover {
     border-bottom-color: #91d856;
     /* Cambia el color del borde inferior al pasar el cursor */
+}
+
+.login-signup{
+    padding-top: 30px;
+}
+
+.login-signup a{
+    color: black;
+}
+
+.login-signup a:hover{
+    color: #5eb319;
 }

@@ -2,12 +2,20 @@ import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import { InvoiceService } from './invoice.service';
 import { RoomService } from './room.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AlertsService {
 
-  constructor(private invoiceService: InvoiceService, private RoomService: RoomService) { }
+  constructor(
+    private invoiceService: InvoiceService,
+    private RoomService: RoomService,
+    private http: HttpClient) { }
+
 
   alertDrop(title: string, text: string): Promise<boolean> {
     return Swal.fire({
@@ -21,6 +29,22 @@ export class AlertsService {
     }).then((result) => {
       return result.isConfirmed;
     });
+  }
+
+  alertConfirmed(title: string): Promise<void> {
+    return Swal.fire({
+      title: title,
+      icon: 'success',
+      confirmButtonColor: '#5eb319', // Cambia el color del botón "OK"
+    }).then(() => {});
+  }
+
+  alertDenied(title: string){
+    Swal.fire({
+      title: title,
+      icon: 'error',
+      confirmButtonColor: '#F27474', // Cambia el color del botón "OK"
+    }).then(() => {});
   }
 
 

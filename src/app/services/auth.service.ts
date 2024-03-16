@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize, retry } from 'rxjs/operators';
+import { AlertsService } from './alerts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +12,13 @@ export class AuthService {
   private urlApi = 'http://127.0.0.1:8000/usuarios'
   private authTokenKey = 'authToken';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private AlertsService: AlertsService) { }
 
   login(credentials: { username: string, password: string }): Observable<any> {
     return this.http.post<any>(`${this.urlApi}/login`, credentials).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessage = 'Error de inicio de sesión';
-
-        if (error.status === 400 && error.error && error.error.detail) {
-          errorMessage = error.error.detail;
-        } else if (error.status === 401 && error.error && error.error.detail) {
-          errorMessage = error.error.detail;
-        } else if (error.status === 403 && error.error && error.error.detail) {
-          errorMessage = error.error.detail;
-        }
-        alert(errorMessage); // Mostrar el mensaje de error
+        let errorMessage = '¡Error! Correo o contraseña inválidas.';
+        this.AlertsService.alertDenied(errorMessage);
         return throwError(() => errorMessage)
       })
     );
