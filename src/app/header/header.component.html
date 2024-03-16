@@ -77,7 +77,7 @@
         </ng-container>
         <ng-container *ngIf="!isLoggedIn">
             <a routerLink="/habitaciones">Habitaciones</a>
-            <a routerLink="">Servicios</a>
+            <a *ngIf="!isLoggedIn" href="#servicios">Servicios</a>
         </ng-container>
     </nav>
 
