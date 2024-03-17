@@ -12,7 +12,7 @@ import { AlertsService } from '../services/alerts.service';
 })
 export class LoginComponent {
   formulario: FormGroup;
-    showPassword: boolean = false;
+  showPassword: boolean = false;
 
   constructor(
     private authService: AuthService,
