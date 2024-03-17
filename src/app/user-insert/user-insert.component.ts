@@ -15,6 +15,7 @@ export class UserInsertComponent {
 
   formulario: FormGroup;
 
+  showPassword: boolean = false;
   TiposUsuarios: any[] = [];
   TiposDocumento: any[] = [];
 
@@ -89,7 +90,11 @@ export class UserInsertComponent {
       console.log('Formulario inválido')
       alert('Formulario inválido')
     }
+  }
 
+  togglePasswordVisibility(passwordField: HTMLInputElement): void {
+    this.showPassword = !this.showPassword;
+    passwordField.type = this.showPassword ? 'text' : 'password';
   }
 
 }
