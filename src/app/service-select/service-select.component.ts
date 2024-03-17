@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { AlertsService } from '../services/alerts.service';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-service-select',
   templateUrl: './service-select.component.html',
@@ -44,4 +45,5 @@ export class ServiceSelectComponent implements OnInit {
     this.alertsService.eliminarServicio(serviceId);
     
   }
+  
 }

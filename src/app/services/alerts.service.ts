@@ -8,6 +8,7 @@ import { InventoryService } from './inventory.service';
 import { InvoiceDetailsService } from './invoice-details.service';
 import { ReservationService } from './reservation.service';
 import { ServiceService } from './service.service';
+import { HttpErrorResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -172,10 +173,27 @@ export class AlertsService {
           }).then(() => {
             window.location.reload();
           });
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 500) {
+            console.error('Error interno del servidor:', error.message);
+            // Muestra un mensaje al usuario informándole sobre el error interno del servidor
+            Swal.fire({
+              title: 'Error',
+              text: 'Este servicio o producto está siendo utilizado en uno o más detalles de facturas. Por favor, elimine el servicio o producto de los detalles de factura asociados antes de intentar eliminarlo nuevamente.',
+              icon: 'error',
+              confirmButtonColor: '#d33',
+            });
+          } else {
+            console.error('Error desconocido:', error);
+            // Puedes manejar otros códigos de estado HTTP si es necesario
+          }
         });
       }
     });
   }
+  
+  
 
   eliminarReserva(reservaId: number): void {
     this.alertDrop(this.ReservaAlertDroptitle, this.ReservaAlertDroptext).then((confirmed) => {

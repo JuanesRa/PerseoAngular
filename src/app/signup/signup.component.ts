@@ -81,13 +81,13 @@ export class SignupComponent {
       if (!this.formulario.hasError('passwordMismatch')) {
         this.authService.signup(this.formulario.value).subscribe((data) => {
             if (data.NRODOCUMENTO == "user with this NRODOCUMENTO already exists."){
-              this.AlertsService.alertDenied("Documento ya registrado. Intente con otro.");
+              this.AlertsService.alertDenied("Documento ya registrado. Inicie sesión o intente con otro.");
               return
 
             }else if (data.TELEFONO == this.formulario.value.TELEFONO){
 
             } else if(data.email == "user with this email already exists."){
-              this.AlertsService.alertDenied("Correo ya registrado. Intente con otro.");
+              this.AlertsService.alertDenied("Correo ya registrado. Inicie sesión o intente con otro.");
               return
                 
             }else{
