@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../validators/password_validator';
 import { UserService } from '../services/user.service';
+import { PlatformLocation } from '@angular/common';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class UserInsertComponent {
   TiposUsuarios: any[] = [];
   TiposDocumento: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService, public fb: FormBuilder) {
+  constructor(private authService: AuthService, private router: Router, private userService: UserService, public fb: FormBuilder, private _location: PlatformLocation) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: ['', [Validators.required, Validators.maxLength(10)]],
       NOMBRE: ['', [Validators.required, Validators.maxLength(70)]],
@@ -40,6 +41,10 @@ export class UserInsertComponent {
     this.formulario?.get('email')?.valueChanges.subscribe(email => {
       this.formulario?.get('username')?.setValue(email);
 
+    });
+
+    this._location.onPopState (() => {
+      window.location.href = 'http://localhost:4200'; //Navigate to another location when the browser back is clicked.
     });
   }
 

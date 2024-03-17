@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { forkJoin } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-user-select',
@@ -16,7 +17,7 @@ export class UserSelectComponent implements OnInit {
   tipodocumentos: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator; 
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private _location: PlatformLocation) { }
 
   ngOnInit(): void {
     // Obtener usuarios, roles y tipos de documento
@@ -43,6 +44,10 @@ export class UserSelectComponent implements OnInit {
         const tipodoc = this.tipodocumentos.find(tipodoc => tipodoc.IDTIPODOCUMENTO === user.TIPO_DOCUMENTO_IDTIPODOCUMENTO);
         user.tipodocumento = tipodoc ? tipodoc.TIPO_DOCUMENTO : "Documento no disponible";
       });
+    });
+
+    this._location.onPopState (() => {
+      window.location.href = 'http://localhost:4200';
     });
   }
 
