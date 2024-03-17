@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { MatPaginator } from '@angular/material/paginator'; // Importa MatPaginator
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-statusroom-select',
   templateUrl: './statusroom-select.component.html',
@@ -12,7 +12,10 @@ export class StatusroomSelectComponent implements OnInit {
   Statusrooms: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator; // Obtén una referencia al paginador
 
-  constructor(private roomService: RoomService, private router: Router) { }
+  constructor(
+    private roomService: RoomService, 
+    private router: Router,
+    private alertsService:AlertsService) { }
 
   ngOnInit(): void {
     this.roomService.getStatusRoom().subscribe((data) => {
@@ -30,11 +33,7 @@ export class StatusroomSelectComponent implements OnInit {
     this.router.navigate(['/actualizar-estado', StatusroomId]);
   }
 
-  eliminarEstadoHabitacion(StatusroomId: number): void {
-    if (confirm('¿Está seguro de eliminar el estado de la habitación?')) {
-      this.roomService.deleteStatusRoom(StatusroomId).subscribe(() => {
-        window.location.reload();
-      });
-    }
+  eliminarEstadoHabitacion(StatusRoomId: number): void {
+   this.alertsService.eliminarHabitacionEstado(StatusRoomId);
   }
 }

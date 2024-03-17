@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-inventory-category-select',
   templateUrl: './inventory-category-select.component.html',
@@ -12,8 +12,12 @@ import { MatPaginator } from '@angular/material/paginator';
 export class InventoryCategorySelectComponent {
 
   categoriaInv: any[] = [];
-  @ViewChild(MatPaginator) paginator!: MatPaginator; 
-  constructor(private categoryInvService: InventoryService, private router: Router) { }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  constructor(
+    private categoryInvService: InventoryService,
+    private router: Router,
+    private alertsService: AlertsService
+  ) { }
 
   ngOnInit(): void {
     this.categoryInvService.getInventoryCategory().subscribe((data) => {
@@ -31,10 +35,6 @@ export class InventoryCategorySelectComponent {
   }
 
   eliminarHabitacion(categoryId: number): void {
-    if (confirm('¿Está seguro de eliminar la categoria?')) {
-      this.categoryInvService.deleteInventoryCategory(categoryId).subscribe(() => {
-        window.location.reload();
-      });
-    }
+    this.alertsService.eliminarCategoriaInventario(categoryId);
   }
 }

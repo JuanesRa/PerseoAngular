@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../services/user-data.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,7 +15,10 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = this.authService.isLoggedIn();
 
 
-  constructor(private authService: AuthService, private userDataService: UserDataService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private AlertsService: AlertsService,
+    private router: Router) { }
 
   ngOnInit(): void {
     if (this.isLoggedIn) {
@@ -36,9 +39,11 @@ export class HeaderComponent implements OnInit {
   CerrarSesion(): void {
     this.authService.logout().subscribe({
       next: (response) => {
-        alert('Sesión cerrada exitosamente')
-        this.router.navigate(['/inicio']);
-        this.router.navigate(['/']);
+        let confirmedMessage = '¡Sesión cerrada exitosamente!';
+        this.AlertsService.alertConfirmed(confirmedMessage).then(() => {
+          this.router.navigate(['/inicio']);
+          this.router.navigate(['/']);
+        });
       },
       error: (error) => {
         console.error('Error al cerrar sesión:', error);

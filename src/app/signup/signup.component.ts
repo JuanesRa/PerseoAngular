@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../validators/password_validator';
 import { UserService } from '../services/user.service';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -17,7 +17,12 @@ export class SignupComponent {
   users: any[] = [];
   TiposDocumento: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService, public fb: FormBuilder) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService,
+    public fb: FormBuilder,
+    private AlertsService:AlertsService) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: ['', [Validators.required, Validators.maxLength(10)]],
       NOMBRE: ['', [Validators.required, Validators.maxLength(70)]],
@@ -44,8 +49,11 @@ export class SignupComponent {
   ngOnInit(): void {
     this.userService.getTipoDocumento().subscribe((data) => {
       this.TiposDocumento = data;
-    })
+    });
   }
+
+ 
+
 
   passwordMatchValidator(formGroup: FormGroup) {
     const password = formGroup.get('password')?.value;
@@ -67,21 +75,33 @@ export class SignupComponent {
     }
   }
 
+
   crearNuevoUsuario(): void {
     if (this.formulario.valid) {
       if (!this.formulario.hasError('passwordMismatch')) {
         this.authService.signup(this.formulario.value).subscribe((data) => {
-          console.log('Usuario creado:', data);
-          alert('Registro exitoso');
-          this.router.navigate(['/login'])
-        });
+            if (data.NRODOCUMENTO == "user with this NRODOCUMENTO already exists."){
+              this.AlertsService.alertDenied("Documento ya registrado. Intente con otro.");
+              return
+
+            }else if (data.TELEFONO == this.formulario.value.TELEFONO){
+
+            } else if(data.email == "user with this email already exists."){
+              this.AlertsService.alertDenied("Correo ya registrado. Intente con otro.");
+              return
+                
+            }else{
+              let confirmedMessage = '¡Registro exitoso!';
+              this.AlertsService.alertConfirmed(confirmedMessage).then(() => {
+              console.log('Usuario creado:', data);
+              this.router.navigate(['/login'])
+            })};
+           });
       } else {
-        alert('Las contraseñas no coinciden');
+        this.AlertsService.alertDenied('Las contraseñas no coinciden');
       }
-    }
-    else if (this.formulario.invalid){
-      console.log('Formulario inválido')
-      alert('Formulario inválido')
+    } else if (this.formulario.invalid){
+      this.AlertsService.alertDenied('Formulario inválido');
     }
   }
 

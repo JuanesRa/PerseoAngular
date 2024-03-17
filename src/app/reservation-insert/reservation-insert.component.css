@@ -53,6 +53,7 @@ body {
     width: 450px;
     padding: 50px;
     border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 .signup .title {
@@ -141,6 +142,10 @@ body {
     background-color: #5eb319d8;
 }
 
+
+.signup .button a:hover {
+    background-color: #5eb319d8;
+}
 .signup .login-signup {
     margin-top: 30px;
     text-align: center;
@@ -181,6 +186,7 @@ body {
 .botones {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .input-field.button a:is(:focus, :valid) {
@@ -206,15 +212,16 @@ body {
     width: 90%;
     height: 100%;
     margin: auto;
-    color: var(--white);
+    color: #fff;
     font-size: 17px;
     font-weight: 500;
-    padding: 15px 35px 0 65px;
+    text-align: center;
+    padding: 15px;
     margin-left: 10px;
     margin-top: 30px;
     letter-spacing: 1px;
     border-radius: 6px;
-    background-color: var(--green);
+    background-color: #5eb319;
     transition: all 0.2s ease;
 
 }
@@ -224,9 +231,9 @@ body {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 10px;
-  }
-  
-  .title::before {
+}
+
+.title::before {
     content: '';
     position: absolute;
     left: 0;
@@ -235,30 +242,31 @@ body {
     width: 30px;
     background-color: #5eb319;
     border-radius: 25px;
-  }
+}
+
 .input-field.button a:hover {
     border-bottom-color: #91d856;
     /* Cambia el color del borde inferior al pasar el cursor */
 }
 
 
-.icons{
+.icons {
     margin-top: 0;
     margin-top: 15px;
 }
 
- 
+
 /* Estilo del enlace */
 .icons .link {
     font-size: 16px;
     margin-left: 1px;
-    color: black; 
+    color: #333333;
 }
 
-.header .flex .fa-bars{
+.header .flex .fa-bars {
     font-size: 3rem;
     cursor: pointer;
-    color: var(--green);
+    color: #5eb319;
     display: none;
 }
 
@@ -268,10 +276,10 @@ body {
 }
 
 
-.icons .link  i:hover {
+.icons .link i:hover {
     cursor: pointer;
 }
- 
+
 
 .icons .link:hover {
     cursor: pointer;
@@ -285,8 +293,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
-    z-index: 1000; /* Asegura que la capa se muestre encima de todo */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semi-transparente */
+    z-index: 1000;
+    /* Asegura que la capa se muestre encima de todo */
 }
 
 
@@ -300,22 +310,27 @@ body {
     position: relative;
     background-color: #fff;
     border-radius: 10px;
-    overflow-y: auto; /* Agrega desplazamiento vertical cuando sea necesario */
+    overflow-y: auto;
+    /* Agrega desplazamiento vertical cuando sea necesario */
 
 }
 
 
 .overlay .nuevaHab::-webkit-scrollbar {
-    width: 10px; /* Ancho del scrollbar */
+    width: 10px;
+    /* Ancho del scrollbar */
 }
 
 .overlay .nuevaHab::-webkit-scrollbar-thumb {
-    background-color: #5eb319; /* Color del scrollbar */
-    border-radius: 5px; /* Borde redondeado del thumb */
+    background-color: #5eb319;
+    /* Color del scrollbar */
+    border-radius: 5px;
+    /* Borde redondeado del thumb */
 }
 
 .overlay .nuevaHab::-webkit-scrollbar-track {
-    background-color: #eee; /* Color de fondo del scrollbar */
+    background-color: #eee;
+    /* Color de fondo del scrollbar */
 }
 
 .overlay .nuevaHab .overlay-header {
@@ -428,7 +443,7 @@ body {
     color: #fff;
     background-color: #5eb319;
     border-radius: 5px;
-    
+
 }
 
 .btns button:hover {

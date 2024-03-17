@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 
 @Component({
   selector: 'app-typeroom-insert',
@@ -15,7 +15,11 @@ export class TyperoomInsertComponent {
   selectedFile: File | null = null;
 
 
-  constructor(private roomService: RoomService, private router: Router, public fb: FormBuilder) {
+  constructor(
+    private roomService: RoomService,
+    private router: Router,
+    public fb: FormBuilder,
+    private alertsService: AlertsService) {
     this.typeRoomForm = this.fb.group({
       TIPO_HABITACION: ['', [Validators.required, Validators.maxLength(30)]],
       DESCRIPCION: ['', [Validators.required, Validators.maxLength(200)]],
@@ -27,7 +31,7 @@ export class TyperoomInsertComponent {
   }
 
   ngOnInit(): void {
-   
+
   }
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
@@ -47,7 +51,7 @@ export class TyperoomInsertComponent {
     formData.append('PRECIOXNOCHE', this.typeRoomForm.value.PRECIOXNOCHE.toString());
     formData.append('CANTIDAD_ADULTOS', this.typeRoomForm.value.CANTIDAD_ADULTOS.toString());
     formData.append('CANTIDAD_NINOS', this.typeRoomForm.value.CANTIDAD_NINOS.toString());
-  
+
     if (this.selectedFile) {
       formData.append('FOTO', this.selectedFile);
     } else {
@@ -55,15 +59,17 @@ export class TyperoomInsertComponent {
       this.typeRoomForm.get('FOTO')?.setErrors({ required: true });
       return; // Evitar enviar el formulario si no se ha seleccionado ninguna foto
     }
-  
-    this.roomService.postTypeRoom(formData).subscribe((data) => {
-      this.router.navigate(['/lista-tipohabitaciones']);
+    let confirmedMessage = '¡Registro exitoso!';
+    this.alertsService.alertConfirmed(confirmedMessage).then(() => {
+      this.roomService.postTypeRoom(formData).subscribe((data) => {
+        this.router.navigate(['/lista-tipohabitaciones']);
+      });
     });
   }
-  
+
 }
 
 
 
 
- 
+

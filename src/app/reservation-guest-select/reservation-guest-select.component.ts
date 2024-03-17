@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { GuestService } from '../services/guest.service';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-reservation-guest-select',
   templateUrl: './reservation-guest-select.component.html',
@@ -18,7 +18,8 @@ export class ReservationGuestSelectComponent implements OnInit {
     private ReservationService: ReservationService,
     private route: ActivatedRoute,
     private router: Router,
-    private GuestService: GuestService
+    private GuestService: GuestService,
+    private alertsService: AlertsService
   ) { }
 
   ngOnInit(): void {
@@ -51,10 +52,6 @@ export class ReservationGuestSelectComponent implements OnInit {
   }
 
   eliminarHuespedxReserva(guestxreserId: number): void {
-    if (confirm('¿Está seguro de eliminar el Húesped?')) {
-      this.ReservationService.deleteReservationXGuest(guestxreserId).subscribe(() => {
-        window.location.reload();
-      });
-    }
+    this.alertsService.eliminarHuespedReserva(guestxreserId);
   }
 }

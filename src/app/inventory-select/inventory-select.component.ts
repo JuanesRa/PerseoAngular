@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-inventory-select',
   templateUrl: './inventory-select.component.html',
@@ -13,7 +13,10 @@ export class InventorySelectComponent implements OnInit {
   inventarios: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private router: Router, private inventoryService: InventoryService) { }
+  constructor(
+    private router: Router,
+    private inventoryService: InventoryService,
+    private alertsService: AlertsService) { }
 
   ngOnInit(): void {
     this.inventoryService.getInventory().subscribe((data) => {
@@ -39,10 +42,7 @@ export class InventorySelectComponent implements OnInit {
   }
 
   eliminarInventario(inventarioId: number): void {
-    if (confirm('¿Está seguro de eliminar el inventario?')) {
-      this.inventoryService.deleteInventory(inventarioId).subscribe(() => {
-        window.location.reload();
-      });
-    }
+    this.alertsService.eliminarInventario(inventarioId);
   }
+  
 }

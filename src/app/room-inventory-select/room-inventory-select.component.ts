@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { InventoryService } from '../services/inventory.service';
 import { MatPaginator } from '@angular/material/paginator'; // Importa MatPaginator
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-room-inventory-select',
   templateUrl: './room-inventory-select.component.html',
@@ -14,7 +14,12 @@ export class RoomInventorySelectComponent implements OnInit {
   habitacionId!: number;
   @ViewChild(MatPaginator) paginator!: MatPaginator; // Obtén una referencia al paginador
 
-  constructor(private roomService: RoomService, private route: ActivatedRoute, private router: Router, private InventoryService: InventoryService) { }
+  constructor(
+    private roomService: RoomService, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private InventoryService: InventoryService,
+    private alertsService:AlertsService) { }
 
   ngOnInit(): void {
     // Obtener el ID del servicio de los parámetros de la ruta
@@ -53,10 +58,7 @@ export class RoomInventorySelectComponent implements OnInit {
   }
 
   eliminarHabitacionxInventario(roomxinventoryId: number): void {
-    if (confirm('¿Está seguro de eliminar el inventario?')) {
-      this.roomService.deleteRoomInventory(roomxinventoryId).subscribe(() => {
-        window.location.reload();
-      });
+    this.alertsService.eliminarInventarioHabitacion(roomxinventoryId);
     }
-  }
+  
 }

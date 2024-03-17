@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { RoomService } from '../services/room.service';
 import { ReservationService } from '../services/reservation.service';
-
+import { AlertsService } from '../services/alerts.service';
 
 @Component({
   selector: 'app-reservation-insert',
@@ -32,7 +32,6 @@ export class ReservationInsertComponent implements OnInit {
   numInputs: number = 1;
   additionalControls: FormControl[] = [];
   showAdditionalInputs: boolean = false;
-
   showRoomSection: boolean = true;
   habitacionSeleccionada: any;
   rooms: any[] = [];
@@ -47,8 +46,8 @@ export class ReservationInsertComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     public fb: FormBuilder,
-    private route: ActivatedRoute,
     private elementRef: ElementRef,
+    private alertsService: AlertsService
   ) {
     this.ReservationForm = this.fb.group({
       FECHA_RESERVACION: ['', [Validators.required]],
@@ -184,178 +183,178 @@ export class ReservationInsertComponent implements OnInit {
   }
 
 
-crearNuevaReserva(): void {
-  this.imprimirValoresInputs();
-  console.log(this.roomsInput);
-  if (this.ReservationForm.valid) {
-    this.calcularPrecioTotal();
-    if (this.validarCantidadPersonas()) {
-      this.ReservationService.postReservas(this.ReservationForm.value).subscribe(
-        (data) => {
-          const reservaId = data.IDRESERVA;
-          console.log('Reserva creada:', data);
-          alert('Registro exitoso');
+  crearNuevaReserva(): void {
+    if (this.ReservationForm.valid) {
+      let confirmedMessage = '¡Registro exitoso!';
+      this.alertsService.alertConfirmed(confirmedMessage).then(() => {
+        this.imprimirValoresInputs();
+        this.calcularPrecioTotal();
+        if (this.validarCantidadPersonas()) {
+          this.ReservationService.postReservas(this.ReservationForm.value).subscribe(
+            (data) => {
+              const reservaId = data.IDRESERVA;
+              console.log('Reserva creada:', data);
+              // Crear la reserva para la primera habitación seleccionada
+              this.crearNuevoHabitacionXReserva(reservaId, this.habitacion.NROHABITACION);
+              // Actualizar el estado de la primera habitación seleccionada
+              this.estadoOcupadoId = this.getEstadoOcuapdoId();
+              this.ActualizarEstadoHabitacionAnadidas(this.habitacion.NROHABITACION, this.estadoOcupadoId);
 
-          // Crear la reserva para la primera habitación seleccionada
-          this.crearNuevoHabitacionXReserva(reservaId, this.habitacion.NROHABITACION);
-          // Actualizar el estado de la primera habitación seleccionada
-          this.estadoOcupadoId = this.getEstadoOcuapdoId();
-          this.ActualizarEstadoHabitacionAnadidas(this.habitacion.NROHABITACION, this.estadoOcupadoId);
-
-          // Verificar si roomsInput no está vacío
-          if (Object.keys(this.roomsInput).length > 0) {
-            // Iterar sobre los valores de roomsInput y llamar a crearNuevoHabitacionXReserva() para cada uno
-            // Actualizar el estado de todas las habitaciones seleccionadas
-            for (const roomId in this.roomsInput) {
-              if (this.roomsInput.hasOwnProperty(roomId)) {
-                const roomNumber = this.roomsInput[roomId];
-                this.crearNuevoHabitacionXReserva(reservaId, roomNumber);
-                this.ActualizarEstadoHabitacionAnadidas(roomNumber, this.estadoOcupadoId);
+              // Verificar si roomsInput no está vacío
+              if (Object.keys(this.roomsInput).length > 0) {
+                // Iterar sobre los valores de roomsInput y llamar a crearNuevoHabitacionXReserva() para cada uno
+                // Actualizar el estado de todas las habitaciones seleccionadas
+                for (const roomId in this.roomsInput) {
+                  if (this.roomsInput.hasOwnProperty(roomId)) {
+                    const roomNumber = this.roomsInput[roomId];
+                    this.crearNuevoHabitacionXReserva(reservaId, roomNumber);
+                    this.ActualizarEstadoHabitacionAnadidas(roomNumber, this.estadoOcupadoId);
+                  }
+                }
+              } else {
+                // Si no se agregaron habitaciones adicionales, no ejecutar ActualizarEstadoHabitacionAnadidas()
+                console.log('No se agregaron habitaciones adicionales');
               }
+            },
+            (error) => {
+              console.error('Error al crear reserva:', error);
+              this.alertsService.alertDenied('Error al crear reserva. Por favor, inténtelo de nuevo.');
             }
-          } else {
-            // Si no se agregaron habitaciones adicionales, no ejecutar ActualizarEstadoHabitacionAnadidas()
-            console.log('No se agregaron habitaciones adicionales');
-          }
-        },
-        (error) => {
-          console.error('Error al crear reserva:', error);
-          alert('Error al crear reserva. Por favor, inténtelo de nuevo.');
+          );
+        } else {
+          console.log('Formulario inválido');
+          this.alertsService.alertDenied('Formulario inválido');
         }
-      );
-    } else {
-      console.log('Formulario inválido');
-      alert('Formulario inválido');
+      });
     }
   }
-}
 
-ActualizarEstadoHabitacionAnadidas(nrohab: number, estadoId: number): void {
-  this.formularioActualizarAnadidas.patchValue({
-    ESTADO_HABITACION_IDESTADOHABITACION: estadoId
-  });
-  this.RoomService.patchRoom(nrohab, this.formularioActualizarAnadidas.value).subscribe((data) => {
-    this.router.navigate(['/inicio']);
-  });
-}
-
-crearNuevoHabitacionXReserva(reservaId: number, numeroHabitacion: number): void {
-  this.formularioRoomXReserva.patchValue({
-    HABITACION_NROHABITACION: numeroHabitacion,
-    RESERVA_IDRESERVA: reservaId
-  });
-  this.ReservationService.postReservationXRoom(this.formularioRoomXReserva.value).subscribe((data) => {
-    this.router.navigate(['/inicio']);
-  });
-}
-
-getEstadoDisponibleId(): number {
-  const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');
-  return estadoDisponible ? estadoDisponible.IDESTADOHABITACION : 0;
-}
-
-getEstadoOcuapdoId(): number {
-  const estadoOcupado = this.estados.find((estado) => estado.TIPO_ESTADO == 'Ocupado');
-  return estadoOcupado ? estadoOcupado.IDESTADOHABITACION : 0;
-}
-
-
-imprimirValoresInputs(): void {
-  // Crear un objeto para almacenar los valores de los inputs
-  const inputValues: { [key: string]: any } = {};
-  // Obtener todos los nombres de los controles del formulario
-  const controlNames = Object.keys(this.ReservationForm.controls);
-  // Filtrar solo los nombres de los controles que comienzan con "input"
-  const inputControlNames = controlNames.filter(name => name.startsWith('input'));
-  // Iterar sobre los nombres de los controles filtrados y obtener sus valores
-  inputControlNames.forEach(name => {
-    const value = this.ReservationForm.get(name)?.value;
-    // Almacenar el valor en el objeto usando el nombre del control como clave
-    inputValues[name] = value;
-  });
-  // Almacenar el objeto en la variable roomsInput
-  this.roomsInput = inputValues;
-  // Imprimir el objeto JSON en la consola para verificar
-  //console.log('Valores de los inputs:', this.roomsInput);
-}
-
-
-
-
-// Función agregarInput con parámetros para agregar el número de habitación
-agregarInputWithRoomNumber(numeroHabitacion: number): void {
-  // Verificar si la habitación ya está en la lista de inputs
-  if (this.additionalControls.some(control => control.value === numeroHabitacion) || numeroHabitacion === this.habitacion.NROHABITACION) {
-    alert('¡Esta habitación ya está en tu lista!');
-    return; // Salir de la función si la habitación ya está en la lista
+  ActualizarEstadoHabitacionAnadidas(nrohab: number, estadoId: number): void {
+    this.formularioActualizarAnadidas.patchValue({
+      ESTADO_HABITACION_IDESTADOHABITACION: estadoId
+    });
+    this.RoomService.patchRoom(nrohab, this.formularioActualizarAnadidas.value).subscribe((data) => {
+      this.router.navigate(['/inicio']);
+    });
   }
-  if (this.numInputs < 4) {
-    this.numInputs++;
-    const controlName = `input${this.numInputs}`;
-    // Crear el nuevo control con un valor inicial igual al número de habitación
-    const newControl = this.fb.control(numeroHabitacion, Validators.required);
-    // Agregar el nuevo control al formulario
-    this.ReservationForm.addControl(controlName, newControl);
-    // Agregar el nuevo control a la lista de controles adicionales
-    this.additionalControls.push(newControl);
-    // Mostrar los inputs adicionales
-    this.showAdditionalInputs = true;
-    // Cerrar el overlay
-    this.toggle();
+
+  crearNuevoHabitacionXReserva(reservaId: number, numeroHabitacion: number): void {
+    this.formularioRoomXReserva.patchValue({
+      HABITACION_NROHABITACION: numeroHabitacion,
+      RESERVA_IDRESERVA: reservaId
+    });
+    this.ReservationService.postReservationXRoom(this.formularioRoomXReserva.value).subscribe((data) => {
+      this.router.navigate(['/inicio']);
+    });
   }
-}
 
-
-
-toggle() {
-  const overlay = this.elementRef.nativeElement.querySelector('.overlay');
-
-  // Si el estilo display del overlay es 'none', cambia a 'block', de lo contrario, cambia a 'none'
-  if (overlay.style.display === 'none' || !overlay.style.display) {
-    overlay.style.display = 'block';
-  } else {
-    overlay.style.display = 'none';
+  getEstadoDisponibleId(): number {
+    const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');
+    return estadoDisponible ? estadoDisponible.IDESTADOHABITACION : 0;
   }
-}
+
+  getEstadoOcuapdoId(): number {
+    const estadoOcupado = this.estados.find((estado) => estado.TIPO_ESTADO == 'Ocupado');
+    return estadoOcupado ? estadoOcupado.IDESTADOHABITACION : 0;
+  }
 
 
-toggleOverlay(numeroHabitacion?: number): void {
-  const overlay = document.getElementById('overlay');
-  if (overlay) {
-    overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
-    if (overlay.style.display === 'none') {
-      // Si se está ocultando el overlay, eliminamos el último input solo si hay habitaciones adicionales seleccionadas
-      if (numeroHabitacion) {
-        this.eliminarInput(`input${this.numInputs}`);
-      }
+  imprimirValoresInputs(): void {
+    // Crear un objeto para almacenar los valores de los inputs
+    const inputValues: { [key: string]: any } = {};
+    // Obtener todos los nombres de los controles del formulario
+    const controlNames = Object.keys(this.ReservationForm.controls);
+    // Filtrar solo los nombres de los controles que comienzan con "input"
+    const inputControlNames = controlNames.filter(name => name.startsWith('input'));
+    // Iterar sobre los nombres de los controles filtrados y obtener sus valores
+    inputControlNames.forEach(name => {
+      const value = this.ReservationForm.get(name)?.value;
+      // Almacenar el valor en el objeto usando el nombre del control como clave
+      inputValues[name] = value;
+    });
+    // Almacenar el objeto en la variable roomsInput
+    this.roomsInput = inputValues;
+    // Imprimir el objeto JSON en la consola para verificar
+    //console.log('Valores de los inputs:', this.roomsInput);
+  }
+
+
+
+
+  // Función agregarInput con parámetros para agregar el número de habitación
+  agregarInputWithRoomNumber(numeroHabitacion: number): void {
+    // Verificar si la habitación ya está en la lista de inputs
+    if (this.additionalControls.some(control => control.value === numeroHabitacion) || numeroHabitacion === this.habitacion.NROHABITACION) {
+      this.alertsService.alertDenied('¡Esta habitación ya está en tu lista!');
+      return; // Salir de la función si la habitación ya está en la lista
+    }
+    if (this.numInputs < 4) {
+      this.numInputs++;
+      const controlName = `input${this.numInputs}`;
+      // Crear el nuevo control con un valor inicial igual al número de habitación
+      const newControl = this.fb.control(numeroHabitacion, Validators.required);
+      // Agregar el nuevo control al formulario
+      this.ReservationForm.addControl(controlName, newControl);
+      // Agregar el nuevo control a la lista de controles adicionales
+      this.additionalControls.push(newControl);
+      // Mostrar los inputs adicionales
+      this.showAdditionalInputs = true;
+      // Cerrar el overlay
+      this.toggle();
+    }
+  }
+
+
+
+  toggle() {
+    const overlay = this.elementRef.nativeElement.querySelector('.overlay');
+
+    // Si el estilo display del overlay es 'none', cambia a 'block', de lo contrario, cambia a 'none'
+    if (overlay.style.display === 'none' || !overlay.style.display) {
+      overlay.style.display = 'block';
     } else {
-      // Agregar input con el número de habitación solo si se proporciona
-      if (numeroHabitacion !== undefined && numeroHabitacion !== null) {
-        this.agregarInputWithRoomNumber(numeroHabitacion);
+      overlay.style.display = 'none';
+    }
+  }
+
+
+  toggleOverlay(numeroHabitacion?: number): void {
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+      overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
+      if (overlay.style.display === 'none') {
+        // Si se está ocultando el overlay, eliminamos el último input solo si hay habitaciones adicionales seleccionadas
+        if (numeroHabitacion) {
+          this.eliminarInput(`input${this.numInputs}`);
+        }
+      } else {
+        // Agregar input con el número de habitación solo si se proporciona
+        if (numeroHabitacion !== undefined && numeroHabitacion !== null) {
+          this.agregarInputWithRoomNumber(numeroHabitacion);
+        }
       }
     }
   }
-}
 
 
 
 
-eliminarInput(controlName: string): void {
-  const controlIndex = this.additionalControls.findIndex(control => controlName === controlName);
-  if (controlIndex !== -1) {
-    this.additionalControls.splice(controlIndex, 1); // Eliminar el control de la lista de controles adicionales
-  }
-  this.ReservationForm.removeControl(controlName);
-  this.numInputs--;
-  // Actualizar los nombres de los controles restantes
-  for (let i = 2; i <= this.numInputs + 1; i++) {
-    const oldName = `input${i}`;
-    const newName = `input${i - 1}`;
-    const control = this.ReservationForm.get(oldName);
-    if (control) {
-      this.ReservationForm.removeControl(oldName); // Eliminar el control con el nombre antiguo
-      this.ReservationForm.addControl(newName, control); // Agregar el control con el nuevo nombre
+  eliminarInput(controlName: string): void {
+    const controlIndex = this.additionalControls.findIndex(control => controlName === controlName);
+    if (controlIndex !== -1) {
+      this.additionalControls.splice(controlIndex, 1); // Eliminar el control de la lista de controles adicionales
+    }
+    this.ReservationForm.removeControl(controlName);
+    this.numInputs--;
+    // Actualizar los nombres de los controles restantes
+    for (let i = 2; i <= this.numInputs + 1; i++) {
+      const oldName = `input${i}`;
+      const newName = `input${i - 1}`;
+      const control = this.ReservationForm.get(oldName);
+      if (control) {
+        this.ReservationForm.removeControl(oldName); // Eliminar el control con el nombre antiguo
+        this.ReservationForm.addControl(newName, control); // Agregar el control con el nuevo nombre
+      }
     }
   }
-}
 }

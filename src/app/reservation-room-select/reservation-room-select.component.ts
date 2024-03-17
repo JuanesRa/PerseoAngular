@@ -4,7 +4,7 @@ import { ReservationService } from '../services/reservation.service';
 import { RoomService } from '../services/room.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-reservation-room-select',
   templateUrl: './reservation-room-select.component.html',
@@ -25,7 +25,8 @@ export class ReservationRoomSelectComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public fb: FormBuilder,
-    private RoomService: RoomService
+    private RoomService: RoomService,
+    private alertsService: AlertsService
   ) {
     this.formularioActualizar = this.fb.group({
       ESTADO_HABITACION_IDESTADOHABITACION: [null, Validators.required],
@@ -70,27 +71,28 @@ export class ReservationRoomSelectComponent implements OnInit {
     this.router.navigate(['/actualizar-habitacion-reserva', roomxreserId]);
   }
 
-  eliminarHabitacionxReserva(guestxreserId: number): void {
-    if (confirm('¿Está seguro de eliminar la Habitación?')) {
-      this.ReservationService.getReservationXRoomById(guestxreserId).subscribe((data) => {
-        this.nroHab = data.HABITACION_NROHABITACION;
-        this.ActualizarEstadoHabitacion(this.nroHab);
-        // Luego de actualizar el estado de la habitación, eliminar la habitación de la reserva
-        this.ReservationService.deleteReservationXRoom(guestxreserId).subscribe(() => {
-          window.location.reload();
-        });
-      });
+  async eliminarHabitacionxReserva(roomXreserId: number): Promise<void> {
+    try {
+      await this.alertsService.eliminarHabitacionReserva(roomXreserId);
+      const data = await this.ReservationService.getReservationXRoomById(roomXreserId).toPromise();
+      this.nroHab = data.HABITACION_NROHABITACION;
+      await this.ActualizarEstadoHabitacion(this.nroHab);
+    } catch (error) {
+      console.error('Error al eliminar habitación por reserva:', error);
+      // Manejar el error aquí si es necesario
     }
   }
+  
 
   ActualizarEstadoHabitacion(nroHabitacion: number): void {
     const estadoId = this.estadoDisponibleId;
-    this.RoomService.patchRoom(nroHabitacion, {ESTADO_HABITACION_IDESTADOHABITACION: estadoId }).subscribe(() => {
-      console.log('Estado de la habitación actualizado correctamente.');
+    this.RoomService.patchRoom(nroHabitacion, { ESTADO_HABITACION_IDESTADOHABITACION: estadoId }).subscribe(() => {
+      //console.log('Estado de la habitación actualizado correctamente.');
     }, error => {
       console.error('Error al actualizar el estado de la habitación:', error);
     });
   }
+
 
   getEstadoDisponibleId(): number {
     const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');

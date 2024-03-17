@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { MatPaginator } from '@angular/material/paginator'; // Importa MatPaginator
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-type-room-select',
   templateUrl: './type-room-select.component.html',
@@ -12,7 +12,10 @@ export class TypeRoomSelectComponent implements OnInit {
   Typerooms: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator; // Obtén una referencia al paginador
 
-  constructor(private roomService: RoomService, private router: Router) { }
+  constructor(
+    private roomService: RoomService,
+    private router: Router,
+    private alertsService: AlertsService) { }
 
   ngOnInit(): void {
     this.roomService.getTypeRoom().subscribe((data) => {
@@ -29,11 +32,7 @@ export class TypeRoomSelectComponent implements OnInit {
     this.router.navigate(['/actualizar-tipohabitaciones', TyperoomId]);
   }
 
-  eliminarTipoHabitacion(TyperoomId: number): void {
-    if (confirm('¿Está seguro de eliminar el tipo de habitación?')) {
-      this.roomService.deleteTypeRoom(TyperoomId).subscribe(() => {
-        window.location.reload();
-      });
-    }
+  eliminarTipoHabitacion(TypeRoomId: number): void {
+    this.alertsService.eliminarHabitacionTipo(TypeRoomId);
   }
 }

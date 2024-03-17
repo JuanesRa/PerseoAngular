@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GuestService } from '../services/guest.service';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-guest-select',
   templateUrl: './guest-select.component.html',
@@ -15,7 +15,10 @@ export class GuestSelectComponent implements OnInit {
   huespedes: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator; 
 
-  constructor(private guestService: GuestService, private router: Router) { }
+  constructor(
+    private guestService: GuestService,
+    private router: Router,
+    private alertsService: AlertsService){ }
 
  
   ngOnInit(): void {
@@ -34,10 +37,6 @@ export class GuestSelectComponent implements OnInit {
   }
 
   eliminarHuesped(huespedId: number): void {
-    if (confirm('¿Está seguro de eliminar el huésped?')) {
-      this.guestService.deleteGuest(huespedId).subscribe(() => {
-        window.location.reload()
-      })
-    }
+    this.alertsService.eliminarHuesped(huespedId);
   }
 }

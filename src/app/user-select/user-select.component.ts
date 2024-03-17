@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { forkJoin } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-user-select',
   templateUrl: './user-select.component.html',
@@ -14,9 +14,13 @@ export class UserSelectComponent implements OnInit {
   users: any[] = [];
   roles: any[] = [];
   tipodocumentos: any[] = [];
-  @ViewChild(MatPaginator) paginator!: MatPaginator; 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private AlertsService: AlertsService,
+    ) { }
 
   ngOnInit(): void {
     // Obtener usuarios, roles y tipos de documento
@@ -33,7 +37,7 @@ export class UserSelectComponent implements OnInit {
       if (this.paginator) {
         this.paginator.pageSize = 10;
         this.paginator.hidePageSize = true; // Oculta la selección de tamaño de página
-    }
+      }
 
       // Asignar roles y tipos de documento a los usuarios
       this.users.forEach((user) => {
@@ -51,10 +55,6 @@ export class UserSelectComponent implements OnInit {
   }
 
   eliminarUsuario(nroDocumento: number): void {
-    if (confirm('¿Estás seguro de querer eliminar este usuario?')) {
-      this.userService.deleteUser(nroDocumento).subscribe(() => {
-        window.location.reload();
-      });
-    }
+    this.AlertsService.eliminarUsuario(nroDocumento);
   }
 }
