@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { UserService } from '../services/user.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-reservation-select',
   templateUrl: './reservation-select.component.html',
@@ -14,7 +15,8 @@ export class ReservationSelectComponent implements OnInit {
   constructor(
     private router: Router,
     private reservationService: ReservationService,
-    private userService: UserService
+    private userService: UserService,
+    private alertsService: AlertsService
   ) { }
 
   ngOnInit(): void {
@@ -51,11 +53,7 @@ export class ReservationSelectComponent implements OnInit {
   }
 
   eliminarReserva(reservaId: number): void {
-    if (confirm('¿Está seguro de eliminar la reserva?')) {
-      this.reservationService.deleteReserva(reservaId).subscribe(() => {
-        window.location.reload()
-      });
-    }
+    this.alertsService.eliminarReserva(reservaId);
   }
 }
 

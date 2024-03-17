@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { GuestService } from '../services/guest.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 
 @Component({
   selector: 'app-reservation-guest-insert',
@@ -15,16 +15,21 @@ export class ReservationGuestInsertComponent {
   reservationId!: number;
   huespedes: any[] = [];
 
-  constructor(private ReservationService: ReservationService,private GuestService:GuestService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) {
+  constructor(private ReservationService: ReservationService,
+    private GuestService: GuestService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public fb: FormBuilder,
+    private alertsService: AlertsService) {
     this.formulario = this.fb.group({
-      HUESPED_IDHUESPED : [null, Validators.required],
-      RESERVA_IDRESERVA : [null, [Validators.required, Validators.maxLength(30)]],
+      HUESPED_IDHUESPED: [null, Validators.required],
+      RESERVA_IDRESERVA: [null, [Validators.required, Validators.maxLength(30)]],
     });
-   }
+  }
 
   ngOnInit(): void {
     // Obtener el ID del servicio de los parámetros de la ruta
-    this.reservationId =+this.route.snapshot.params['id'];
+    this.reservationId = +this.route.snapshot.params['id'];
 
     // Establecer el valor de RESERVA_IDRESERVA en el formulario
     this.formulario.patchValue({
@@ -34,13 +39,16 @@ export class ReservationGuestInsertComponent {
     // Obtener los huespedes
     this.GuestService.getGuests().subscribe((data) => {
       this.huespedes = data;
-      console.log(this.huespedes)
+      //console.log(this.huespedes)
     });
   }
 
   crearNuevoGuestXReservation(): void {
-    this.ReservationService.postReservationXGuest(this.formulario.value).subscribe((data) => {
-      this.router.navigate(['/lista-huesped-reserva', this.reservationId]);
+    let confirmedMessage = '¡Se añadió exitosamente!';
+    this.alertsService.alertConfirmed(confirmedMessage).then(() => {
+      this.ReservationService.postReservationXGuest(this.formulario.value).subscribe((data) => {
+        this.router.navigate(['/lista-huesped-reserva', this.reservationId]);
+      });
     });
   }
 

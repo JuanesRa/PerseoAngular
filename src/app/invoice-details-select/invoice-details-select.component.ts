@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceDetailsService } from '../services/invoice-details.service';
 import { ServiceService } from '../services/service.service';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-invoice-details-select',
   templateUrl: './invoice-details-select.component.html',
@@ -15,7 +15,12 @@ export class InvoiceDetailsSelectComponent implements OnInit {
   facturaId!: number;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private ServiceService: ServiceService, private route: ActivatedRoute, private invoiceDetailsService: InvoiceDetailsService, private router: Router) { }
+  constructor(
+    private ServiceService: ServiceService,
+    private route: ActivatedRoute,
+    private invoiceDetailsService: InvoiceDetailsService,
+    private router: Router,
+    private alertsService:AlertsService) { }
 
   ngOnInit(): void {
     this.invoiceDetailsService.getInvoiceDetails().subscribe((data) => {
@@ -45,10 +50,6 @@ export class InvoiceDetailsSelectComponent implements OnInit {
   }
 
   eliminarDetalleFatura(invDetId: number): void {
-    if (confirm('¿Está seguro de eliminar el detalle de factura?')) {
-      this.invoiceDetailsService.deleteInvoiceDetail(invDetId).subscribe(() => {
-        window.location.reload();
-      });
-    }
+    this.alertsService.eliminarDetalleFactura(invDetId);
   }
 }

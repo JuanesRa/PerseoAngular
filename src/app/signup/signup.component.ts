@@ -88,12 +88,13 @@ export class SignupComponent {
               this.AlertsService.alertDenied("Correo ya registrado. Intente con otro.");
               return
                 
-            }
-    
-          console.log('Usuario creado:', data);
-          alert('Registro exitoso');
-          this.router.navigate(['/login'])
-        });
+            }else{
+              let confirmedMessage = '¡Registro exitoso!';
+              this.AlertsService.alertConfirmed(confirmedMessage).then(() => {
+              console.log('Usuario creado:', data);
+              this.router.navigate(['/login'])
+            })};
+           });
       } else {
         this.AlertsService.alertDenied('Las contraseñas no coinciden');
       }
@@ -101,5 +102,4 @@ export class SignupComponent {
       this.AlertsService.alertDenied('Formulario inválido');
     }
   }
-  
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../services/invoice.service';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-invoice-payment-method-select',
   templateUrl: './invoice-payment-method-select.component.html',
@@ -13,7 +13,11 @@ export class InvoicePaymentMethodSelectComponent implements OnInit {
   facturaId!: number;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private InvoiceService:InvoiceService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private InvoiceService:InvoiceService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private alertsService: AlertsService) { }
 
   ngOnInit(): void {
     this.InvoiceService.getInvoiceMethod().subscribe((data) => {
@@ -41,11 +45,7 @@ export class InvoicePaymentMethodSelectComponent implements OnInit {
     this.router.navigate(['/actualizar-metodo-factura', invDetId]);
   }
 
-  eliminarMetodoFatura(invDetId: number): void {
-    if (confirm('¿Está seguro de eliminar el Método?')) {
-      this.InvoiceService.deleteInvoiceMethod(invDetId).subscribe(() => {
-        window.location.reload();
-      });
-    }
+  eliminarMetodoFatura(invMetId: number): void {
+    this.alertsService.eliminarMetodoPagoFactura(invMetId);
   }
 }

@@ -141,6 +141,11 @@ body {
     background-color: #5eb319d8;
 }
 
+.signup .button a:hover {
+    background-color: #5eb319d8;
+}
+
+
 .signup .login-signup {
     margin-top: 30px;
     text-align: center;
@@ -182,6 +187,7 @@ body {
 .botones {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .input-field.button a:is(:focus, :valid) {
@@ -207,15 +213,16 @@ body {
     width: 90%;
     height: 100%;
     margin: auto;
-    color: var(--white);
+    color: #fff;
     font-size: 17px;
     font-weight: 500;
-    padding: 15px 35px 0 65px;
+    text-align: center;
+    padding: 15px;
     margin-left: 10px;
     margin-top: 30px;
     letter-spacing: 1px;
     border-radius: 6px;
-    background-color: var(--green);
+    background-color: #5eb319;
     transition: all 0.2s ease;
 
 }

@@ -3,19 +3,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { InventoryService } from '../services/inventory.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-room-inventory-insert',
   templateUrl: './room-inventory-insert.component.html',
   styleUrls: ['./room-inventory-insert.component.css']
 })
+
 export class RoomInventoryInsertComponent {
   formulario: FormGroup;
   habitacionId!: number;
   productos: any[] = [];
   estados: any[] = [];
 
-  constructor(private roomService: RoomService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private inventoryService: InventoryService) {
+  constructor(
+    private roomService: RoomService, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    public fb: FormBuilder, 
+    private inventoryService: InventoryService,
+    private alertsService:AlertsService) {
     this.formulario = this.fb.group({
       HABITACION_NROHABITACION: [null, Validators.required],
       INVENTARIO_IDINVENTARIO: [null, [Validators.required, Validators.maxLength(30)]],
@@ -46,8 +53,11 @@ export class RoomInventoryInsertComponent {
   }
 
   crearNuevaInventarioXHabitacion(): void {
+    let confirmedMessage = 'Se añadió exitosamente!';
+    this.alertsService.alertConfirmed(confirmedMessage).then(() => {
     this.roomService.postRoomInventory(this.formulario.value).subscribe((data) => {
       this.router.navigate(['/lista-habitacion-inventario', this.habitacionId]);
+    });
     });
   }
 

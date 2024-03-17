@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { RoomService } from '../services/room.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-reservation-room-insert',
   templateUrl: './reservation-room-insert.component.html',
@@ -25,7 +25,8 @@ export class ReservationRoomInsertComponent {
     private RoomService: RoomService,
     private route: ActivatedRoute,
     private router: Router,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private alertsService: AlertsService
   ) {
     // Inicialización de los formularios
     this.formulario = this.fb.group({
@@ -69,14 +70,17 @@ export class ReservationRoomInsertComponent {
     const habitacionSeleccionada = this.formulario.value.HABITACION_NROHABITACION;
     const habitacion = this.habitaciones.find(hab => hab.NROHABITACION === habitacionSeleccionada);
     if (habitacion) {
-      // Crear la reserva para la habitación seleccionada
-      this.ReservationService.postReservationXRoom(this.formulario.value).subscribe(() => {
-        // Actualizar el estado de la habitación a "Ocupado"
-        this.ActualizarEstadoHabitacion(habitacion);
-        this.router.navigate(['/lista-habitacion-reserva', this.reservationId]);
+      let confirmedMessage = '¡Se añadió exitosamente!';
+      this.alertsService.alertConfirmed(confirmedMessage).then(() => {
+        // Crear la reserva para la habitación seleccionada
+        this.ReservationService.postReservationXRoom(this.formulario.value).subscribe(() => {
+          // Actualizar el estado de la habitación a "Ocupado"
+          this.ActualizarEstadoHabitacion(habitacion);
+          this.router.navigate(['/lista-habitacion-reserva', this.reservationId]);
+        });
       });
     } else {
-      console.error('No se ha seleccionado ninguna habitación.');
+      this.alertsService.alertDenied('No se ha seleccionado ninguna habitación.');
     }
   }
 

@@ -46,11 +46,12 @@
             <option *ngFor="let estado of estadoUsuario" [value]="estado.IDESTADO">{{ estado.ESTADO }}</option>
         </select>
 
-        <div class="input-field">
-            <input type="password" formControlName="password" name="password" class="password" required>
+        <div class="input-field" style="display: none;">
+            <input type="password" formControlName="password" name="password" class="password" readonly>
             <i class="uil uil-lock icon"></i>
             <i class="uil uil-eye-slash showHidePw"></i>
         </div>
+        
 
 
         <div class="botones">

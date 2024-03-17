@@ -3,7 +3,7 @@ import { InvoiceService } from '../services/invoice.service';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-invoice-insert',
   templateUrl: './invoice-insert.component.html',
@@ -18,7 +18,8 @@ export class InvoiceInsertComponent {
     private UserService: UserService,
     private invoiceService: InvoiceService,
     private router: Router,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private alertsService: AlertsService
   ) {
     // Crear el formulario
     this.formulario = this.fb.group({
@@ -45,8 +46,11 @@ export class InvoiceInsertComponent {
   }
 
   crearNuevaFactura(): void {
-    this.invoiceService.postInvoice(this.formulario.value).subscribe((data) => {
-      this.router.navigate(['/lista-facturas']);
+    let confirmedMessage = '¡Registro exitoso!';
+    this.alertsService.alertConfirmed(confirmedMessage).then(() => {
+      this.invoiceService.postInvoice(this.formulario.value).subscribe((data) => {
+        this.router.navigate(['/lista-facturas']);
+      });
     });
   }
 }

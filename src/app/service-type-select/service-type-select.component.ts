@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { AlertsService } from '../services/alerts.service';
 
 @Component({
   selector: 'app-service-type-select',
@@ -12,7 +12,10 @@ import { MatPaginator } from '@angular/material/paginator';
 export class ServiceTypeSelectComponent {
   servicios: any[] =[];
   @ViewChild(MatPaginator) paginator!: MatPaginator; 
-  constructor(private serviceService: ServiceService, private router: Router) { }
+  constructor(
+    private serviceService: ServiceService, 
+    private router: Router,
+    private alertsService:AlertsService) { }
 
   ngOnInit(): void {
     this.serviceService.getTypeService().subscribe((data) => {
@@ -28,11 +31,7 @@ export class ServiceTypeSelectComponent {
   redireccionarActualizar(serviceID: number): void {
     this.router.navigate(['/actualizar-tiposervicio', serviceID]);
   }
-  eliminarTipoServicio(roomId: number): void {
-    if (confirm('¿Está seguro de eliminar el tipo servicio ')) {
-      this.serviceService.deleteTypeService(roomId).subscribe(() => {
-        window.location.reload()
-      })
-    }
-}
+  eliminarTipoServicio(TypeServiceId: number): void {
+   this.alertsService.eliminarTipoServicio(TypeServiceId);
+  }
 }
