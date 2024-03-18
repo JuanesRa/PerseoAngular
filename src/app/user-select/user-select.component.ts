@@ -4,6 +4,8 @@ import { UserService } from '../services/user.service';
 import { forkJoin } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-user-select',
   templateUrl: './user-select.component.html',
@@ -15,11 +17,11 @@ export class UserSelectComponent implements OnInit {
   roles: any[] = [];
   tipodocumentos: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   constructor(
     private userService: UserService,
     private router: Router,
     private AlertsService: AlertsService,
+    private _location: PlatformLocation
     ) { }
 
   ngOnInit(): void {
@@ -47,6 +49,10 @@ export class UserSelectComponent implements OnInit {
         const tipodoc = this.tipodocumentos.find(tipodoc => tipodoc.IDTIPODOCUMENTO === user.TIPO_DOCUMENTO_IDTIPODOCUMENTO);
         user.tipodocumento = tipodoc ? tipodoc.TIPO_DOCUMENTO : "Documento no disponible";
       });
+    });
+
+    this._location.onPopState (() => {
+      window.location.href = 'http://localhost:4200';
     });
   }
 

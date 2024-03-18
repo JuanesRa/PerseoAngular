@@ -26,7 +26,7 @@
     <div class="input-field">
       <input type="text" [formControl]="$any(formulario).controls['NOMBRE']" name="NOMBRE"
         placeholder="Ingrese su nombre" required maxlength="30" (keydown)="inputValidator($event)" />
-      <i class="uil uil-user"></i>
+      <i class="fa-regular fa-user"></i>
     </div>
 
     <div *ngIf="formulario.get('NOMBRE')?.hasError('required') && formulario.get('NOMBRE')?.touched"
@@ -37,7 +37,7 @@
     <div class="input-field">
       <input type="text" [formControl]="$any(formulario).controls['APELLIDO']" name="APELLIDO"
         placeholder="Ingrese su apellido" required maxlength="30" (keydown)="inputValidator($event)" />
-      <i class="uil uil-user"></i>
+      <i class="fa-regular fa-user"></i>
     </div>
 
     <div *ngIf="formulario.get('APELLIDO')?.hasError('required') && formulario.get('APELLIDO')?.touched"
@@ -77,7 +77,7 @@
     <div class="input-field">
       <input type="text" [formControl]="$any(formulario).controls['email']" name="email" placeholder="Ingrese su email"
         required maxlength="50" />
-      <i class="uil uil-envelope icon"></i>
+      <i class="fa-regular fa-envelope"></i>
     </div>
 
     <div *ngIf="formulario.get('email')?.hasError('required') && formulario.get('email')?.touched"
@@ -103,9 +103,11 @@
     </div>
 
     <div class="input-field">
-      <input type="text" formControlName="password" class="password" placeholder="Ingrese su contraseña" required />
-      <i class="uil uil-lock icon"></i>
-      <i class="uil uil-eye-slash showHidePw"></i>
+      <input type="password" formControlName="password" class="password" placeholder="Ingrese su contraseña" required
+        #passwordField />
+      <i class="fa-solid fa-lock"></i>
+      <i [ngClass]="showPassword ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash'" class="showHidePw"
+        (click)="togglePasswordVisibility(passwordField)"></i>
     </div>
 
     <div *ngIf="formulario.get('password')?.hasError('invalidPassword') && formulario.get('password')?.touched"
@@ -115,10 +117,9 @@
     </div>
 
     <div class="input-field">
-      <input type="text" formControlName="confirmPassword" class="password" placeholder="Confirme su contraseña"
+      <input type="password" formControlName="confirmPassword" class="password" placeholder="Confirme su contraseña"
         required />
-      <i class="uil uil-lock icon"></i>
-      <i class="uil uil-eye-slash showHidePw"></i>
+      <i class="fa-solid fa-lock"></i>
     </div>
 
     <div
@@ -140,6 +141,5 @@
 </div>
 
 <div>
-      <app-footer></app-footer>
+  <app-footer></app-footer>
 </div>
-    

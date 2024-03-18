@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../validators/password_validator';
 import { UserService } from '../services/user.service';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 
 @Component({
   selector: 'app-user-insert',
@@ -15,6 +17,7 @@ export class UserInsertComponent {
 
   formulario: FormGroup;
 
+  showPassword: boolean = false;
   TiposUsuarios: any[] = [];
   TiposDocumento: any[] = [];
 
@@ -23,7 +26,8 @@ export class UserInsertComponent {
     private router: Router,
     private userService: UserService,
     public fb: FormBuilder,
-    private AlertsService:AlertsService) {
+    private AlertsService:AlertsService,
+    private _location: PlatformLocation) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: ['', [Validators.required, Validators.maxLength(10)]],
       NOMBRE: ['', [Validators.required, Validators.maxLength(70)]],
@@ -44,6 +48,10 @@ export class UserInsertComponent {
     this.formulario?.get('email')?.valueChanges.subscribe(email => {
       this.formulario?.get('username')?.setValue(email);
 
+    });
+
+    this._location.onPopState (() => {
+      window.location.href = 'http://localhost:4200'; //Navigate to another location when the browser back is clicked.
     });
   }
 
@@ -102,6 +110,11 @@ export class UserInsertComponent {
     } else if (this.formulario.invalid){
       this.AlertsService.alertDenied('Formulario inválido');
     }
+  }
+
+  togglePasswordVisibility(passwordField: HTMLInputElement): void {
+    this.showPassword = !this.showPassword;
+    passwordField.type = this.showPassword ? 'text' : 'password';
   }
 
 }
