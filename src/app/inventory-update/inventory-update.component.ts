@@ -1,8 +1,8 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 
 @Component({
   selector: 'app-inventory-update',
@@ -15,11 +15,15 @@ export class InventoryUpdateComponent {
   formulario: FormGroup;
 
 
-constructor(private router: Router, private route: ActivatedRoute, private inventoryService: InventoryService, public fb: FormBuilder) {
+  constructor(
+    private route: ActivatedRoute,
+    private inventoryService: InventoryService,
+    public fb: FormBuilder,
+    private alertsService: AlertsService) {
     this.formulario = this.fb.group({
-      NOMBRE_PRODUCTO:['', [Validators.required, Validators.maxLength(30)]],
-      DESCRIPCION_PRODUCTO:['', [Validators.required, Validators.maxLength(100)]],
-      CATEGORIA_IDCATEGORIA:[null, [Validators.required]],
+      NOMBRE_PRODUCTO: ['', [Validators.required, Validators.maxLength(30)]],
+      DESCRIPCION_PRODUCTO: ['', [Validators.required, Validators.maxLength(100)]],
+      CATEGORIA_IDCATEGORIA: [null, [Validators.required]],
     });
   }
 
@@ -28,17 +32,18 @@ constructor(private router: Router, private route: ActivatedRoute, private inven
     //Obtener Categorias De inventario
     this.inventoryService.getInventoryCategory().subscribe((data) => {
       this.categorias = data;
-     });
+    });
 
     this.route.params.subscribe((params) => {
       const inventarioId = +params['id'];
       this.inventoryService.getInventoryById(inventarioId).subscribe((categoria) => {
         // Establece los valores del formulario con los datos del tipo de servicio
         this.formulario.patchValue({
-          NOMBRE_PRODUCTO:categoria.NOMBRE_PRODUCTO,
-          DESCRIPCION_PRODUCTO:categoria.DESCRIPCION_PRODUCTO,
-          CATEGORIA_IDCATEGORIA:categoria.CATEGORIA_IDCATEGORIA})
-        })
+          NOMBRE_PRODUCTO: categoria.NOMBRE_PRODUCTO,
+          DESCRIPCION_PRODUCTO: categoria.DESCRIPCION_PRODUCTO,
+          CATEGORIA_IDCATEGORIA: categoria.CATEGORIA_IDCATEGORIA
+        });
+      });
     });
   }
 
@@ -54,12 +59,9 @@ constructor(private router: Router, private route: ActivatedRoute, private inven
       );
 
       if (camposModificados.length > 0) {
-        // Enviar actualización al servicio
-        this.inventoryService.putInventory(inventarioId, valoresFormulario).subscribe(() => {
-          this.router.navigate(['/lista-inventario']);
-        });
+        this.alertsService.actualizarInventario(inventarioId, valoresFormulario);
       } else {
-        alert('No se han realizado cambios');
+        this.alertsService.alertDenied('No se han realizado cambios.');
       }
     });
   }

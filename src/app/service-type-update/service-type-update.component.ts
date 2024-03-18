@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-service-type-update',
   templateUrl: './service-type-update.component.html',
@@ -12,7 +12,7 @@ export class ServiceTypeUpdateComponent implements OnInit {
   formulario: FormGroup;
 
   constructor(
-    private router: Router,
+    private alertsService: AlertsService,
     private route: ActivatedRoute,
     private serviceService: ServiceService,
     public fb: FormBuilder
@@ -47,11 +47,9 @@ export class ServiceTypeUpdateComponent implements OnInit {
 
       if (camposModificados.length > 0) {
         // Enviar actualización al servicio
-        this.serviceService.putTypeService(tiposervicioId, valoresFormulario).subscribe(() => {
-          this.router.navigate(['/lista-tiposervicios']);
-        });
+        this.alertsService.actualizarTipoServicio(tiposervicioId, valoresFormulario);
       } else {
-        alert('No se han realizado cambios');
+        this.alertsService.alertDenied('No se han realizado cambios.');
       }
     });
   }

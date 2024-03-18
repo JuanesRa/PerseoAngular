@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-user-update',
   templateUrl: './user-update.component.html',
@@ -18,7 +18,7 @@ export class UserUpdateComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private router: Router,
+    private alertsService: AlertsService,
     public fb: FormBuilder
   ) {
     this.formulario = this.fb.group({
@@ -78,12 +78,21 @@ export class UserUpdateComponent implements OnInit {
   }
 
   actualizarUsuario(): void {
-    // Obtener los valores del formulario
-    const valoresFormulario = this.formulario.value;
+   // Obtén los valores del formulario
+   const valoresFormulario = this.formulario.value;
 
-    // Enviar actualización al servicio
-    this.userService.putUser(this.usuarioId, valoresFormulario).subscribe(() => {
-      this.router.navigate(['/lista-usuarios']);
-    });
-  }
+   // Comparar campos modificados y enviar actualización si hay cambios
+   const UserId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
+   this.userService.getUserById(UserId).subscribe((userOriginal) => {
+     const camposModificados = Object.keys(valoresFormulario).filter(
+       key => valoresFormulario[key] !== userOriginal[key]
+     );
+
+     if (camposModificados.length > 0) {
+       this.alertsService.actualizarUsuario(UserId, valoresFormulario);
+     } else {
+       this.alertsService.alertDenied('No se han realizado cambios.');
+     }
+   });
+ }
 }

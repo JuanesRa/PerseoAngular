@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RoomService } from '../services/room.service';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-typeroom-update',
   templateUrl: './typeroom-update.component.html',
@@ -14,7 +14,10 @@ export class TyperoomUpdateComponent {
   tipohabitacionOriginal: any = {};
   selectedFile: File | null = null;
 
-  constructor(private router: Router, private route: ActivatedRoute, private roomService: RoomService) { }
+  constructor(
+    private AlertsService: AlertsService, 
+    private route: ActivatedRoute, 
+    private roomService: RoomService) { }
 
   ngOnInit(): void {
     this.roomService.getTypeRoom().subscribe((data) => {
@@ -41,7 +44,12 @@ export class TyperoomUpdateComponent {
   }
   
   actualizarTipoHabitacion(): void {
-    const roomId = this.tipohabitacion.IDTIPOHABITACION;
+    // Obtén los valores del formulario
+    //const valoresFormulario = this.formulario.value;
+
+    // Comparar campos modificados y enviar actualización si hay cambios
+
+    const typeRoomId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
     const camposModificados = Object.keys(this.tipohabitacion).filter(
       key => this.tipohabitacion[key] !== this.tipohabitacionOriginal[key]
     );
@@ -65,14 +73,9 @@ export class TyperoomUpdateComponent {
         formData.append('FOTO', this.selectedFile);
       };
   
-      // Envía la solicitud para actualizar el tipo de habitación
-      this.roomService.putTypeRoom(roomId, formData).subscribe(() => {
-        this.router.navigate(['/lista-tipohabitaciones']);
-      }, error => {
-        console.error('Error al actualizar el tipo de habitación:', error);
-      });
+      this.AlertsService.actualizarHabitacionTipo(typeRoomId, formData)
     } else {
-      alert('No se han realizado cambios');
+      this.AlertsService.alertDenied('No se han realizado cambios');
     }
   } 
   

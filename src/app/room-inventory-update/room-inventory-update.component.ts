@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { InventoryService } from '../services/inventory.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-room-inventory-update',
   templateUrl: './room-inventory-update.component.html',
@@ -15,7 +16,12 @@ export class RoomInventoryUpdateComponent {
   productos: any[] = [];
   estados: any[] = [];
 
-  constructor(private roomService: RoomService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder, private inventoryService: InventoryService) {
+  constructor(
+    private roomService: RoomService, 
+    private route: ActivatedRoute, 
+    private alertsService: AlertsService, 
+    public fb: FormBuilder, 
+    private inventoryService: InventoryService) {
     this.formulario = this.fb.group({
       HABITACION_NROHABITACION: [null, Validators.required],
       INVENTARIO_IDINVENTARIO: [null, [Validators.required, Validators.maxLength(30)]],
@@ -30,7 +36,7 @@ export class RoomInventoryUpdateComponent {
     // Obtener los estados de los productos
     this.inventoryService.getStatusInventory().subscribe((data) => {
       this.estados = data;
-      console.log(this.estados)
+
     });
 
     // Obtener los productos
@@ -54,12 +60,21 @@ export class RoomInventoryUpdateComponent {
   }
 
   actualizarInventoryXRoom(): void {
-    // Obtener los valores del formulario
+    // Obtén los valores del formulario
     const valoresFormulario = this.formulario.value;
 
-    // Enviar actualización al servicio
-    this.roomService.putRoomInventory(this.habitacionId, valoresFormulario).subscribe(() => {
-      this.router.navigate(['/lista-habitacion-inventario',this.nroHabitacion]);
+    // Comparar campos modificados y enviar actualización si hay cambios
+    const roomxinventoryId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
+    this.roomService.getRoomInventoryById(roomxinventoryId).subscribe((inventarioHabitacionOriginal) => {
+      const camposModificados = Object.keys(valoresFormulario).filter(
+        key => valoresFormulario[key] !== inventarioHabitacionOriginal[key]
+      );
+
+      if (camposModificados.length > 0) {
+        this.alertsService.actualizarInventarioHabitacion(roomxinventoryId, valoresFormulario, this.nroHabitacion);
+      } else {
+        this.alertsService.alertDenied('No se han realizado cambios.');
+      }
     });
   }
 

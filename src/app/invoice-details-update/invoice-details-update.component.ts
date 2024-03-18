@@ -3,7 +3,7 @@ import { InvoiceDetailsService } from '../services/invoice-details.service';
 import { ServiceService } from '../services/service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-invoice-details-update',
   templateUrl: './invoice-details-update.component.html',
@@ -14,7 +14,12 @@ export class InvoiceDetailsUpdateComponent {
   nroFactura!: number;
   formulario: FormGroup;
   productos: any[] = [];
-  constructor(private ServiceService: ServiceService, private invoiceDetailsService: InvoiceDetailsService, private route: ActivatedRoute, public fb: FormBuilder, private router: Router) {
+  constructor(
+    private ServiceService: ServiceService, 
+    private invoiceDetailsService: InvoiceDetailsService, 
+    private route: ActivatedRoute, 
+    public fb: FormBuilder, private router: Router,
+    private alertsService:AlertsService ) {
     this.formulario = this.fb.group({
       CANTIDAD: [null, Validators.required],
       PRODUCTO_IDPRODUCTO: [null, [Validators.required, Validators.maxLength(30)]],
@@ -51,14 +56,22 @@ export class InvoiceDetailsUpdateComponent {
   }
 
   actualizarDetalleFactura(): void {
-    // Obtener los valores del formulario
-    const valoresFormulario = this.formulario.value;
+   // Obtén los valores del formulario
+   const valoresFormulario = this.formulario.value;
 
-    // Enviar actualización al servicio
-    this.invoiceDetailsService.putInvoiceDetail(this.detallesfacturaId, valoresFormulario).subscribe(() => {
-      this.router.navigate(['/lista-detalles-facturas/', this.nroFactura]);
-    });
+   // Comparar campos modificados y enviar actualización si hay cambios
+   const invDetId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
+   this.invoiceDetailsService.getInvoiceDetailById(invDetId).subscribe((DetallesoOriginal) => {
+     const camposModificados = Object.keys(valoresFormulario).filter(
+       key => valoresFormulario[key] !== DetallesoOriginal[key]
+     );
 
+     if (camposModificados.length > 0) {
+       this.alertsService.actualizarDetalleFactura(invDetId, valoresFormulario,this.nroFactura);
+     } else {
+       this.alertsService.alertDenied('No se han realizado cambios.');
+     }
+   });
 
   }
 

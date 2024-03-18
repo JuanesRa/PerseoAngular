@@ -2,7 +2,7 @@ import { Component,  OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-inventory-category-update',
   templateUrl: './inventory-category-update.component.html',
@@ -11,7 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class InventoryCategoryUpdateComponent  implements OnInit{
   formulario: FormGroup;
 
-  constructor(private router: Router, private route: ActivatedRoute, private categoryInvService: InventoryService, public fb: FormBuilder) {
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private categoryInvService: InventoryService, 
+    public fb: FormBuilder,
+    private alertsService:AlertsService) {
     this.formulario = this.fb.group({
       NOMBRE_CATEGORIA: ['', [Validators.required, Validators.maxLength(30)]],
       DESCRIPCION: ['', [Validators.required, Validators.maxLength(100)]],
@@ -43,11 +48,9 @@ export class InventoryCategoryUpdateComponent  implements OnInit{
 
       if (camposModificados.length > 0) {
         // Enviar actualización al servicio
-        this.categoryInvService.putInventoryCategory(categoriaId, valoresFormulario).subscribe(() => {
-          this.router.navigate(['/lista-categoria-inventario']);
-        });
+        this.alertsService.actualizarCategoriaInventario(categoriaId, valoresFormulario);
       } else {
-        alert('No se han realizado cambios');
+        this.alertsService.alertDenied('No se han realizado cambios.');
       }
     });
   }

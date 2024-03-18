@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { GuestService } from '../services/guest.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 
 @Component({
   selector: 'app-reservation-guest-update',
@@ -16,7 +16,12 @@ export class ReservationGuestUpdateComponent {
   nroReserva!: number;
   huespedes: any[] = [];
 
-  constructor(private ReservationService: ReservationService,private GuestService:GuestService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) {
+  constructor(
+    private ReservationService: ReservationService,
+    private GuestService:GuestService, 
+    private route: ActivatedRoute, 
+    private alertsService: AlertsService, 
+    public fb: FormBuilder) {
     this.formulario = this.fb.group({
       HUESPED_IDHUESPED : [null, Validators.required],
       RESERVA_IDRESERVA : [null, [Validators.required, Validators.maxLength(30)]],
@@ -47,12 +52,21 @@ export class ReservationGuestUpdateComponent {
   }
 
   actualizarGuestXReservation(): void {
-    // Obtener los valores del formulario
+    // Obtén los valores del formulario
     const valoresFormulario = this.formulario.value;
 
-    // Enviar actualización al huesped x reserva
-    this.ReservationService.putReservationXGuest(this.reservationId, valoresFormulario).subscribe(() => {
-      this.router.navigate(['/lista-huesped-reserva',this.nroReserva]);
+    // Comparar campos modificados y enviar actualización si hay cambios
+    const guestxreserId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
+    this.ReservationService.getReservationXGuestById(guestxreserId).subscribe((huespedReservaOriginal) => {
+      const camposModificados = Object.keys(valoresFormulario).filter(
+        key => valoresFormulario[key] !== huespedReservaOriginal[key]
+      );
+
+      if (camposModificados.length > 0) {
+        this.alertsService.actualizarHuespedReserva(guestxreserId, valoresFormulario, this.nroReserva);
+      } else {
+        this.alertsService.alertDenied('No se han realizado cambios.');
+      }
     });
   }
 

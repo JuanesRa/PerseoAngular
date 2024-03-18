@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-service-update',
   templateUrl: './service-update.component.html',
@@ -13,7 +13,11 @@ export class ServiceUpdateComponent implements OnInit {
   typeService: any[] = [];
   servicioId!: number;
 
-  constructor( private router: Router, private route: ActivatedRoute, private serviceService: ServiceService, public fb: FormBuilder) {
+  constructor(
+    private alertsService: AlertsService,
+    private route: ActivatedRoute,
+    private serviceService: ServiceService,
+    public fb: FormBuilder) {
     this.formulario = this.fb.group({
       NOMBRE_PRODUCTO: ['', [Validators.required, Validators.maxLength(30)]],
       VALOR: [null, [Validators.required, Validators.maxLength(30)]],
@@ -42,12 +46,21 @@ export class ServiceUpdateComponent implements OnInit {
   }
 
   actualizarServicio(): void {
-    // Obtener los valores del formulario
+    // Obtén los valores del formulario
     const valoresFormulario = this.formulario.value;
 
-    // Enviar actualización al servicio
-    this.serviceService.putService(this.servicioId, valoresFormulario).subscribe(() => {
-      this.router.navigate(['/lista-servicios']);
+    // Comparar campos modificados y enviar actualización si hay cambios
+    const serviceId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
+    this.serviceService.getServiceById(serviceId).subscribe((servicioOriginal) => {
+      const camposModificados = Object.keys(valoresFormulario).filter(
+        key => valoresFormulario[key] !== servicioOriginal[key]
+      );
+
+      if (camposModificados.length > 0) {
+        this.alertsService.actualizarServicio(serviceId, valoresFormulario);
+      } else {
+        this.alertsService.alertDenied('No se han realizado cambios.');
+      }
     });
   }
 }

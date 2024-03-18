@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { InvoiceService } from '../services/invoice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AlertsService } from '../services/alerts.service';
 @Component({
   selector: 'app-invoice-update',
   templateUrl: './invoice-update.component.html',
@@ -15,7 +15,12 @@ export class InvoiceUpdateComponent {
   clientes: any[] = [];
   facturaId!: number;
 
-  constructor(private UserService:UserService, private invoiceService: InvoiceService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) {
+  constructor(
+    private UserService:UserService, 
+    private invoiceService: InvoiceService, 
+    private route: ActivatedRoute, 
+    private alertsService: AlertsService, 
+    public fb: FormBuilder) {
     this.formulario = this.fb.group({
       FECHA_FACTURA  : ['', [Validators.required, Validators.maxLength(4)]],
       MONTO_TOTAL_RESERVA  : [null, [Validators.required, Validators.maxLength(3)]],
@@ -49,12 +54,22 @@ export class InvoiceUpdateComponent {
   }
 
   actualizarFactura(): void {
-    // Obtener los valores del formulario
+    // Obtén los valores del formulario
     const valoresFormulario = this.formulario.value;
-    this.invoiceService.putInvoice(this.facturaId, valoresFormulario).subscribe(() => {
-      this.router.navigate(['/lista-facturas']);
-    });
 
+    // Comparar campos modificados y enviar actualización si hay cambios
+    const invoiceId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
+    this.invoiceService.getInvoiceById(invoiceId).subscribe((facturaOriginal) => {
+      const camposModificados = Object.keys(valoresFormulario).filter(
+        key => valoresFormulario[key] !== facturaOriginal[key]
+      );
+
+      if (camposModificados.length > 0) {
+        this.alertsService.actualizarFactura(invoiceId, valoresFormulario);
+      } else {
+        this.alertsService.alertDenied('No se han realizado cambios.');
+      }
+    });
   }
 
 }
