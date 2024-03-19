@@ -3,7 +3,7 @@
         <div class="info">
             <h1>Factura</h1>
             <p>Factura N° <span>{{ facturaId }}</span></p>
-            <p>Fecha <span>{{ factura.FECHA_FACTURA }}</span></p>
+            <p>Fecha <span>{{ factura?.FECHA_FACTURA }}</span></p>
         </div>
         <div class="logo">
             <img src="../../assets/LogoPerseo.png" alt="">
@@ -15,15 +15,15 @@
             <span>INFORMACIÓN DEL CLIENTE</span>
             <div class="info-cliente">
                 <span>Nombre: </span>
-                <p>{{ usuario.NOMBRE }} {{ usuario.APELLIDO }}</p>
+                <p>{{ usuario?.NOMBRE }} {{ usuario?.APELLIDO }}</p>
             </div>
             <div class="info-cliente">
                 <span>Celular: </span>
-                <p>{{ usuario.TELEFONO }}</p>
+                <p>{{ usuario?.TELEFONO }}</p>
             </div>
             <div class="info-cliente">
                 <span>email: </span>
-                <p>{{ usuario.email }}</p>
+                <p>{{ usuario?.email }}</p>
             </div>
         </div>
         <table class="table table-hover">
