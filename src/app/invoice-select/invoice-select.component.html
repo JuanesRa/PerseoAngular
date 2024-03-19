@@ -9,7 +9,7 @@
                 <th scope="col">Detalles Factura</th>
                 <th scope="col">Factura PDF</th>
                 <th scope="col">Método Pago</th>
-                <th scope="col">Codigo</th>
+                <th scope="col">Id Reserva</th>
                 <th scope="col">Fecha Expedición</th>
                 <th scope="col">Monto Total</th>
                 <th scope="col">Documento</th>
@@ -36,7 +36,7 @@
                         <a href="lista-metodos-facturas/{{df.IDFACTURA}}"><i class="fa-solid fa-credit-card"></i> </a>
                     </div>
                 </td>
-                <td class="table-light">{{ df.IDFACTURA }}</td>
+                <td class="table-light">{{ df.IDRESERVA }}</td>
                 <td class="table-light">{{ df.FECHA_FACTURA }}</td>
                 <td class="table-light">{{ df.MONTO_TOTAL_RESERVA }}</td>
                 <td class="table-light">{{ df.PERSONA_NRODOCUMENTO }}</td>
@@ -55,7 +55,7 @@
     </table>
     <mat-paginator [pageSize]="10" [length]="facturas.length" #paginator></mat-paginator>
 
-    <div class="boton">
+    <!-- <div class="boton">
         <a routerLink="/insertar-factura">Crear Factura</a>
-    </div>
+    </div> -->
 </div>
