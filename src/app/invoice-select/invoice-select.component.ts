@@ -37,44 +37,27 @@ export class InvoiceSelectComponent implements OnInit {
         // Obtener los IDFACTURA de todas las facturas
         this.facturaIds = data.map((factura: any) => factura.IDFACTURA);
       }
+      console.log(this.facturas)
       this.facturas = data;
+      this.facturas.forEach((factura => {
+        this.reservationService.getReservaById(factura.IDRESERVA).subscribe((data) => {
+          factura.USUARIO_DOCUMENTO = data.PERSONA_NRODOCUMENTO;
+          this.facturas.forEach((factura) => {
+            this.UserService.getUserById(factura.USUARIO_DOCUMENTO).subscribe((data) => {
+              factura.USUARIO_NOMBRE = data.NOMBRE;
+              factura.USUARIO_APELLIDO = data.APELLIDO;
+            })
+          })
+        })
+      }))
 
       console.log(this.facturas);
-      console.log(this.facturaIds);
 
       // Configurar el paginador después de recibir los datos
       if (this.paginator) {
         this.paginator.pageSize = 10;
         this.paginator.hidePageSize = true; // Oculta la selección de tamaño de página
       }
-
-      this.reservationService.getReservas().subscribe((data) => {
-        this.reservas = data;
-        console.log(this.reservas)
-        if (data.length > 0) {
-          // Obtener los números de documento de todas las reservas
-          this.nroDocumentos = data.map((reserva: any) => reserva.PERSONA_NRODOCUMENTO);
-          console.log(this.nroDocumentos)
-
-          // Asignar el número de documento correspondiente a cada factura
-          this.facturas.forEach((factura) => {
-            // Encontrar el número de documento correspondiente en el arreglo nroDocumentos
-            const index = this.nroDocumentos.indexOf(factura.PERSONA_NRODOCUMENTO);
-            if (index !== -1) {
-              // Asignar el número de documento correspondiente a la factura
-              factura.nroDocumento = this.nroDocumentos[index];
-
-              // Obtener el tipo de estado para cada factura
-                this.UserService.getUserById(factura.PERSONA_NRODOCUMENTO).subscribe((statusData) => {
-                  factura.Nombre = statusData.NOMBRE;
-                  factura.Apellido = statusData.APELLIDO;
-                  factura.Correo = statusData.email;
-                });
-              
-            }
-          });
-        }
-      });
     });
   }
 

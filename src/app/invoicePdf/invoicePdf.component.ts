@@ -107,6 +107,7 @@ export class InvoicePdfComponent implements OnInit {
 
                   this.totalReserva += RoomXReservation.precioTotalHabitacion;
                   console.log(this.totalReserva)
+                  this.totalGeneral = this.totalReserva + this.totalServicios;
                 });
               })
             )

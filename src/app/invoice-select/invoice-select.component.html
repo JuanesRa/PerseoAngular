@@ -11,10 +11,9 @@
                 <th scope="col">Método Pago</th>
                 <th scope="col">Id Reserva</th>
                 <th scope="col">Fecha Expedición</th>
-                <th scope="col">Monto Total</th>
+                <!-- <th scope="col">Monto Total</th> -->
                 <th scope="col">Documento</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
+                <th scope="col">Usuario</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -38,10 +37,9 @@
                 </td>
                 <td class="table-light">{{ df.IDRESERVA }}</td>
                 <td class="table-light">{{ df.FECHA_FACTURA }}</td>
-                <td class="table-light">{{ df.MONTO_TOTAL_RESERVA }}</td>
-                <td class="table-light">{{ df.PERSONA_NRODOCUMENTO }}</td>
-                <td class="table-light">{{ df.Nombre }}</td>
-                <td class="table-light">{{ df.Apellido }}</td>
+                <!-- <td class="table-light">{{ df.MONTO_TOTAL_RESERVA }}</td> -->
+                <td class="table-light">{{ df.USUARIO_DOCUMENTO }}</td>
+                <td class="table-light">{{ df.USUARIO_NOMBRE }} {{ df.USUARIO_APELLIDO }}</td>
                 <td class="btns">
                     <button (click)="redireccionarActualizar(df.IDFACTURA)" type="button" class="btn btn-warning">
                         Actualizar
