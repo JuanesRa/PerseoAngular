@@ -62,6 +62,7 @@ import { RoomReservationSelectComponent } from './room-reservation-select/room-r
 import { InvoicePdfComponent } from './invoicePdf/invoicePdf.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ReservationSelectClientComponent } from './reservation-select-client/reservation-select-client.component';
 
 @NgModule({
   declarations: [	
@@ -122,6 +123,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     InvoicePaymentMethodUpdateComponent,
     RoomReservationSelectComponent,
     InvoicePdfComponent,
+    ReservationSelectClientComponent,
   ],
   imports: [
     MatPaginatorModule,

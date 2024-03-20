@@ -49,6 +49,7 @@ import { ReservationGuestUpdateComponent } from './reservation-guest-update/rese
 import { ReservationRoomSelectComponent } from './reservation-room-select/reservation-room-select.component';
 import { ReservationRoomInsertComponent } from './reservation-room-insert/reservation-room-insert.component';
 import { ReservationRoomUpdateComponent } from './reservation-room-update/reservation-room-update.component';
+import { ReservationSelectClientComponent } from './reservation-select-client/reservation-select-client.component';
 import { InvoicePaymentMethodSelectComponent } from './invoice-payment-method-select/invoice-payment-method-select.component';
 import { InvoicePaymentMethodInsertComponent } from './invoice-payment-method-insert/invoice-payment-method-insert.component';
 import { InvoicePaymentMethodUpdateComponent } from './invoice-payment-method-update/invoice-payment-method-update.component';
@@ -108,6 +109,7 @@ const routes: Routes = [
   
   // RESERVAS
   {path: 'lista-reservas', component: ReservationSelectComponent},
+  {path: 'reservas', component: ReservationSelectClientComponent, canActivate: [AuthGuardService]},
   {path: 'insertar-reserva/:ids', component: ReservationInsertComponent, canActivate: [AuthGuardService] },
   {path: 'actualizar-reserva/:id', component: ReservationUpdateComponent},
   

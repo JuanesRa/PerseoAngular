@@ -1,0 +1,43 @@
+<div>
+    <app-header></app-header>
+</div>
+
+<div class="contenido">
+    <div class="row">
+        <div class="card" *ngFor="let reserva of reservas">
+            <div class="card-body">
+                <div class="secciones">
+                    <div class="info">
+                        <h3>Información general</h3>
+                        <p>Habitaciones:</p>
+                        <ul>
+                            <li *ngFor="let habitacion of reserva.habitacion">
+                                {{ habitacion.HABITACION_NROHABITACION }} {{ habitacion.TIPO_HABITACION }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="fecha">
+                        <h3>Fecha de reserva</h3>
+                        <p>Entrada {{ reserva.FECHA_ENTRADA }}</p>
+                        <p>Salida {{ reserva.FECHA_SALIDA }}</p>
+                    </div>
+                    <div class="estado">
+                        <h3>Estado</h3>
+                        <p><span>Reserva {{ reserva.estadoReserva }}</span></p>
+                        <div class="botones" *ngIf="reserva.estadoReserva == 'Confirmada'">
+
+                            <a class="buttonEliminar" routerLink="/lista-reservas">Cancelar reserva</a>
+                        </div>
+                        <div class="botones" *ngIf="reserva.estadoReserva == 'Completada'">
+                            <a class="buttonVer" routerLink="/lista-reservas">Ver factura</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>
