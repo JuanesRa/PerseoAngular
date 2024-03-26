@@ -1,38 +1,89 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Perseo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  
 <div>
     <app-header></app-header>
 </div>
 
 <div class="signup">
-    <span class="title">Actualizar Reserva</span>
+    <span class="title">Actualizar Reserva </span>
 
     <form [formGroup]="formulario" (ngSubmit)="actualizarReserva()">
-        <input formControlName="FECHA_RESERVACION" name="fechaReservacion" type="date" placeholder="Fecha de entrada" style="display: none;">
 
-        <p>Fecha de entrada</p>
-        <div class="input-field">
-            <input formControlName="FECHA_ENTRADA" type="date" name="Ffecha_entrada" placeholder="Fecha de entrada" required [min]="fechaMinimaIn">
-            <i class="uil uil-calendar"></i>
+        <div class="input-container">
+            <h4>Fecha de entrada</h4>
+            <div class="input-field">
+                <input formControlName="FECHA_ENTRADA" type="date" name="Ffecha_entrada" placeholder="Fecha de entrada" required [min]="fechaMinimaIn">
+                <i class="uil uil-calendar"></i>
+            </div>
         </div>
 
-        <p>Fecha de Salida</p>
-        <div class="input-field">
-            <input formControlName="FECHA_SALIDA" type="date" name="Ffecha_entrada" placeholder="Fecha de salida" required [min]="fechaMinimaOut">
-            <i class="uil uil-calendar"></i>
+        <div class="input-container">
+            <h4>Hora de entrada</h4>
+            <div class="input-field">
+                <input formControlName="HORA_ENTRADA" type="time" name="Fhora_entrada" placeholder="Hora de entrada" required [min]="fechaMinimaIn">
+                <i class="uil uil-clock"></i>
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <h4>Fecha de Salida</h4>
+            <div class="input-field">
+                <input formControlName="FECHA_SALIDA" type="date" name="Ffecha_salida" placeholder="Fecha de salida" required [min]="fechaMinimaOut">
+                <i class="uil uil-calendar"></i>
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <h4>Hora de salida</h4>
+            <div class="input-field">
+                <input formControlName="HORA_SALIDA" type="time" name="Fhora_salida" placeholder="Hora de salida" required [min]="fechaMinimaIn">
+                <i class="uil uil-clock"></i>
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <h4>Cantidad Adultos</h4>
+            <div class="input-field">
+                <input formControlName="CANTIDAD_ADULTOS" type="number" name="Fcantidad_adultos" placeholder="Cantidad de adultos" required>
+                <i class="uil uil-user"></i>
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <h4>Cantidad Niños</h4>
+            <div class="input-field">
+                <input formControlName="CANTIDAD_NINOS" type="number" name="Fcantidad_niños" placeholder="Cantidad de niños" required>
+                <i class="uil uil-child"></i>
+            </div>
         </div>
 
-        <div class="input-field">
-            <input formControlName="CANTIDAD_ADULTOS" type="number" name="Fcantidad_adultos" placeholder="Cantidad de adultos" required>
-            <i class="uil uil-user"></i>
+        <div class="input-container">
+            <h4>Estado Reserva</h4>
+            <div class="input-field">
+                <select class="input-select" formControlName="ESTADO_RESERVA"  name="estado reserva">
+                    <option selected="selected" disabled="disabled">Seleccione una opción</option>
+                    <option *ngFor="let estado of estadosReserva" [value]="estado.IDESTADORESERVA">
+                    {{estado.ESTADO_RESERVA}}
+                    </option>
+                </select> 
+                
+            </div>
         </div>
-
-        <div class="input-field">
-            <input formControlName="CANTIDAD_NINOS" type="number" name="Fcantidad_niños" placeholder="Cantidad de niños" required>
-            <i class="uil uil-child"></i>
-        </div>
+        
+        
       
         <div class="botones">
             <div class="input-field button">
-                <input type="submit" value="Reservar">
+                <input type="submit" value="Actualizar">
             </div>
 
             <div class="input-field button">

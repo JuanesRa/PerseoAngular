@@ -34,7 +34,7 @@ export class ReservationService {
 
   public putReserva(reservaId: number, updatedReservaData: any): Observable<any> {
     const url = `${this.urlApi}${reservaId}/`;
-    return this.http.put<any>(url, updatedReservaData);
+    return this.http.patch<any>(url, updatedReservaData);
   }
 
   public deleteReserva(reservaId: number): Observable<any> {
@@ -43,6 +43,11 @@ export class ReservationService {
   }
 
   //Estado reserva
+  public getStatusReservation(): Observable<any> {
+    return this.http.get(this.urlApiStatusReservation);
+  }
+
+
   public getStatusReservationById(statusreservationId: number): Observable<any> {
     const url = `${this.urlApiStatusReservation}${statusreservationId}/`;
     return this.http.get(url);

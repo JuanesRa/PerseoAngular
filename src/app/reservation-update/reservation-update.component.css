@@ -30,6 +30,10 @@
     background-color: transparent;
 }
 
+form {
+    margin-top: 15px;
+}
+
 *::-webkit-scrollbar-thumb {
     background-color: #5eb319;
     border-radius: 5rem;
@@ -60,6 +64,7 @@ body {
     position: relative;
     font-size: 22px;
     font-weight: 600;
+    
 }
 
 .signup .title::before {
@@ -158,7 +163,6 @@ body {
     position: relative;
     height: 100%;
     width: 100%;
-    margin-top: 40px;
     border-bottom: 2px solid #ccc;
     padding: 0 35px;
     font-size: 16px;
@@ -231,4 +235,15 @@ body {
 .input-field.button a:hover {
     border-bottom-color: #91d856;
     /* Cambia el color del borde inferior al pasar el cursor */
+}
+
+
+.input-container {
+    margin-bottom: 20px; /* Ajusta el margen inferior según sea necesario */
+}
+
+.input-container h4 {
+    margin-right: 10px; /* Ajusta el margen derecho según sea necesario */
+    width: 150px; /* Ajusta el ancho del título según sea necesario */
+    font-size: 17px;
 }

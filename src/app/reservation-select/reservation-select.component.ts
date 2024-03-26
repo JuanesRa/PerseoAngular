@@ -23,8 +23,6 @@ export class ReservationSelectComponent implements OnInit {
     this.reservationService.getReservas().subscribe((data) => {
       this.reservas = data;
       console.log(this.reservas);
-      // Filtra reservas por estado "Cxonfirmada"
-      this.reservas = data.filter((reserva: any) => reserva.ESTADO_RESERVA === 2);
       this.getEstadoReserva();
       this.getUsuario(); 
       if (this.paginatorR) {

@@ -82,10 +82,7 @@ body {
 
 .table-light {
    height: 100px;
-   padding-top: 35px;
-   align-items: center;
-   text-align: center;
-
+   padding: 35px;
 }
 
 .table-light1 {

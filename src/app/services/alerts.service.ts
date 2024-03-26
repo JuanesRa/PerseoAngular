@@ -208,6 +208,7 @@ export class AlertsService {
       showCancelButton: true,
       confirmButtonColor: "#5eb319",
       cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
       confirmButtonText: "¡Sí, Borralo!"
     }).then((result) => {
       return result.isConfirmed;
@@ -222,6 +223,7 @@ export class AlertsService {
       showCancelButton: true,
       confirmButtonColor: "#5eb319",
       cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
       confirmButtonText: "¡Sí, Actualiza!"
     }).then((result) => {
       return result.isConfirmed;

@@ -14,6 +14,7 @@ export class ReservationUpdateComponent {
   reservaId!: number;
   fechaMinimaIn: string = '';
   fechaMinimaOut: string = '';
+  estadosReserva:  any =  [];
 
   constructor(
     private reservationService: ReservationService,
@@ -23,7 +24,9 @@ export class ReservationUpdateComponent {
     this.formulario = this.fb.group({
       FECHA_RESERVACION: ['', [Validators.required]],
       FECHA_ENTRADA: ['', [Validators.required]],
+      HORA_ENTRADA: [null, [Validators.required]],
       FECHA_SALIDA: ['', [Validators.required]],
+      HORA_SALIDA: [null, [Validators.required]],
       PRECIO_CALCULADO: [0, [Validators.required]],
       CANTIDAD_ADULTOS: [null, [Validators.required]],
       CANTIDAD_NINOS: [null, [Validators.required]],
@@ -33,13 +36,18 @@ export class ReservationUpdateComponent {
   }
 
   ngOnInit(): void {
+    this.reservationService.getStatusReservation().subscribe((data) => {
+      this.estadosReserva = data;
+    })
     this.reservaId = +this.route.snapshot.params['id'];
 
     this.reservationService.getReservaById(this.reservaId).subscribe((reserva) => {
       this.formulario.patchValue({
         FECHA_RESERVACION: reserva.FECHA_RESERVACION,
         FECHA_ENTRADA: reserva.FECHA_ENTRADA,
+        HORA_ENTRADA: reserva.HORA_ENTRADA,
         FECHA_SALIDA: reserva.FECHA_SALIDA,
+        HORA_SALIDA: reserva.HORA_SALIDA,
         PRECIO_CALCULADO: reserva.PRECIO_CALCULADO,
         CANTIDAD_ADULTOS: reserva.CANTIDAD_ADULTOS,
         CANTIDAD_NINOS: reserva.CANTIDAD_NINOS,
