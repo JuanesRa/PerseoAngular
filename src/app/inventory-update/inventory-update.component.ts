@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-inventory-update',
@@ -13,13 +14,16 @@ export class InventoryUpdateComponent {
 
   categorias: any[] = [];
   formulario: FormGroup;
+  inventarioId!: number;
 
 
   constructor(
     private route: ActivatedRoute,
     private inventoryService: InventoryService,
     public fb: FormBuilder,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       NOMBRE_PRODUCTO: ['', [Validators.required, Validators.maxLength(30)]],
       DESCRIPCION_PRODUCTO: ['', [Validators.required, Validators.maxLength(100)]],
@@ -36,6 +40,7 @@ export class InventoryUpdateComponent {
 
     this.route.params.subscribe((params) => {
       const inventarioId = +params['id'];
+      this.inventarioId = +params['id'];
       this.inventoryService.getInventoryById(inventarioId).subscribe((categoria) => {
         // Establece los valores del formulario con los datos del tipo de servicio
         this.formulario.patchValue({
@@ -45,6 +50,12 @@ export class InventoryUpdateComponent {
         });
       });
     });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-inventario/' + this.inventarioId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   actualizarInventario(): void {

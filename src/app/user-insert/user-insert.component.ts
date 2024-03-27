@@ -27,7 +27,7 @@ export class UserInsertComponent {
     private userService: UserService,
     public fb: FormBuilder,
     private AlertsService:AlertsService,
-    private _location: PlatformLocation) {
+    private location: PlatformLocation) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: ['', [Validators.required, Validators.maxLength(10)]],
       NOMBRE: ['', [Validators.required, Validators.maxLength(70)]],
@@ -50,8 +50,10 @@ export class UserInsertComponent {
 
     });
 
-    this._location.onPopState (() => {
-      window.location.href = 'http://localhost:4200'; //Navigate to another location when the browser back is clicked.
+    history.pushState(null, '', location.href)
+    this.location.onPopState (() => {
+      window.location.href = 'http://localhost:4200/insertar-usuario'; //Navigate to another location when the browser back is clicked.
+      history.pushState(null, '', location.href)
     });
   }
 

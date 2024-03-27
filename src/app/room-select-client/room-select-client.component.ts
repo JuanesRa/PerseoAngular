@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-room-select-client',
@@ -16,7 +17,17 @@ export class RoomSelectClientComponent implements OnInit {
   // Variable para almacenar el ID del estado "Disponible"
   estadoDisponibleId: number = 0;
 
-  constructor(private roomService: RoomService, private router: Router) { }
+  constructor(
+    private roomService: RoomService,
+    private router: Router,
+    private location: PlatformLocation,
+  ) {
+    history.pushState(null, '', location.href);
+    this.location.onPopState(() => {
+      window.location.href = ('http://localhost:4200/habitaciones'); //Navigate to another location when the browser back is clicked.
+      history.pushState(null, '', location.href);
+    });
+  }
 
   ngOnInit(): void {
     // Obtener todas las habitaciones
@@ -30,7 +41,7 @@ export class RoomSelectClientComponent implements OnInit {
 
         // Filtrar las habitaciones por el estado "Disponible"
         this.rooms = data.filter((item: any) => item.ESTADO_HABITACION_IDESTADOHABITACION == this.estadoDisponibleId);
-        
+
         if (this.rooms.length === 0) {
           this.noRoomsAvailable = true; // Establecer la bandera en true si no hay habitaciones disponibles
         } else {
@@ -39,8 +50,8 @@ export class RoomSelectClientComponent implements OnInit {
             this.Typerooms = typeData;
 
             // Obtener foto de habitación para cada habitación
-            this.rooms.forEach((room)=> {
-              this.roomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData)=>{
+            this.rooms.forEach((room) => {
+              this.roomService.getTypeRoomById(room.TIPO_HABITACION_IDTIPOHABITACION).subscribe((statusData) => {
                 room.foto = statusData.FOTO; // Asignar la foto al objeto de la habitación
                 room.tipo = statusData.TIPO_HABITACION;
                 room.precio = statusData.PRECIOXNOCHE;

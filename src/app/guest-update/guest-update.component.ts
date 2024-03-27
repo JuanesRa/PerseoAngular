@@ -3,6 +3,8 @@ import { ActivatedRoute} from '@angular/router';
 import { GuestService } from '../services/guest.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-guest-update',
   templateUrl: './guest-update.component.html',
@@ -16,7 +18,9 @@ export class GuestUpdateComponent implements OnInit {
     private guestService: GuestService,
     private route: ActivatedRoute,
     public fb: FormBuilder,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: [''],
       NOMBRE: [''],
@@ -42,6 +46,12 @@ export class GuestUpdateComponent implements OnInit {
         TELEFONO: huesped.TELEFONO,
       });
     });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-huesped/' + this.huespedId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
 
   }
 

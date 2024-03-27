@@ -6,6 +6,7 @@ import { UserService } from '../services/user.service';
 import { AlertsService } from '../services/alerts.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { forkJoin } from 'rxjs';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-invoice-select',
@@ -27,7 +28,14 @@ export class InvoiceSelectComponent implements OnInit {
     private router: Router,
     private AlertsService: AlertsService,
     private reservationService: ReservationService,
-  ) { }
+    private location: PlatformLocation,
+  ) {
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/lista-facturas'); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
+  }
 
   ngOnInit(): void {
 

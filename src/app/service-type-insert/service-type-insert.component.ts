@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-service-type-insert',
   templateUrl: './service-type-insert.component.html',
@@ -16,10 +18,18 @@ export class ServiceTypeInsertComponent {
     private serviceService: ServiceService,
     private router: Router,
     public fb: FormBuilder,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       TIPO_SERVICIO: ['', [Validators.required, Validators.maxLength(30)]],
-    })
+    });
+
+    history.pushState(null, '', location.href)
+    this.location.onPopState(() => {
+      window.location.href = 'http://localhost:4200/insertar-tiposervicio'; //Navigate to another location when the browser back is clicked.
+      history.pushState(null, '', location.href)
+    });
   }
 
   crearTipoServicio(): void {

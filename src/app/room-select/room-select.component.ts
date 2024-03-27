@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { AlertsService } from '../services/alerts.service';
 import { MatPaginator } from '@angular/material/paginator'; // Importa MatPaginator
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-room-select',
@@ -13,7 +14,18 @@ export class RoomSelectComponent implements OnInit {
   rooms: any[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator; // Obtén una referencia al paginador
 
-  constructor(private roomService: RoomService, private router: Router, private alertsService: AlertsService) { }
+  constructor(
+    private roomService: RoomService, 
+    private router: Router, 
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+    ) {
+      history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/lista-habitaciones'); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
+    }
 
   ngOnInit(): void {
     this.roomService.getRooms().subscribe((data) => {

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-typeroom-update',
   templateUrl: './typeroom-update.component.html',
@@ -10,6 +12,7 @@ import { AlertsService } from '../services/alerts.service';
 export class TyperoomUpdateComponent {
  
   Typerooms: any[] = [];
+  typeroomId: number = 0;
   tipohabitacion: any = {};
   tipohabitacionOriginal: any = {};
   selectedFile: File | null = null;
@@ -17,7 +20,9 @@ export class TyperoomUpdateComponent {
   constructor(
     private AlertsService: AlertsService, 
     private route: ActivatedRoute, 
-    private roomService: RoomService) { }
+    private roomService: RoomService,
+    private location: PlatformLocation,
+    ) { }
 
   ngOnInit(): void {
     this.roomService.getTypeRoom().subscribe((data) => {
@@ -26,11 +31,18 @@ export class TyperoomUpdateComponent {
 
     this.route.params.subscribe(params => {
       const typeroomId = +params['id'];
+      this.typeroomId = +params['id'];
       this.roomService.getTypeRoomById(typeroomId).subscribe((room) => {
         this.tipohabitacion = room;
         this.tipohabitacionOriginal = { ...room }; // Copia original para comparación
       });
     });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-tipohabitaciones/' + this.typeroomId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   onFileSelected(event: any) {

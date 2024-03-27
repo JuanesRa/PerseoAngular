@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-service-type-update',
   templateUrl: './service-type-update.component.html',
@@ -10,12 +12,14 @@ import { AlertsService } from '../services/alerts.service';
 })
 export class ServiceTypeUpdateComponent implements OnInit {
   formulario: FormGroup;
+  tiposervicioId: number = 0;
 
   constructor(
     private alertsService: AlertsService,
     private route: ActivatedRoute,
     private serviceService: ServiceService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private location: PlatformLocation,
   ) {
     this.formulario = this.fb.group({
       TIPO_SERVICIO: ['', [Validators.required, Validators.maxLength(30)]],
@@ -25,6 +29,7 @@ export class ServiceTypeUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const tiposervicioId = +params['id'];
+      this.tiposervicioId = +params['id'];
       this.serviceService.getTypeServiceById(tiposervicioId).subscribe((tipoServicio) => {
         // Establece los valores del formulario con los datos del tipo de servicio
         this.formulario.patchValue({
@@ -32,6 +37,12 @@ export class ServiceTypeUpdateComponent implements OnInit {
         });
       });
     });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-tiposervicio/' + this.tiposervicioId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   actualizarTipoServicio(): void {

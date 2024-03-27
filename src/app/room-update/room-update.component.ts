@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-room-update',
   templateUrl: './room-update.component.html',
@@ -18,7 +20,9 @@ export class RoomUpdateComponent {
     private alertsService: AlertsService,
     private route: ActivatedRoute,
     private roomService: RoomService,
-    public fb: FormBuilder) {
+    public fb: FormBuilder,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       NROHABITACION: ['', [Validators.required, Validators.maxLength(4)]],
       ESTADO_HABITACION_IDESTADOHABITACION: [null, [Validators.required, Validators.maxLength(3)]],
@@ -46,6 +50,12 @@ export class RoomUpdateComponent {
         TIPO_HABITACION_IDTIPOHABITACION: habitacion.TIPO_HABITACION_IDTIPOHABITACION,
       });
     });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-habitacion/' + this.habitacionId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   actualizarHabitacion(): void {

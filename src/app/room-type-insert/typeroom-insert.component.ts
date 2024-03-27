@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-typeroom-insert',
@@ -19,7 +20,9 @@ export class TyperoomInsertComponent {
     private roomService: RoomService,
     private router: Router,
     public fb: FormBuilder,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+    ) {
     this.typeRoomForm = this.fb.group({
       TIPO_HABITACION: ['', [Validators.required, Validators.maxLength(30)]],
       DESCRIPCION: ['', [Validators.required, Validators.maxLength(200)]],
@@ -27,7 +30,13 @@ export class TyperoomInsertComponent {
       CANTIDAD_ADULTOS: [null, [Validators.required]],
       CANTIDAD_NINOS: [null, [Validators.required]],
       FOTO: [null, [Validators.required]],
-    })
+    });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/insertar-tipo-habitacion'); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   ngOnInit(): void {

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-inventory-select',
   templateUrl: './inventory-select.component.html',
@@ -16,7 +18,15 @@ export class InventorySelectComponent implements OnInit {
   constructor(
     private router: Router,
     private inventoryService: InventoryService,
-    private alertsService: AlertsService) { }
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+    ) {
+      history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/lista-inventario'); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
+    }
 
   ngOnInit(): void {
     this.inventoryService.getInventory().subscribe((data) => {

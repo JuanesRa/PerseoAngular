@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { AlertsService } from '../services/alerts.service';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-reservation-select-client',
@@ -27,7 +28,14 @@ export class ReservationSelectClientComponent implements OnInit {
     private alertsService: AlertsService,
     private authService: AuthService,
     private roomService: RoomService,
-  ) { }
+    private location: PlatformLocation,
+  ) {
+    history.pushState(null, '', location.href);
+    this.location.onPopState(() => {
+      window.location.href = ('http://localhost:4200/reservas'); //Navigate to another location when the browser back is clicked.
+      history.pushState(null, '', location.href);
+    });
+  }
 
   ngOnInit(): void {
     this.usuario = this.authService.getAuthId()

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-inventory-category-update',
   templateUrl: './inventory-category-update.component.html',
@@ -10,13 +12,16 @@ import { AlertsService } from '../services/alerts.service';
 })
 export class InventoryCategoryUpdateComponent  implements OnInit{
   formulario: FormGroup;
+  categoryId!: number;
 
   constructor(
     private router: Router, 
     private route: ActivatedRoute, 
     private categoryInvService: InventoryService, 
     public fb: FormBuilder,
-    private alertsService:AlertsService) {
+    private alertsService:AlertsService,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       NOMBRE_CATEGORIA: ['', [Validators.required, Validators.maxLength(30)]],
       DESCRIPCION: ['', [Validators.required, Validators.maxLength(100)]],
@@ -25,6 +30,7 @@ export class InventoryCategoryUpdateComponent  implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const categoryId = +params['id'];
+      this.categoryId = +params['id'];
       this.categoryInvService.getInventoryCategoryById(categoryId).subscribe((categoria) => {
         // Establece los valores del formulario con los datos del tipo de servicio
         this.formulario.patchValue({
@@ -33,6 +39,12 @@ export class InventoryCategoryUpdateComponent  implements OnInit{
         });
       });
     });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-categoria-inventario/' + this.categoryId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   actualizarCategoria(): void {

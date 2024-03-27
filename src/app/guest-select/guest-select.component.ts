@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { GuestService } from '../services/guest.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-guest-select',
   templateUrl: './guest-select.component.html',
@@ -18,7 +20,15 @@ export class GuestSelectComponent implements OnInit {
   constructor(
     private guestService: GuestService,
     private router: Router,
-    private alertsService: AlertsService){ }
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+    ){
+      history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/lista-huespedes'); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
+    }
 
  
   ngOnInit(): void {

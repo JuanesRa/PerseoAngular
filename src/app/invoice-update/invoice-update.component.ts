@@ -4,6 +4,8 @@ import { UserService } from '../services/user.service';
 import { InvoiceService } from '../services/invoice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-invoice-update',
   templateUrl: './invoice-update.component.html',
@@ -20,7 +22,9 @@ export class InvoiceUpdateComponent {
     private invoiceService: InvoiceService, 
     private route: ActivatedRoute, 
     private alertsService: AlertsService, 
-    public fb: FormBuilder) {
+    public fb: FormBuilder,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       FECHA_FACTURA  : ['', [Validators.required, Validators.maxLength(4)]],
       MONTO_TOTAL_RESERVA  : [null, [Validators.required, Validators.maxLength(3)]],
@@ -51,6 +55,12 @@ export class InvoiceUpdateComponent {
         PERSONA_NRODOCUMENTO: factura.PERSONA_NRODOCUMENTO,
       });
     });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-factura/' + this.facturaId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   actualizarFactura(): void {

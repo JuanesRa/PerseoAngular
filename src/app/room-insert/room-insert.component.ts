@@ -3,6 +3,8 @@ import { RoomService } from '../services/room.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-room-insert',
   templateUrl: './room-insert.component.html',
@@ -19,12 +21,20 @@ export class RoomInsertComponent {
     private roomService: RoomService,
     private router: Router,
     public fb: FormBuilder,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       NROHABITACION: ['', [Validators.required, Validators.maxLength(4)]],
       ESTADO_HABITACION_IDESTADOHABITACION: [null, [Validators.required, Validators.maxLength(3)]],
       TIPO_HABITACION_IDTIPOHABITACION: [null, [Validators.required, Validators.maxLength(3)]],
-    })
+    });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/insertar-habitacion'); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   ngOnInit(): void {

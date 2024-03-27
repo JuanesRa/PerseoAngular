@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GuestService } from '../services/guest.service';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-guest-insert',
@@ -17,14 +18,22 @@ export class GuestInsertComponent {
     private guestService: GuestService,
     private router: Router,
     public fb: FormBuilder,
-    private alertsService: AlertsService) {
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+  ) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: ['',],
       NOMBRE: ['',],
       APELLIDO: ['',],
       EMAIL: ['',],
       TELEFONO: ['',],
-    })
+    });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/insertar-huesped'); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   crearNuevoHuesped(): void {

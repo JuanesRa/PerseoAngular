@@ -21,8 +21,14 @@ export class UserSelectComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private AlertsService: AlertsService,
-    private _location: PlatformLocation
-    ) { }
+    private location: PlatformLocation
+  ) {
+    history.pushState(null, '', location.href)
+    this.location.onPopState(() => {
+      window.location.href = 'http://localhost:4200/lista-usuarios'; //Navigate to another location when the browser back is clicked.
+      history.pushState(null, '', location.href)
+    });
+  }
 
   ngOnInit(): void {
     // Obtener usuarios, roles y tipos de documento
@@ -51,9 +57,7 @@ export class UserSelectComponent implements OnInit {
       });
     });
 
-    this._location.onPopState (() => {
-      window.location.href = 'http://localhost:4200';
-    });
+
   }
 
   redireccionarActualizar(nroDocumento: number): void {

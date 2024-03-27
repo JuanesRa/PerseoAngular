@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-inventory-insert',
@@ -18,13 +19,20 @@ export class InventoryInsertComponent {
     private inventoryService: InventoryService,
     private router: Router,
     public fb: FormBuilder,
-    private alertsService: AlertsService
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
   ) {
     this.formulario = this.fb.group({
       NOMBRE_PRODUCTO: ['', [Validators.required, Validators.maxLength(30)]],
       DESCRIPCION_PRODUCTO: ['', [Validators.required, Validators.maxLength(100)]],
       CATEGORIA_IDCATEGORIA: [null, [Validators.required]],
-    })
+    });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/insertar-inventario'); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   ngOnInit(): void {

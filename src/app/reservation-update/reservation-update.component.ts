@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-reservation-update',
   templateUrl: './reservation-update.component.html',
@@ -20,7 +22,9 @@ export class ReservationUpdateComponent {
     private reservationService: ReservationService,
     private alertsService: AlertsService,
     private route: ActivatedRoute,
-    public fb: FormBuilder) {
+    public fb: FormBuilder,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       FECHA_RESERVACION: ['', [Validators.required]],
       FECHA_ENTRADA: ['', [Validators.required]],
@@ -83,7 +87,13 @@ export class ReservationUpdateComponent {
           }
         }
       });
-    }
+    };
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-reserva/' + this.reservaId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   actualizarReserva(): void {

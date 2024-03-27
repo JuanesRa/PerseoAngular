@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-user-update',
   templateUrl: './user-update.component.html',
@@ -19,7 +21,8 @@ export class UserUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private alertsService: AlertsService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private location: PlatformLocation,
   ) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: ['', [Validators.required, Validators.maxLength(10)]],
@@ -53,6 +56,11 @@ export class UserUpdateComponent implements OnInit {
           ESTADO_USUARIO_IDESTADO: usuario.ESTADO_USUARIO_IDESTADO,
         });
       });
+      history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-usuario/' + this.usuarioId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
     });
 
     // Suscribirse a los cambios del campo email
@@ -78,21 +86,21 @@ export class UserUpdateComponent implements OnInit {
   }
 
   actualizarUsuario(): void {
-   // Obtén los valores del formulario
-   const valoresFormulario = this.formulario.value;
+    // Obtén los valores del formulario
+    const valoresFormulario = this.formulario.value;
 
-   // Comparar campos modificados y enviar actualización si hay cambios
-   const UserId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
-   this.userService.getUserById(UserId).subscribe((userOriginal) => {
-     const camposModificados = Object.keys(valoresFormulario).filter(
-       key => valoresFormulario[key] !== userOriginal[key]
-     );
+    // Comparar campos modificados y enviar actualización si hay cambios
+    const UserId = +this.route.snapshot.params['id']; // Obtener ID de los parámetros de ruta
+    this.userService.getUserById(UserId).subscribe((userOriginal) => {
+      const camposModificados = Object.keys(valoresFormulario).filter(
+        key => valoresFormulario[key] !== userOriginal[key]
+      );
 
-     if (camposModificados.length > 0) {
-       this.alertsService.actualizarUsuario(UserId, valoresFormulario);
-     } else {
-       this.alertsService.alertDenied('No se han realizado cambios.');
-     }
-   });
- }
+      if (camposModificados.length > 0) {
+        this.alertsService.actualizarUsuario(UserId, valoresFormulario);
+      } else {
+        this.alertsService.alertDenied('No se han realizado cambios.');
+      }
+    });
+  }
 }

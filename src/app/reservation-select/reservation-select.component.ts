@@ -4,6 +4,8 @@ import { ReservationService } from '../services/reservation.service';
 import { UserService } from '../services/user.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-reservation-select',
   templateUrl: './reservation-select.component.html',
@@ -16,15 +18,22 @@ export class ReservationSelectComponent implements OnInit {
     private router: Router,
     private reservationService: ReservationService,
     private userService: UserService,
-    private alertsService: AlertsService
-  ) { }
+    private alertsService: AlertsService,
+    private location: PlatformLocation,
+  ) {
+    history.pushState(null, '', location.href);
+    this.location.onPopState(() => {
+      window.location.href = ('http://localhost:4200/lista-reservas'); //Navigate to another location when the browser back is clicked.
+      history.pushState(null, '', location.href);
+    });
+  }
 
   ngOnInit(): void {
     this.reservationService.getReservas().subscribe((data) => {
       this.reservas = data;
       console.log(this.reservas);
       this.getEstadoReserva();
-      this.getUsuario(); 
+      this.getUsuario();
       if (this.paginatorR) {
         this.paginatorR.pageSize = 10;
         this.paginatorR.hidePageSize = true; // Oculta la selección de tamaño de página

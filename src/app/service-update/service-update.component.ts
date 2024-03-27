@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
+
 @Component({
   selector: 'app-service-update',
   templateUrl: './service-update.component.html',
@@ -17,7 +19,9 @@ export class ServiceUpdateComponent implements OnInit {
     private alertsService: AlertsService,
     private route: ActivatedRoute,
     private serviceService: ServiceService,
-    public fb: FormBuilder) {
+    public fb: FormBuilder,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       NOMBRE_PRODUCTO: ['', [Validators.required, Validators.maxLength(30)]],
       VALOR: [null, [Validators.required, Validators.maxLength(30)]],
@@ -43,6 +47,12 @@ export class ServiceUpdateComponent implements OnInit {
         TIPO_SERVICIO_IDTIPOSERVICIO: servicio.TIPO_SERVICIO_IDTIPOSERVICIO
       });
     });
+
+    history.pushState(null, '', location.href);
+      this.location.onPopState(() => {
+        window.location.href = ('http://localhost:4200/actualizar-servicio/' + this.servicioId); //Navigate to another location when the browser back is clicked.
+        history.pushState(null, '', location.href);
+      });
   }
 
   actualizarServicio(): void {

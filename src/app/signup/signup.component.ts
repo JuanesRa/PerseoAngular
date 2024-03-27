@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../validators/password_validator';
 import { UserService } from '../services/user.service';
 import { AlertsService } from '../services/alerts.service';
+import { PlatformLocation } from '@angular/common';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -22,7 +23,9 @@ export class SignupComponent {
     private router: Router,
     private userService: UserService,
     public fb: FormBuilder,
-    private AlertsService:AlertsService) {
+    private AlertsService:AlertsService,
+    private location: PlatformLocation,
+    ) {
     this.formulario = this.fb.group({
       NRODOCUMENTO: ['', [Validators.required, Validators.maxLength(10)]],
       NOMBRE: ['', [Validators.required, Validators.maxLength(70)]],
@@ -43,6 +46,12 @@ export class SignupComponent {
     this.formulario?.get('email')?.valueChanges.subscribe(email => {
       this.formulario?.get('username')?.setValue(email);
 
+    });
+
+    history.pushState(null, '', location.href)
+    this.location.onPopState(() => {
+      window.location.href = 'http://localhost:4200/registro'; //Navigate to another location when the browser back is clicked.
+      history.pushState(null, '', location.href)
     });
   }
 
