@@ -247,6 +247,14 @@ export class AlertsService {
     }).then(() => { });
   }
 
+  alertInfo(title: string) {
+    Swal.fire({
+      title: title,
+      icon: 'info',
+      confirmButtonColor: '#3FC3EE',
+    }).then(() => { });
+  }
+
   //---------------------------------- METODOS PARA ACTUALIZAR -----------------------------------------------
 
   actualizarTipoServicio(TypeServiceId: number, formulario: any): void {

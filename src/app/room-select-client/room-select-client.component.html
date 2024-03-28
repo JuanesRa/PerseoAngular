@@ -31,14 +31,26 @@
 
         <div class="informacion">
           <p class="card-text">{{ room.description }}</p>
-            <li class="list-group-item">Descripción: {{room.descripcion}} </li>
-            <li class="list-group-item" style="font-weight:500;">Capacidad</li>
-            <li class="list-group-itemi">Adultos: <ng-container *ngFor="let i of [].constructor(room.cap_adultos)"><i
-                  class="fa-solid fa-child"></i></ng-container></li>
-            <li class="list-group-itemi">Niños: <ng-container *ngFor="let i of [].constructor(room.cap_ninos)"><i
-                  class="fa-solid fa-child"></i></ng-container></li>
-      
+          <li class="list-group-item">Descripción: {{ room.descripcion }} </li>
+          <li class="list-group-item" style="font-weight:500;">Capacidad</li>
+          <li class="list-group-itemi">Adultos: 
+            <ng-container *ngIf="room.cap_adultos !== 0; else showZero">
+              <ng-container *ngFor="let i of [].constructor(room.cap_adultos)">
+                <i class="fa-solid fa-child"></i>
+              </ng-container>
+            </ng-container>
+            <ng-template #showZero>0</ng-template>
+          </li>
+          <li class="list-group-itemi">Niños: 
+            <ng-container *ngIf="room.cap_ninos !== 0; else showZero">
+              <ng-container *ngFor="let i of [].constructor(room.cap_ninos)">
+                <i class="fa-solid fa-child"></i>
+              </ng-container>
+            </ng-container>
+            <ng-template #showZero>0</ng-template>
+          </li>
         </div>
+        
       </div>
 
       <div class="btns">
