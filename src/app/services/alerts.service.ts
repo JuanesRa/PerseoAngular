@@ -781,10 +781,25 @@ export class AlertsService {
           }).then(() => {
             window.location.reload();
           });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 500) {
+            console.error('Error interno del servidor:', error.message);
+            // Muestra un mensaje al usuario informándole sobre el error interno del servidor
+            Swal.fire({
+              title: 'Error',
+              text: 'Esta habitación está siendo utilizado en una reserva. Por favor, elimine la habitación de las reservas asociados antes de intentar actualizarlo nuevamente.',
+              icon: 'error',
+              confirmButtonColor: '#d33',
+            });
+          } else {
+            console.error('Error desconocido:', error);
+            // Puedes manejar otros códigos de estado HTTP si es necesario
+          }
         });
       }
     });
   }
+  
 
   eliminarHabitacionTipo(TypeRoomId: number): void {
     this.alertDrop(this.habitacionTipoAlertDroptitle, this.habitacionTipoAlertDroptext).then((confirmed) => {
