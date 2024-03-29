@@ -4,7 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Perseo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <div>
@@ -15,11 +17,13 @@
     <span class="title">Crear Reserva</span>
 
     <form [formGroup]="ReservationForm" (ngSubmit)="crearNuevaReserva()">
-        <input formControlName="FECHA_RESERVACION" name="fechaReservacion" type="date" placeholder="Fecha de entrada" style="display: none;">
+        <input formControlName="FECHA_RESERVACION" name="fechaReservacion" type="date" placeholder="Fecha de entrada"
+            style="display: none;">
 
         <p>Fecha de entrada</p>
         <div class="input-field">
-            <input formControlName="FECHA_ENTRADA" type="date" name="Ffecha_entrada" placeholder="Fecha de entrada" required [min]="fechaMinimaIn">
+            <input formControlName="FECHA_ENTRADA" type="date" name="Ffecha_entrada" placeholder="Fecha de entrada"
+                required [min]="fechaMinimaIn">
             <i class="uil uil-calendar"></i>
         </div>
 
@@ -30,7 +34,8 @@
 
         <p>Fecha de Salida</p>
         <div class="input-field">
-            <input formControlName="FECHA_SALIDA" type="date" name="Ffecha_entrada" placeholder="Fecha de salida" required [min]="fechaMinimaOut">
+            <input formControlName="FECHA_SALIDA" type="date" name="Ffecha_entrada" placeholder="Fecha de salida"
+                required [min]="fechaMinimaOut">
             <i class="uil uil-calendar"></i>
         </div>
 
@@ -40,7 +45,8 @@
         </div>
 
         <div class="input-field">
-            <input formControlName="CANTIDAD_ADULTOS" type="number" name="Fcantidad_adultos" placeholder="Cantidad de adultos" required>
+            <input formControlName="CANTIDAD_ADULTOS" type="number" name="Fcantidad_adultos"
+                placeholder="Cantidad de adultos" required>
             <i class="uil uil-user"></i>
         </div>
 
@@ -50,7 +56,8 @@
         </div>
 
         <div class="input-field">
-            <input formControlName="CANTIDAD_NINOS" type="number" name="Fcantidad_niños" placeholder="Cantidad de niños" required>
+            <input formControlName="CANTIDAD_NINOS" type="number" name="Fcantidad_niños" placeholder="Cantidad de niños"
+                required>
             <i class="uil uil-child"></i>
         </div>
 
@@ -72,27 +79,25 @@
             </div>
         </ng-container>
 
-
-
         <div *ngIf="showAdditionalInputs">
             <div *ngFor="let input of ReservationForm.controls | keyvalue">
-              <ng-container *ngIf="input.key.startsWith('input')">
-             
-                  <input formControlName="{{ input.key }}" type="text" placeholder="Ingrese un número" required>
-                  <button (click)="eliminarInput(input.key)">Eliminar</button>
-            
-              </ng-container>
+                <ng-container *ngIf="input.key.startsWith('input')">
+                    <input formControlName="{{ input.key }}" type="text" placeholder="Ingrese un número" readonly>
+                    <button (click)="eliminarInput(input.key, ReservationForm.get(input.key)?.value)">Eliminar</button>
+                </ng-container>
             </div>
-          </div>
-
-          <div class="icons">
-          <a class="link" (click)="toggleOverlay()"> <i class="fa-solid fa-circle-plus" style= "color:#5eb319"></i> Añadir otra habitación</a>
-          </div>
-          
+        </div>
 
 
+        <div class="icons">
+            <a class="link" (click)="toggleOverlay()"> <i class="fa-solid fa-circle-plus" style="color:#5eb319"></i>
+                Añadir otra habitación</a>
+        </div>
 
-          <div id="overlay" class="overlay">
+
+
+
+        <div id="overlay" class="overlay">
             <div class="nuevaHab">
                 <div class="overlay-header">
                     <span class="title">Añadir otra habitación</span>
@@ -101,35 +106,37 @@
                 <div class="div_habitacion" *ngIf="!noRoomsAvailable && showRoomSection">
                     <div class="card" style="width: 18rem;" *ngFor="let room of rooms">
                         <img src="{{room.foto}}" class="card-img-top" alt="Room Image">
-                      <div class="card-body">
-                        <h5 class="card-title">Habitación Nro: {{room.NROHABITACION }}</h5>
-                        <p class="card-text">{{ room.description }}</p>
-                      </div>
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item"></li>
-                        <li class="list-group-item">{{room.tipo}} </li>
-                        <li class="list-group-item">Descripción:{{room.descripcion}} </li>
-                        <li class="list-group-item">Precio:{{room.precio}} </li>
-                        <li class="list-group-item">Capacidad</li>
-                        <li class="list-group-item">Adultos: {{room.cap_adultos}}</li>
-                        <li class="list-group-item">Niños: {{room.cap_ninos}}</li>
-                      </ul>
-                      <div class="btns">
-                        <button type="button" class="btn btn-success" (click)="agregarInputWithRoomNumber(room.NROHABITACION)">Añadir</button>
-                      </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Habitación Nro: {{room.NROHABITACION }}</h5>
+                            <p class="card-text">{{ room.description }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"></li>
+                            <li class="list-group-item">{{room.tipo}} </li>
+                            <li class="list-group-item">Descripción:{{room.descripcion}} </li>
+                            <li class="list-group-item">Precio:{{room.precio}} </li>
+                            <li class="list-group-item">Capacidad</li>
+                            <li class="list-group-item">Adultos: {{room.cap_adultos}}</li>
+                            <li class="list-group-item">Niños: {{room.cap_ninos}}</li>
+                        </ul>
+                        <div class="btns">
+                            <button type="button" class="btn btn-success"
+                                (click)="agregarInputWithRoomNumber(room.NROHABITACION)">Añadir</button>
+                        </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
-        
 
 
-<div class="botones">
-    <div class="input-field button">
-        <input type="submit" value="Reservar">
-    </div>
-    <div class="input-field button">
-        <a routerLink="/lista-reservas">Volver</a>
-    </div>
-</div>
+
+        <div class="botones">
+            <div class="input-field button">
+                <input type="submit" value="Reservar">
+            </div>
+    
+            <div class="input-field button" >
+                <a routerLink="/habitaciones">Volver</a>
+            </div>
+        </div>

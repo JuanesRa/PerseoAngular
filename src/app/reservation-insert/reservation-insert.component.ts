@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ControlContainer } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { RoomService } from '../services/room.service';
@@ -39,6 +39,10 @@ export class ReservationInsertComponent implements OnInit {
   noRoomsAvailable: boolean = false;
   estadoDisponibleId: number = 0;
   roomsInput: { [key: string]: any } = {};
+  // Antes del constructor o dentro del constructor
+  capacidadAdultos: number = 0;
+  capacidadNinos: number = 0;
+
 
   constructor(
     private RoomService: RoomService,
@@ -145,6 +149,11 @@ export class ReservationInsertComponent implements OnInit {
     });
 
     this.habitacion = history.state.habitacion;
+    this.habitacion = history.state.habitacion;
+    this.precioPorNoche = this.habitacion.precio;
+    this.capacidadAdultos = this.habitacion.cap_adultos;
+    this.capacidadNinos = this.habitacion.cap_ninos;
+
     console.log(this.habitacionId = history.state.habitacion.NROHABITACION);
     this.precioPorNoche = this.habitacion.precio;
   }
@@ -168,15 +177,15 @@ export class ReservationInsertComponent implements OnInit {
   }
 
   validarCantidadPersonas(): boolean {
-    const capacidadAdultos = this.habitacion.cap_adultos;
-    const capacidadNinos = this.habitacion.cap_ninos;
+    //this.capacidadAdultos = this.habitacion.cap_adultos;
+    //this.capacidadNinos = this.habitacion.cap_ninos;
     const cantidadAdultos = this.ReservationForm.value.CANTIDAD_ADULTOS;
     const cantidadNinos = this.ReservationForm.value.CANTIDAD_NINOS;
-    if (cantidadAdultos > capacidadAdultos) {
-      alert('La cantidad de adultos supera la capacidad de la habitación.');
+    if (cantidadAdultos > this.capacidadAdultos) {
+      this.alertsService.alertDenied('La cantidad de adultos supera la capacidad de la habitación. Por favor eliga otra habitación o añada otra habitación.');
       return false;
-    } else if (cantidadNinos > capacidadNinos) {
-      alert('La cantidad de niños supera la capacidad de la habitación.');
+    } else if (cantidadNinos > this.capacidadNinos) {
+      this.alertsService.alertDenied('La cantidad de niños supera la capacidad de la habitación. Por favor eliga otra habitación o añada otra habitación.');
       return false;
     }
     return true;
@@ -186,16 +195,17 @@ export class ReservationInsertComponent implements OnInit {
   crearNuevaReserva(): void {
     if (this.ReservationForm.valid) {
       let confirmedMessage = '¡Registro exitoso!';
-      this.alertsService.alertConfirmed(confirmedMessage).then(() => {
-        this.imprimirValoresInputs();
-        this.calcularPrecioTotal();
-        if (this.validarCantidadPersonas()) {
+      this.imprimirValoresInputs();
+      this.calcularPrecioTotal();
+      if (this.validarCantidadPersonas()) {
+
           this.ReservationService.postReservas(this.ReservationForm.value).subscribe(
             (data) => {
               const reservaId = data.IDRESERVA;
               console.log('Reserva creada:', data);
               // Crear la reserva para la primera habitación seleccionada
               this.crearNuevoHabitacionXReserva(reservaId, this.habitacion.NROHABITACION);
+              this.alertsService.alertConfirmed(confirmedMessage);
               // Actualizar el estado de la primera habitación seleccionada
               this.estadoOcupadoId = this.getEstadoOcuapdoId();
               this.ActualizarEstadoHabitacionAnadidas(this.habitacion.NROHABITACION, this.estadoOcupadoId);
@@ -218,14 +228,10 @@ export class ReservationInsertComponent implements OnInit {
             },
             (error) => {
               console.error('Error al crear reserva:', error);
-              this.alertsService.alertDenied('Error al crear reserva. Por favor, inténtelo de nuevo.');
+              this.alertsService.alertDenied('Error al crear reserva. Por favor, verifique el numero de documento');
             }
-          );
-        } else {
-          console.log('Formulario inválido');
-          this.alertsService.alertDenied('Formulario inválido');
-        }
-      });
+            );
+        } 
     }
   }
 
@@ -299,8 +305,21 @@ export class ReservationInsertComponent implements OnInit {
       this.additionalControls.push(newControl);
       // Mostrar los inputs adicionales
       this.showAdditionalInputs = true;
+
+      this.RoomService.getRoomById(numeroHabitacion).subscribe((data) => {
+        //console.log(data);
+        this.RoomService.getTypeRoomById(data.TIPO_HABITACION_IDTIPOHABITACION).subscribe((data) => {
+          this.capacidadAdultos += data.CANTIDAD_ADULTOS;
+          this.capacidadNinos += data.CANTIDAD_NINOS;
+          // console.log(data);
+        });
+      })
+
       // Cerrar el overlay
       this.toggle();
+    }
+    else {
+      this.alertsService.alertInfo("Ya has alcanzado el máximo de habitaciones")
     }
   }
 
@@ -316,8 +335,6 @@ export class ReservationInsertComponent implements OnInit {
       overlay.style.display = 'none';
     }
   }
-
-
   toggleOverlay(numeroHabitacion?: number): void {
     const overlay = document.getElementById('overlay');
     if (overlay) {
@@ -325,7 +342,7 @@ export class ReservationInsertComponent implements OnInit {
       if (overlay.style.display === 'none') {
         // Si se está ocultando el overlay, eliminamos el último input solo si hay habitaciones adicionales seleccionadas
         if (numeroHabitacion) {
-          this.eliminarInput(`input${this.numInputs}`);
+          this.eliminarInput(`input${this.numInputs}`, numeroHabitacion);
         }
       } else {
         // Agregar input con el número de habitación solo si se proporciona
@@ -338,12 +355,21 @@ export class ReservationInsertComponent implements OnInit {
 
 
 
-
-  eliminarInput(controlName: string): void {
+  eliminarInput(controlName: string, controlValue: any): void {
     const controlIndex = this.additionalControls.findIndex(control => controlName === controlName);
     if (controlIndex !== -1) {
       this.additionalControls.splice(controlIndex, 1); // Eliminar el control de la lista de controles adicionales
     }
+    const controlNameAsNumber: number = parseInt(controlValue, 10); // Convertir el valor del control a un número entero
+    console.log(controlValue);
+    this.RoomService.getRoomById(controlNameAsNumber).subscribe((data) => {
+      console.log(data);
+      this.RoomService.getTypeRoomById(data.TIPO_HABITACION_IDTIPOHABITACION).subscribe((data) => {
+        this.capacidadAdultos -= data.CANTIDAD_ADULTOS;
+        this.capacidadNinos -= data.CANTIDAD_NINOS;
+        console.log(data);
+      });
+    })
     this.ReservationForm.removeControl(controlName);
     this.numInputs--;
     // Actualizar los nombres de los controles restantes
@@ -357,4 +383,4 @@ export class ReservationInsertComponent implements OnInit {
       }
     }
   }
-}
+}  

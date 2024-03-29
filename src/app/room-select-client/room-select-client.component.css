@@ -67,7 +67,7 @@
 
 .card-title{
     position: relative;
-    width: 50%;
+    width: 60%;
     text-align: start;
     font-size: 15px; 
     padding: 5px 5px 0 30px;
@@ -86,7 +86,7 @@
 }
 
 .card-title2{
-    width: 50%;
+    width: 40%;
     text-align: end;
     font-size: 15px;
     padding: 5px 30px 0 5px;

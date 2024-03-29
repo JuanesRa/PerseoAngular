@@ -6,6 +6,17 @@
     --gray: #707070;
     --border: .1rem solid rgba(84, 134, 80, 0.7);
 }
+a{
+    cursor: pointer;
+}
+
+.title {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 50px 0 50px 0;
+    text-align: center;
+}
 
 * {
     font-family: 'Montserrat', sans-serif;
