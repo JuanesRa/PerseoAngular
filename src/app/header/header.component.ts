@@ -14,6 +14,12 @@ export class HeaderComponent implements OnInit {
   isCliente: boolean = false;
   isLoggedIn: boolean = this.authService.isLoggedIn();
 
+  isChecked: boolean = false;
+
+  toggleMenu() {
+    this.isChecked = !this.isChecked;
+  }
+
 
   constructor(
     private authService: AuthService,

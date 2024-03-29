@@ -1,47 +1,53 @@
-:root{
-   --white:#fff;
+:root {
+   --white: #fff;
    --black: #333333;
-   --green:#5eb319;
-   --green_de:rgb(205, 235, 180);
+   --green: #5eb319;
+   --green_de: rgb(205, 235, 180);
    --gray: #707070;
-   --border:.1rem solid rgba(84, 134, 80, 0.7);
+   --border: .1rem solid rgba(84, 134, 80, 0.7);
 }
 
-section{
-    padding: 20px 0px;
-    max-width: 1150px;
-    margin: 0 auto;
- }
+section {
+   padding: 20px 0px;
+   max-width: 1150px;
+   margin: 0 auto;
+}
 
- .header{
-    padding-bottom: 0;
- }
+.header {
+   padding-bottom: 0;
+}
 
- .header .flex{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
- }
+.header .flex {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
 
- .header .flex .icons{
+.header .flex .icons {
    margin-top: 0;
 }
 
- .header .flex .logo{
-    color: #5eb319;
-    font-size: 25px
- }
+.header .flex .logo {
+   color: #5eb319;
+   font-size: 25px
+}
 
-.header .flex .icons a{
+.header .flex .icons a {
    font-size: 25px;
    margin-left: 20px;
    color: #5eb319;
 }
 
-.header .flex .fa-bars{
-   font-size: 3rem;
+/* CHECKBOX MENU*/
+
+.checkbtn {
+   font-size: 25px;
+   color: #5eb319;
    cursor: pointer;
-   color: var(--green);
+   display: none;
+}
+
+#check {
    display: none;
 }
 
@@ -49,32 +55,32 @@ section{
    cursor: pointer;
 }
 
- .header .navbar{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 15px;
-    margin-top: 20px;
-    background-color: #5eb319;
-    padding: 5px 0px;
-    border-radius: 5px;
- }
+.header .navbar {
+   display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+   gap: 15px;
+   margin-top: 20px;
+   background-color: #5eb319;
+   padding: 5px 0px;
+   border-radius: 5px;
+}
 
- .header .navbar a{
-    font-size: 20px;
-    color: #fff;
-    border-radius: 5px;
-    padding: 5px 15px;
-    text-decoration: none;
- }
+.header .navbar a {
+   font-size: 20px;
+   color: #fff;
+   border-radius: 5px;
+   padding: 5px 15px;
+   text-decoration: none;
+}
 
- .header .navbar a:hover{
-    background-color: #fff;
-    color: #5eb319;
-    padding: 5px 15px;
- }
+.header .navbar a:hover {
+   background-color: #fff;
+   color: #5eb319;
+   padding: 5px 15px;
+}
 
- .navbar .options {
+.navbar .options {
    display: none;
    position: absolute;
    background-color: #5eb319;
@@ -98,7 +104,8 @@ li {
    text-decoration: none;
    list-style-type: none;
 }
-.opcion{
+
+.opcion {
    font-size: 1px;
    color: #fff;
 
@@ -127,10 +134,84 @@ li {
    background-color: #5eb319;
    padding: 5px;
    border-radius: 7px;
-   z-index: 1000; /* Ajusta el valor según sea necesario */
+   z-index: 1000;
 }
 
 .dropdown:hover .submenu {
    display: block;
 }
 
+@media (max-width: 952px) {
+
+   .header .navbar a {
+      padding: 10px;
+      font-size: 18px;
+   }
+}
+
+@media (max-width: 858px) {
+
+   .header .flex {
+      padding: 0 20px;
+   }
+
+   .header .flex .icons {
+      font-size: 25px;
+      margin-right: 30px;
+      color: #5eb319;
+   }
+
+   .checkbtn {
+      position: absolute;
+      right: 10px;
+      top: 21px;
+      font-size: 25px;
+      color: #5eb319;
+      cursor: pointer;
+      display: block;
+   }
+
+   .header .navbar {
+      flex-direction: column;
+      position: fixed;
+      width: 100%;
+      height: 80%;
+      align-items: center;
+      background-color: #5eb319;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 999999;
+      right: -100%;
+      transition: all 0.3s ease;
+   }
+
+   .navbar.active {
+      transform: translateX(-100%);
+    }
+
+   .header .navbar a {
+      display: block;
+      font-size: 20px;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 5px 15px;
+   }
+
+   .header .navbar a:hover {
+      background-color: #fff;
+      color: #5eb319;
+      border-radius: 5px;
+   }
+
+   .submenu {
+      display: none;
+      border: 1px solid #fff;
+   }
+
+   .submenu a {
+      display: block;
+      z-index: 1;
+      color: #5eb319;
+   }
+}

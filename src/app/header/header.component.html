@@ -4,25 +4,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Perseo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 
 <section class="header">
     <div class="flex">
-       <a routerLink="/inicio"  class="logo">Hotel Perseo</a>
-       <div class="icons">
-          <a *ngIf="!isLoggedIn" routerLink="/login"><i class="fa-regular fa-user" style="color: var(--green);"></i></a>
-          <a *ngIf="!isLoggedIn" routerLink="/registro"> <i class="fa-solid fa-user-plus" style="color: var(--green);"></i></a>
-          <a *ngIf="isLoggedIn">
-            <i (click)="CerrarSesion()" class="fa-solid fa-right-from-bracket" style="color: var(--green);"></i>
-          </a>
-
-
-       </div>
+        <a routerLink="/inicio" class="logo">Hotel Perseo</a>
+        <div class="icons">
+            <a *ngIf="!isLoggedIn" routerLink="/login"><i class="fa-regular fa-user"></i></a>
+            <a *ngIf="!isLoggedIn" routerLink="/registro"> <i class="fa-solid fa-user-plus"></i></a>
+            <a *ngIf="isLoggedIn"><i (click)="CerrarSesion()" class="fa-solid fa-right-from-bracket"></i></a>
+            <input type="checkbox" id="check" [(ngModel)]="isChecked">
+            <label for="check" class="checkbtn" (click)="toggleMenu()">
+                <i (click)="toggleMenu()" class="fa-solid fa-bars"></i>
+            </label>
+        </div>
     </div>
 
-    <nav class="navbar">
+    <nav class="navbar" [ngClass]="{ 'active': isChecked }">
         <a routerLink="/inicio">Inicio</a>
         <ng-container *ngIf="isAdmin">
             <a routerLink="/lista-usuarios">Gestión Usuarios</a>
@@ -60,7 +62,6 @@
             </li>
 
             <li><a routerLink="/lista-facturas" class="opcion">Gestión Factura</a></li>
-             
 
         </ng-container>
         <ng-container *ngIf="isRecepcionista">
