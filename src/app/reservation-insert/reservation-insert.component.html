@@ -81,13 +81,13 @@
 
         <div *ngIf="showAdditionalInputs">
             <div *ngFor="let input of ReservationForm.controls | keyvalue">
-              <ng-container *ngIf="input.key.startsWith('input')">
-                <input formControlName="{{ input.key }}" type="text" placeholder="Ingrese un número" readonly>
-                <button (click)="eliminarInput(input.key, ReservationForm.get(input.key)?.value)">Eliminar</button>
-              </ng-container>
+                <ng-container *ngIf="input.key.startsWith('input')">
+                    <input formControlName="{{ input.key }}" type="text" placeholder="Ingrese un número" readonly>
+                    <button (click)="eliminarInput(input.key, ReservationForm.get(input.key)?.value)">Eliminar</button>
+                </ng-container>
             </div>
-          </div>
-          
+        </div>
+
 
         <div class="icons">
             <a class="link" (click)="toggleOverlay()"> <i class="fa-solid fa-circle-plus" style="color:#5eb319"></i>
@@ -135,7 +135,8 @@
             <div class="input-field button">
                 <input type="submit" value="Reservar">
             </div>
-            <div class="input-field button">
-                <a routerLink="/lista-reservas">Volver</a>
+    
+            <div class="input-field button" >
+                <a routerLink="/habitaciones">Volver</a>
             </div>
         </div>

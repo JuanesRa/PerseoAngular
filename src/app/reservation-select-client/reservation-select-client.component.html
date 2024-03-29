@@ -2,6 +2,10 @@
     <app-header></app-header>
 </div>
 
+<div *ngIf="noReservasHechas">
+    <h1 class="title">No has hecho ninguna reserva.</h1>
+  </div>
+
 <div class="contenido">
     <div class="row">
         <div class="card" *ngFor="let reserva of reservas">
@@ -25,8 +29,7 @@
                         <h3>Estado</h3>
                         <p><span>Reserva {{ reserva.estadoReserva }}</span></p>
                         <div class="botones" *ngIf="reserva.estadoReserva == 'Confirmada'">
-
-                            <a class="buttonEliminar" routerLink="/lista-reservas">Cancelar reserva</a>
+                            <a class="buttonEliminar" (click)="cancelarReserva(reserva.IDRESERVA)">Cancelar reserva</a>
                         </div>
                         <div class="botones" *ngIf="reserva.estadoReserva == 'En curso'">
                         </div>

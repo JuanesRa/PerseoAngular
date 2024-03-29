@@ -184,6 +184,14 @@ export class AlertsService {
   metodoPagofacturaeliminar = 'El método de pago ha sido quitado.';
 
 
+  //Cancelar Reserva
+  cancelarReservaAlertDroptitle = '¿Está seguro de cancelar la reserva?';
+  cancelarReservaAlertDroptext = 'Este proceso cancelará la reserva. ¿Estás seguro de que deseas proceder?';
+  cancelarReservaeliminar = 'La reserva ha sido cancelada.';
+
+  estadoDisponibleId: number = 0;
+  estados: any[] = [];
+
   constructor(
     private invoiceService: InvoiceService,
     private roomService: RoomService,
@@ -195,9 +203,7 @@ export class AlertsService {
     private reservationService: ReservationService,
     private serviceService: ServiceService,
     private router: Router,
-
   ) { }
-
 
 
   alertDrop(title: string, text: string): Promise<boolean> {
@@ -210,6 +216,21 @@ export class AlertsService {
       cancelButtonColor: "#d33",
       cancelButtonText: "Cancelar",
       confirmButtonText: "¡Sí, Borralo!"
+    }).then((result) => {
+      return result.isConfirmed;
+    });
+  }
+
+  alertCancelar(title: string, text: string): Promise<boolean> {
+    return Swal.fire({
+      title: title,
+      text: text,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5eb319",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "¡Sí, Cancelar!"
     }).then((result) => {
       return result.isConfirmed;
     });
@@ -259,34 +280,34 @@ export class AlertsService {
 
   actualizarTipoServicio(TypeServiceId: number, formulario: any): void {
     this.alertUpdate(this.tipoServicioAlertUpdatetitle, this.tipoServicioAlertUpdatetext).then((confirmed) => {
-        if (confirmed) {
-            this.serviceService.putTypeService(TypeServiceId, formulario).subscribe(() => {
-                Swal.fire({
-                    title: '¡Actualizado!',
-                    text: this.tipoServicioactualizar,
-                    icon: 'success',
-                    confirmButtonColor: '#5eb319',
-                }).then(() => {
-                    this.router.navigate(['/lista-tiposervicios']);
-                });
-            }, (error: HttpErrorResponse) => {
-                if (error.status === 400) {
-                    console.error('Error interno del servidor:', error.message);
-                    // Muestra un mensaje al usuario informándole sobre el error interno del servidor
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Cambie el nombre del tipo de servicio e inténtalo de nuevo.',
-                        icon: 'error',
-                        confirmButtonColor: '#d33',
-                    });
-                } else {
-                    console.error('Error desconocido:', error);
-                    // Puedes manejar otros códigos de estado HTTP si es necesario
-                }
+      if (confirmed) {
+        this.serviceService.putTypeService(TypeServiceId, formulario).subscribe(() => {
+          Swal.fire({
+            title: '¡Actualizado!',
+            text: this.tipoServicioactualizar,
+            icon: 'success',
+            confirmButtonColor: '#5eb319',
+          }).then(() => {
+            this.router.navigate(['/lista-tiposervicios']);
+          });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 400) {
+            console.error('Error interno del servidor:', error.message);
+            // Muestra un mensaje al usuario informándole sobre el error interno del servidor
+            Swal.fire({
+              title: 'Error',
+              text: 'Cambie el nombre del tipo de servicio e inténtalo de nuevo.',
+              icon: 'error',
+              confirmButtonColor: '#d33',
             });
-        }
+          } else {
+            console.error('Error desconocido:', error);
+            // Puedes manejar otros códigos de estado HTTP si es necesario
+          }
+        });
+      }
     });
-}
+  }
 
   actualizarServicio(serviceId: number, formulario: any): void {
     this.alertUpdate(this.servicioAlertUpdatetitle, this.servicioAlertUpdatetext).then((confirmed) => {
@@ -440,40 +461,40 @@ export class AlertsService {
 
   actualizarUsuario(UserId: number, formulario: any): void {
     this.alertUpdate(this.usuarioAlertUpdatetitle, this.usuarioAlertUpdatetext).then((confirmed) => {
-        if (confirmed) {
-            this.userService.putUser(UserId, formulario).subscribe(() => {
-                Swal.fire({
-                    title: '¡Actualizado!',
-                    text: this.usuarioactualizar,
-                    icon: 'success',
-                    confirmButtonColor: '#5eb319',
-                }).then(() => {
-                    this.router.navigate(['/lista-usuarios']);
-                });
-            }, (error: HttpErrorResponse) => {
-                if (error.status === 400) {
-                    console.error('Error interno del servidor:', error.message);
-                    // Muestra un mensaje al usuario informándole sobre el error interno del servidor
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'El correo ya está registrado. Ingrese otro e inténtalo de nuevo.',
-                        icon: 'error',
-                        confirmButtonColor: '#d33',
-                    });
-                } else {
-                    console.error('Error desconocido:', error);
-                    // Puedes manejar otros códigos de estado HTTP si es necesario
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Se produjo un error al actualizar el usuario. Por favor, inténtalo de nuevo más tarde. Si el problema persiste, contacta al soporte técnico para obtener asistencia adicional.',
-                        icon: 'error',
-                        confirmButtonColor: '#d33',
-                    });
-                }
+      if (confirmed) {
+        this.userService.putUser(UserId, formulario).subscribe(() => {
+          Swal.fire({
+            title: '¡Actualizado!',
+            text: this.usuarioactualizar,
+            icon: 'success',
+            confirmButtonColor: '#5eb319',
+          }).then(() => {
+            this.router.navigate(['/lista-usuarios']);
+          });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 400) {
+            console.error('Error interno del servidor:', error.message);
+            // Muestra un mensaje al usuario informándole sobre el error interno del servidor
+            Swal.fire({
+              title: 'Error',
+              text: 'El correo ya está registrado. Ingrese otro e inténtalo de nuevo.',
+              icon: 'error',
+              confirmButtonColor: '#d33',
             });
-        }
+          } else {
+            console.error('Error desconocido:', error);
+            // Puedes manejar otros códigos de estado HTTP si es necesario
+            Swal.fire({
+              title: 'Error',
+              text: 'Se produjo un error al actualizar el usuario. Por favor, inténtalo de nuevo más tarde. Si el problema persiste, contacta al soporte técnico para obtener asistencia adicional.',
+              icon: 'error',
+              confirmButtonColor: '#d33',
+            });
+          }
+        });
+      }
     });
-}
+  }
 
 
   actualizarHabitacion(roomId: number, formulario: any): void {
@@ -799,7 +820,7 @@ export class AlertsService {
       }
     });
   }
-  
+
 
   eliminarHabitacionTipo(TypeRoomId: number): void {
     this.alertDrop(this.habitacionTipoAlertDroptitle, this.habitacionTipoAlertDroptext).then((confirmed) => {
@@ -902,4 +923,36 @@ export class AlertsService {
       }
     });
   }
+
+  cancelarReserva(reservaId: number, formulario: any, estadoId: number): void {
+    this.alertCancelar(this.cancelarReservaAlertDroptitle, this.cancelarReservaAlertDroptext).then((confirmed) => {
+      if (confirmed) {
+        this.reservationService.getReservationXRoom().subscribe((data) => {
+          const reservasFiltradas = data.filter((item: any) => item.RESERVA_IDRESERVA === reservaId);
+          // Iterar sobre las reservas filtradas
+          reservasFiltradas.forEach((reserva: { HABITACION_NROHABITACION: any; }) => {
+            console.log(reserva.HABITACION_NROHABITACION);
+            console.log(estadoId);
+            // Actualizar el estado de la habitación
+            this.roomService.patchRoom(reserva.HABITACION_NROHABITACION, { ESTADO_HABITACION_IDESTADOHABITACION: estadoId }).subscribe(() => {
+              // Luego de la actualización de la habitación, realizar el put de la reserva
+              this.reservationService.putReserva(reservaId, formulario).subscribe(() => {
+                Swal.fire({
+                  title: '¡Cancelada!',
+                  text: this.cancelarReservaeliminar,
+                  icon: 'success',
+                  confirmButtonColor: '#5eb319',
+                }).then(() => {
+                  window.location.reload();
+                });
+              });
+            });
+          });
+        });
+      }
+    });
+  }
+  
+
+  
 }

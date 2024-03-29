@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationService } from '../services/reservation.service';
 import { RoomService } from '../services/room.service';
 import { MatPaginator } from '@angular/material/paginator';
@@ -19,14 +19,18 @@ export class ReservationSelectClientComponent implements OnInit {
   habitaciones: any[] = [];
   roomxreservation: any[] = [];
   usuario: any;
-
+  estadosReserva: any[] = [];
+  estadoCancelarReservaId: number = 0;
+  estadoDisponibleId: number = 0;
+  estados: any[] = [];
+  noReservasHechas: boolean = false; // Variable para controlar si no hay reservas
   @ViewChild(MatPaginator) paginatorR!: MatPaginator;
 
   constructor(
-    private router: Router,
     private reservationService: ReservationService,
     private alertsService: AlertsService,
     private authService: AuthService,
+    private route: ActivatedRoute,
     private roomService: RoomService,
     private location: PlatformLocation,
   ) {
@@ -35,6 +39,8 @@ export class ReservationSelectClientComponent implements OnInit {
       window.location.href = ('http://localhost:4200/reservas'); //Navigate to another location when the browser back is clicked.
       history.pushState(null, '', location.href);
     });
+
+   
   }
 
   ngOnInit(): void {
@@ -43,6 +49,10 @@ export class ReservationSelectClientComponent implements OnInit {
       this.reservas = data;
       // Filtra reservas por estado "usuario"
       this.reservas = data.filter((reserva: any) => reserva.PERSONA_NRODOCUMENTO === this.usuario);
+      if (this.reservas.length === 0){
+        this.noReservasHechas = true;
+      }
+      else{
       this.reservas.forEach((reserva => {
         this.reservationService.getReservationXRoom().subscribe((data) => {
           this.roomxreservation = data.filter((item: any) => item.RESERVA_IDRESERVA == reserva.IDRESERVA);
@@ -63,8 +73,27 @@ export class ReservationSelectClientComponent implements OnInit {
         this.paginatorR.pageSize = 10;
         this.paginatorR.hidePageSize = true; // Oculta la selección de tamaño de página
       }
+    }
+    });
+    this.obtenerIdEstadoReservaCancelada();
+
+    this.roomService.getStatusRoom().subscribe((statusData) => {
+      // Asignar los estados obtenidos
+      this.estados = statusData;
+      this.estadoDisponibleId = this.getEstadoDisponibleId();
+      console.log(this.estados);
     });
   }
+
+  obtenerIdEstadoReservaCancelada(): void {
+    this.reservationService.getStatusReservation().subscribe((data) => {
+      const estadoCancelada = data.find((item: any) => item.ESTADO_RESERVA == "Cancelada");
+      if (estadoCancelada) {
+        this.estadoCancelarReservaId = estadoCancelada.IDESTADORESERVA;
+      }
+    });
+  }
+  
 
   getEstadoReserva(): void {
     this.reservas.forEach((reserva) => {
@@ -76,5 +105,16 @@ export class ReservationSelectClientComponent implements OnInit {
 
   getTipoHab(id: any): Observable<any> {
     return this.roomService.getTypeRoomById(id);
+  }
+
+
+  cancelarReserva(reservaId : number  ): void {
+      this.alertsService.cancelarReserva(reservaId, {'ESTADO_RESERVA' : this.estadoCancelarReservaId}, this.estadoDisponibleId );
+    
+  }
+
+  getEstadoDisponibleId(): number {
+    const estadoDisponible = this.estados.find((estado) => estado.TIPO_ESTADO == 'Disponible');
+    return estadoDisponible ? estadoDisponible.IDESTADOHABITACION : 0;
   }
 }

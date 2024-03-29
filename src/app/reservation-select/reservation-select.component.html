@@ -51,7 +51,8 @@
                 <td class="btns">
                     <button (click)="redireccionarActualizar(reserva.IDRESERVA)" type="button" class="btn btn-warning">
                         Actualizar</button>
-                    <button (click)="eliminarReserva(reserva.IDRESERVA)" type="button" class="btn btn-danger">Eliminar</button>
+                    <button (click)="eliminarReserva(reserva.IDRESERVA)" type="button" class="btn btn-danger"  *ngIf="isAdmin ">Eliminar</button>
+                    <button (click)="cancelarReserva(reserva.IDRESERVA)" type="button" class="btn btn-danger"  *ngIf="isRecepcionista ">Cancelar</button>
                 </td>
             </tr>
         </tbody>
