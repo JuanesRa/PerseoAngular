@@ -7,6 +7,7 @@ import { AlertsService } from '../services/alerts.service';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { PlatformLocation } from '@angular/common';
+import { InvoiceService } from '../services/invoice.service';
 
 @Component({
   selector: 'app-reservation-select-client',
@@ -18,6 +19,7 @@ export class ReservationSelectClientComponent implements OnInit {
   reservas: any[] = [];
   habitaciones: any[] = [];
   roomxreservation: any[] = [];
+  idFacturas: any[] = [];
   usuario: any;
   estadosReserva: any[] = [];
   estadoCancelarReservaId: number = 0;
@@ -33,6 +35,7 @@ export class ReservationSelectClientComponent implements OnInit {
     private route: ActivatedRoute,
     private roomService: RoomService,
     private location: PlatformLocation,
+    private invoiceService: InvoiceService,
   ) {
     history.pushState(null, '', location.href);
     this.location.onPopState(() => {
@@ -40,40 +43,46 @@ export class ReservationSelectClientComponent implements OnInit {
       history.pushState(null, '', location.href);
     });
 
-   
-  }
 
+  }
   ngOnInit(): void {
-    this.usuario = this.authService.getAuthId()
+    this.usuario = this.authService.getAuthId();
     this.reservationService.getReservas().subscribe((data) => {
       this.reservas = data;
       // Filtra reservas por estado "usuario"
-      this.reservas = data.filter((reserva: any) => reserva.PERSONA_NRODOCUMENTO === this.usuario);
-      if (this.reservas.length === 0){
+      this.reservas = this.reservas.filter((reserva: any) => reserva.PERSONA_NRODOCUMENTO === this.usuario);
+      if (this.reservas.length === 0) {
         this.noReservasHechas = true;
-      }
-      else{
-      this.reservas.forEach((reserva => {
-        this.reservationService.getReservationXRoom().subscribe((data) => {
-          this.roomxreservation = data.filter((item: any) => item.RESERVA_IDRESERVA == reserva.IDRESERVA);
-          reserva.habitacion = this.roomxreservation;
-          reserva.habitacion.forEach((habitacion: any) => {
-            this.roomService.getRoomById(habitacion.HABITACION_NROHABITACION).subscribe((tipoHabitacion: any) => {
-              habitacion.ID_TIPO_HABITACION = tipoHabitacion.TIPO_HABITACION_IDTIPOHABITACION;
-              this.getTipoHab(habitacion.ID_TIPO_HABITACION).subscribe((tipoHabitacion: any) => {
-                habitacion.TIPO_HABITACION = tipoHabitacion.TIPO_HABITACION;
-              })
+      } else {
+        this.reservas.forEach((reserva => {
+          this.invoiceService.getInvoice().subscribe((data) => {
+            console.log(data);
+            const facturas = data.filter((item: any) => item.IDRESERVA == reserva.IDRESERVA);
+            if (facturas.length > 0) {
+              reserva.IDFACT = facturas[0].IDFACTURA; // Asignar el IDFACTURA de la primera factura encontrada
+            }
+          });
+          this.reservationService.getReservationXRoom().subscribe((data) => {
+            this.roomxreservation = data.filter((item: any) => item.RESERVA_IDRESERVA == reserva.IDRESERVA);
+            reserva.habitacion = this.roomxreservation;
+            reserva.habitacion.forEach((habitacion: any) => {
+              this.roomService.getRoomById(habitacion.HABITACION_NROHABITACION).subscribe((tipoHabitacion: any) => {
+                habitacion.ID_TIPO_HABITACION = tipoHabitacion.TIPO_HABITACION_IDTIPOHABITACION;
+                this.getTipoHab(habitacion.ID_TIPO_HABITACION).subscribe((tipoHabitacion: any) => {
+                  habitacion.TIPO_HABITACION = tipoHabitacion.TIPO_HABITACION;
+                  console.log(reserva.IDRESERVA);
+                });
+              });
             });
           });
-        })
-      }))
-      console.log(this.reservas);
-      this.getEstadoReserva();
-      if (this.paginatorR) {
-        this.paginatorR.pageSize = 10;
-        this.paginatorR.hidePageSize = true; // Oculta la selección de tamaño de página
+        }));
+        console.log(this.reservas);
+        this.getEstadoReserva();
+        if (this.paginatorR) {
+          this.paginatorR.pageSize = 10;
+          this.paginatorR.hidePageSize = true; // Oculta la selección de tamaño de página
+        }
       }
-    }
     });
     this.obtenerIdEstadoReservaCancelada();
 
@@ -93,7 +102,7 @@ export class ReservationSelectClientComponent implements OnInit {
       }
     });
   }
-  
+
 
   getEstadoReserva(): void {
     this.reservas.forEach((reserva) => {
@@ -108,9 +117,9 @@ export class ReservationSelectClientComponent implements OnInit {
   }
 
 
-  cancelarReserva(reservaId : number  ): void {
-      this.alertsService.cancelarReserva(reservaId, {'ESTADO_RESERVA' : this.estadoCancelarReservaId}, this.estadoDisponibleId );
-    
+  cancelarReserva(reservaId: number): void {
+    this.alertsService.cancelarReserva(reservaId, { 'ESTADO_RESERVA': this.estadoCancelarReservaId }, this.estadoDisponibleId);
+
   }
 
   getEstadoDisponibleId(): number {
